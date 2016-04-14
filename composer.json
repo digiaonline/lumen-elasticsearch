@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.5",
-        "elasticsearch/elasticsearch": "~1.0"
+        "elasticsearch/elasticsearch": "^2.1"
     },
     "autoload": {
         "psr-4": {
