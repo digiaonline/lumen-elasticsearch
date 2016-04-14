@@ -38,6 +38,24 @@ Copy the configuration template in `config/elasticsearch.php` to your applicatio
 For more information see the [Configuration Files](http://lumen.laravel.com/docs/configuration#configuration-files)
 section in the Lumen documentation.
 
+### Quickstart
+
+[Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+
+```php
+$service = app(ElasticsearchServiceContract::class);
+
+$query = $service->createBoolQuery();
+$query->addMust($service->createMatchQuery()->setField('user')->setValue('kimchy'));
+$query->addFilter($service->createMatchQuery()->setField('tag')->setValue('tech'));
+$query->addMustNot($service->createRangeQuery()->setField('age')->setGreaterThanOrEquals(10)->setLessThanOrEquals(20));
+$query->addShould($service->createMatchQuery()->setField('tag')->setValue('wow'));
+$query->addShould($service->createMatchQuery()->setField('tag')->setValue('elasticsearch'));
+$query->setSize(50)->setPage(0);
+
+$result = $service->changeIndex('index')->changeType('document')->execute($query);
+```
+
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).
