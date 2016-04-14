@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Query\FullText;
+<?php namespace Nord\Lumen\Elasticsearch\Queries\FullText;
 
 /**
  * A family of match queries that accepts text/numerics/dates, analyzes them, and constructs a query.

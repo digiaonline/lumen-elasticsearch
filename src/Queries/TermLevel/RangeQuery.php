@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Query\TermLevel;
+<?php namespace Nord\Lumen\Elasticsearch\Queries\TermLevel;
 
 /**
  * Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the

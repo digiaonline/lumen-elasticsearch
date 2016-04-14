@@ -97,7 +97,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function createBoolQuery()
     {
-        return new Query\Compound\BoolQuery();
+        return new Queries\Compound\BoolQuery();
     }
 
 
@@ -106,7 +106,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function createMatchQuery()
     {
-        return new Query\FullText\MatchQuery();
+        return new Queries\FullText\MatchQuery();
     }
 
 
@@ -115,7 +115,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function createRangeQuery()
     {
-        return new Query\TermLevel\RangeQuery();
+        return new Queries\TermLevel\RangeQuery();
     }
 
 
@@ -124,14 +124,14 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function createGeoDistanceQuery()
     {
-        return new Query\Geo\GeoDistanceQuery();
+        return new Queries\Geo\GeoDistanceQuery();
     }
 
 
     /**
      * @inheritdoc
      */
-    public function execute(Query\QueryDSL $query)
+    public function execute(Queries\QueryDSL $query)
     {
         return $this->search([
             'index' => $this->index,
@@ -171,10 +171,10 @@ class ElasticsearchService implements ElasticsearchServiceContract
 
 
     /**
-     * @param Query\QueryDSL $query
+     * @param Queries\QueryDSL $query
      * @return array
      */
-    private function buildQueryBody(Query\QueryDSL $query)
+    private function buildQueryBody(Queries\QueryDSL $query)
     {
         $body = [];
 

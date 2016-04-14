@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Query;
+<?php namespace Nord\Lumen\Elasticsearch\Queries;
 
 /**
  * Elasticsearch provides a full Query DSL based on JSON to define queries.

@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Query\TermLevel;
+<?php namespace Nord\Lumen\Elasticsearch\Queries\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
 
 /**
  * While the full text queries will analyze the query string before executing, the term-level queries operate on the

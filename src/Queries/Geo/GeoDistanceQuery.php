@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Query\Geo;
+<?php namespace Nord\Lumen\Elasticsearch\Queries\Geo;
 
 /**
  * Filters documents that include only hits that exists within a specific distance from a geo point.
