@@ -42,18 +42,58 @@ section in the Lumen documentation.
 
 [Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
 
+Using the query builder:
+
 ```php
 $service = app(ElasticsearchServiceContract::class);
 
 $query = $service->createBoolQuery();
-$query->addMust($service->createMatchQuery()->setField('user')->setValue('kimchy'));
-$query->addFilter($service->createMatchQuery()->setField('tag')->setValue('tech'));
+$query->addMust($service->createTermQuery()->setField('user')->setValue('kimchy'));
+$query->addFilter($service->createTermQuery()->setField('tag')->setValue('tech'));
 $query->addMustNot($service->createRangeQuery()->setField('age')->setGreaterThanOrEquals(10)->setLessThanOrEquals(20));
-$query->addShould($service->createMatchQuery()->setField('tag')->setValue('wow'));
-$query->addShould($service->createMatchQuery()->setField('tag')->setValue('elasticsearch'));
+$query->addShould($service->createTermQuery()->setField('tag')->setValue('wow'));
+$query->addShould($service->createTermQuery()->setField('tag')->setValue('elasticsearch'));
 $query->setSize(50)->setPage(0);
 
 $result = $service->changeIndex('index')->changeType('document')->execute($query);
+```
+
+Raw arrays:
+
+```php
+$service = app(ElasticsearchServiceContract::class);
+
+$result = $service->search(array(
+    'index' => 'index',
+    'type'  => 'document,
+    'body'  => array(
+        'query' => array(
+            'bool' => array(
+                'must' => array(
+                    'term' => array('user' => 'kimchy')
+                ),
+                'filter' => array(
+                    'term' => array('tag' => 'tech') 
+                ),
+                'must_not' => array(
+                    'range' => array(
+                        'age' => array('gte' => 10, 'lte' => 20)
+                    )
+                ),
+                'should' => array(
+                    array(
+                        'term' => array('tag' => 'wow')
+                    ),
+                    array(
+                        'term' => array('tag' => 'elasticsearch')
+                    )
+                ),
+            )
+        ),
+        'size' => 50,
+        'page' => 0
+    ),
+));
 ```
 
 ## Contributing

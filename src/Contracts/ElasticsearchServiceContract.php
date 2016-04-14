@@ -65,6 +65,12 @@ interface ElasticsearchServiceContract
 
 
     /**
+     * @return Queries\TermLevel\TermQuery
+     */
+    public function createTermQuery();
+
+
+    /**
      * @return Queries\TermLevel\RangeQuery
      */
     public function createRangeQuery();

@@ -113,6 +113,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function createTermQuery()
+    {
+        return new Queries\TermLevel\TermQuery();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function createRangeQuery()
     {
         return new Queries\TermLevel\RangeQuery();
