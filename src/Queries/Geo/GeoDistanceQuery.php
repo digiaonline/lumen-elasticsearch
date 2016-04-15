@@ -1,0 +1,176 @@
+<?php namespace Nord\Lumen\Elasticsearch\Queries\Geo;
+
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+
+/**
+ * Filters documents that include only hits that exists within a specific distance from a geo point.
+ *
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-distance-query.html
+ */
+class GeoDistanceQuery extends AbstractQuery
+{
+    const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
+    const DISTANCE_TYPE_ARC = 'arc';
+    const DISTANCE_TYPE_PLANE = 'plane';
+
+    /**
+     * @var string
+     */
+    private $field;
+
+    /**
+     * @var mixed
+     */
+    private $latitude;
+
+    /**
+     * @var mixed
+     */
+    private $longitude;
+
+    /**
+     * @var string The radius of the circle centred on the specified location. Points which fall into this circle are
+     * considered to be matches. The distance can be specified in various units.
+     *
+     * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#distance-units
+     */
+    private $distance;
+
+    /**
+     * @var string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
+     * significantly slower) or plane (faster, but inaccurate on long distances and close to the poles).
+     */
+    private $distanceType;
+
+
+    /**
+     * @inheritdoc
+     */
+    public function toArray()
+    {
+        $geoDistance = [
+            'distance' => $this->getDistance(),
+            $this->getField() => [
+                'lat' => $this->getLatitude(),
+                'lon' => $this->getLongitude(),
+            ]
+        ];
+
+        $distanceType = $this->getDistanceType();
+        if (!is_null($distanceType)) {
+            $geoDistance['distance_type'] = $distanceType;
+        }
+
+        return ['geo_distance' => $geoDistance];
+    }
+
+
+    /**
+     * @param string $field
+     * @return GeoDistanceQuery
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
+
+
+    /**
+     * @param mixed $latitude
+     * @param mixed $longitude
+     * @return GeoDistanceQuery
+     */
+    public function setLocation($latitude, $longitude)
+    {
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getLongitude()
+    {
+        return $this->longitude;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getLatitude()
+    {
+        return $this->latitude;
+    }
+
+
+    /**
+     * @param string $distance
+     * @return GeoDistanceQuery
+     */
+    public function setDistance($distance)
+    {
+        $this->distance = $distance;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getDistance()
+    {
+        return $this->distance;
+    }
+
+
+    /**
+     * @param string $distanceType
+     * @return GeoDistanceQuery
+     * @throws InvalidArgument
+     */
+    public function setDistanceType($distanceType)
+    {
+        $this->assertDistanceType($distanceType);
+        $this->distanceType = $distanceType;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getDistanceType()
+    {
+        return $this->distanceType;
+    }
+
+
+    /**
+     * @param string $distanceType
+     * @throws InvalidArgument
+     */
+    protected function assertDistanceType($distanceType)
+    {
+        $validTypes = [self::DISTANCE_TYPE_SLOPPY_ARC, self::DISTANCE_TYPE_ARC, self::DISTANCE_TYPE_PLANE];
+        if (!in_array($distanceType, $validTypes)) {
+            throw new InvalidArgument(sprintf(
+                'GeoDistance Query `distance_type` must be one of "%s", "%s" given.',
+                implode(', ', $validTypes),
+                $distanceType
+            ));
+        }
+    }
+}
