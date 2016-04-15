@@ -3,9 +3,22 @@
     "description": "Simple wrapper of https://github.com/elastic/elasticsearch-php for the Lumen PHP framework.",
     "keywords": ["laravel", "lumen", "elasticsearch"],
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Christoffer Lindqvist",
+            "email": "christoffer.lindqvist@nordsoftware.com"
+        }
+    ],
     "require": {
         "php": ">=5.5",
         "elasticsearch/elasticsearch": "^2.1"
+    },
+    "require-dev": {
+        "laravel/lumen-framework": "^5.2",
+        "codeception/codeception": "^2.1",
+        "codeception/specify": "^0.4",
+        "codeception/verify": "^0.3",
+        "satooshi/php-coveralls": "^1.0"
     },
     "autoload": {
         "psr-4": {

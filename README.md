@@ -1,6 +1,7 @@
 # Lumen Elasticsearch
 
 [![Code Climate](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch/badges/gpa.svg)](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch)
+[![Coverage Status](https://coveralls.io/repos/github/nordsoftware/lumen-elasticsearch/badge.svg?branch=master)](https://coveralls.io/github/nordsoftware/lumen-elasticsearch?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/version)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
 [![Total Downloads](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/downloads)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
 [![License](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/license)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
@@ -99,6 +100,20 @@ $result = $service->search(array(
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).
+
+## Running tests
+
+Clone the project and install its dependencies by running:
+
+```sh
+composer install
+```
+
+Run the following command to run the test suite:
+
+```sh
+vendor/bin/codecept run unit
+```
 
 ## License
 

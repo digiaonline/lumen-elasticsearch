@@ -1,2 +1,4 @@
 .idea
 /vendor/
+/tests/_output/*
+!/tests/_output/.gitkeep

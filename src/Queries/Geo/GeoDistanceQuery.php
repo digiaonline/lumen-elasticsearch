@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Queries\Geo;
 
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+
 /**
  * Filters documents that include only hits that exists within a specific distance from a geo point.
  *
@@ -38,7 +40,7 @@ class GeoDistanceQuery extends AbstractQuery
      * @var string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
      * significantly slower) or plane (faster, but inaccurate on long distances and close to the poles).
      */
-    private $distanceType = self::DISTANCE_TYPE_SLOPPY_ARC;
+    private $distanceType;
 
 
     /**
@@ -46,16 +48,20 @@ class GeoDistanceQuery extends AbstractQuery
      */
     public function toArray()
     {
-        return [
-            'geo_distance' => [
-                'distance' => $this->distance,
-                'distance_type' => $this->distanceType,
-                $this->field => [
-                    'lat' => $this->latitude,
-                    'lon' => $this->longitude,
-                ]
+        $geoDistance = [
+            'distance' => $this->getDistance(),
+            $this->getField() => [
+                'lat' => $this->getLatitude(),
+                'lon' => $this->getLongitude(),
             ]
         ];
+
+        $distanceType = $this->getDistanceType();
+        if (!is_null($distanceType)) {
+            $geoDistance['distance_type'] = $distanceType;
+        }
+
+        return ['geo_distance' => $geoDistance];
     }
 
 
@@ -133,9 +139,11 @@ class GeoDistanceQuery extends AbstractQuery
     /**
      * @param string $distanceType
      * @return GeoDistanceQuery
+     * @throws InvalidArgument
      */
     public function setDistanceType($distanceType)
     {
+        $this->assertDistanceType($distanceType);
         $this->distanceType = $distanceType;
         return $this;
     }
@@ -147,5 +155,22 @@ class GeoDistanceQuery extends AbstractQuery
     public function getDistanceType()
     {
         return $this->distanceType;
+    }
+
+
+    /**
+     * @param string $distanceType
+     * @throws InvalidArgument
+     */
+    protected function assertDistanceType($distanceType)
+    {
+        $validTypes = [self::DISTANCE_TYPE_SLOPPY_ARC, self::DISTANCE_TYPE_ARC, self::DISTANCE_TYPE_PLANE];
+        if (!in_array($distanceType, $validTypes)) {
+            throw new InvalidArgument(sprintf(
+                'GeoDistance Query `distance_type` must be one of "%s", "%s" given.',
+                implode(', ', $validTypes),
+                $distanceType
+            ));
+        }
     }
 }

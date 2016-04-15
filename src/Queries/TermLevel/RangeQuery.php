@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Queries\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+
 /**
  * Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the
  * field type, for string fields, the TermRangeQuery, while for number/date fields, the query is a NumericRangeQuery.
@@ -8,6 +10,11 @@
  */
 class RangeQuery extends AbstractQuery
 {
+    /**
+     * @var string
+     */
+    private $field;
+
     /**
      * @var mixed Greater-than or equal to.
      */
@@ -31,12 +38,7 @@ class RangeQuery extends AbstractQuery
     /**
      * @var float Sets the boost value of the query, defaults to 1.0.
      */
-    private $boost = 1.0;
-
-    /**
-     * @var string
-     */
-    private $field;
+    private $boost;
 
 
     /**
@@ -44,23 +46,50 @@ class RangeQuery extends AbstractQuery
      */
     public function toArray()
     {
-        $params = [];
-        if (isset($this->gte)) {
-            $params['gte'] = $this->gte;
+        $range = [];
+
+        $gte = $this->getGreaterThanOrEquals();
+        if (!is_null($gte)) {
+            $range['gte'] = $gte;
         }
-        if (isset($this->gt)) {
-            $params['gt'] = $this->gt;
+        $gt = $this->getGreaterThan();
+        if (!is_null($gt)) {
+            $range['gt'] = $gt;
         }
-        if (isset($this->lte)) {
-            $params['lte'] = $this->lte;
+        $lte = $this->getLessThanOrEquals();
+        if (!is_null($lte)) {
+            $range['lte'] = $lte;
         }
-        if (isset($this->lt)) {
-            $params['lt'] = $this->lt;
+        $lt = $this->getLessThan();
+        if (!is_null($lt)) {
+            $range['lt'] = $lt;
         }
-        if (isset($this->boost)) {
-            $params['boost'] = $this->boost;
+        $boost = $this->getBoost();
+        if (!is_null($boost)) {
+            $range['boost'] = $boost;
         }
-        return ['range' => [$this->getField() => $params]];
+
+        return ['range' => [$this->getField() => $range]];
+    }
+
+
+    /**
+     * @param string $field
+     * @return RangeQuery
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+        return $this;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getField()
+    {
+        return $this->field;
     }
 
 
@@ -147,9 +176,11 @@ class RangeQuery extends AbstractQuery
     /**
      * @param float $boost
      * @return RangeQuery
+     * @throws InvalidArgument
      */
     public function setBoost($boost)
     {
+        $this->assertBoost($boost);
         $this->boost = $boost;
         return $this;
     }
@@ -165,21 +196,16 @@ class RangeQuery extends AbstractQuery
 
 
     /**
-     * @param string $field
-     * @return RangeQuery
+     * @param float $boost
+     * @throws InvalidArgument
      */
-    public function setField($field)
+    protected function assertBoost($boost)
     {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
+        if (!is_float($boost)) {
+            throw new InvalidArgument(sprintf(
+                'Range Query `boost` must be a float value, "%s" given.',
+                gettype($boost)
+            ));
+        }
     }
 }
