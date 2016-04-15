@@ -1,5 +1,6 @@
 # Lumen Elasticsearch
 
+[![Build Status](https://travis-ci.org/nordsoftware/lumen-elasticsearch.svg?branch=master)](https://travis-ci.org/nordsoftware/lumen-elasticsearch)
 [![Code Climate](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch/badges/gpa.svg)](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch)
 [![Coverage Status](https://coveralls.io/repos/github/nordsoftware/lumen-elasticsearch/badge.svg?branch=master)](https://coveralls.io/github/nordsoftware/lumen-elasticsearch?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/version)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
