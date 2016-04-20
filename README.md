@@ -55,7 +55,7 @@ $query->addFilter($service->createTermQuery()->setField('tag')->setValue('tech')
 $query->addMustNot($service->createRangeQuery()->setField('age')->setGreaterThanOrEquals(10)->setLessThanOrEquals(20));
 $query->addShould($service->createTermQuery()->setField('tag')->setValue('wow'));
 $query->addShould($service->createTermQuery()->setField('tag')->setValue('elasticsearch'));
-$query->setSize(50)->setPage(0);
+$query->setSize(50)->setPage(1);
 
 $result = $service->changeIndex('index')->changeType('document')->execute($query);
 ```
@@ -65,37 +65,37 @@ Raw arrays:
 ```php
 $service = app(ElasticsearchServiceContract::class);
 
-$result = $service->search(array(
+$result = $service->search([
     'index' => 'index',
-    'type'  => 'document,
-    'body'  => array(
-        'query' => array(
-            'bool' => array(
-                'must' => array(
-                    'term' => array('user' => 'kimchy')
-                ),
-                'filter' => array(
-                    'term' => array('tag' => 'tech') 
-                ),
-                'must_not' => array(
-                    'range' => array(
-                        'age' => array('gte' => 10, 'lte' => 20)
-                    )
-                ),
-                'should' => array(
-                    array(
-                        'term' => array('tag' => 'wow')
-                    ),
-                    array(
-                        'term' => array('tag' => 'elasticsearch')
-                    )
-                ),
-            )
-        ),
+    'type'  => 'document',
+    'body'  => [
+        'query' => [
+            'bool' => [
+                'must' => [
+                    'term' => ['user' => 'kimchy']
+                ],
+                'filter' => [
+                    'term' => ['tag' => 'tech']
+                ],
+                'must_not' => [
+                    'range' => [
+                        'age' => ['gte' => 10, 'lte' => 20]
+                    ]
+                ],
+                'should' => [
+                    [
+                        'term' => ['tag' => 'wow']
+                    ],
+                    [
+                        'term' => ['tag' => 'elasticsearch']
+                    ]
+                ],
+            ]
+        ],
         'size' => 50,
-        'page' => 0
-    ),
-));
+        'from' => 0
+    ],
+]);
 ```
 
 ## Contributing
