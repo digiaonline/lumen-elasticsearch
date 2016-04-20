@@ -29,7 +29,7 @@ composer require nordsoftware/lumen-elasticsearch
 Add the following line to ```bootstrap/app.php```:
 
 ```php
-$app->register('Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class');
+$app->register(Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class);
 ```
 
 You can now get the service instance using ```app(ElasticsearchServiceContract::class)``` or inject the ```ElasticsearchServiceContract``` where needed.
