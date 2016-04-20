@@ -55,7 +55,7 @@ $query->addFilter($service->createTermQuery()->setField('tag')->setValue('tech')
 $query->addMustNot($service->createRangeQuery()->setField('age')->setGreaterThanOrEquals(10)->setLessThanOrEquals(20));
 $query->addShould($service->createTermQuery()->setField('tag')->setValue('wow'));
 $query->addShould($service->createTermQuery()->setField('tag')->setValue('elasticsearch'));
-$query->setSize(50)->setPage(0);
+$query->setSize(50)->setPage(1);
 
 $result = $service->changeIndex('index')->changeType('document')->execute($query);
 ```
@@ -67,7 +67,7 @@ $service = app(ElasticsearchServiceContract::class);
 
 $result = $service->search(array(
     'index' => 'index',
-    'type'  => 'document,
+    'type'  => 'document',
     'body'  => array(
         'query' => array(
             'bool' => array(
