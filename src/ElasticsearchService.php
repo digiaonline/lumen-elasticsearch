@@ -199,7 +199,8 @@ class ElasticsearchService implements ElasticsearchServiceContract
 
         // Set which "page" of results to return.
         if ($query->getPage() > 0) {
-            $body['from'] = isset($body['size']) ? ($query->getPage() * $body['size']) : 0;
+            $page = $query->getPage() - 1;
+            $body['from'] = isset($body['size']) ? ($page * $body['size']) : 0;
         }
 
         return $body;
