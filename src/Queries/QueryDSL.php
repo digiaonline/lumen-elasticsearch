@@ -26,7 +26,7 @@ abstract class QueryDSL
     /**
      * @var int
      */
-    private $page = 0;
+    private $page = 1;
 
 
     /**

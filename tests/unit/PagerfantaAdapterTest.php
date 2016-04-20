@@ -93,9 +93,6 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
             ]);
             verify($this->adapter->getNbResults())->equals(2);
         });
-
-
-
     }
 
 
@@ -118,7 +115,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
             ]));
 
         $this->specify('getting page 2 results', function () {
-            verify($this->adapter->getSlice(1, 2))->equals([
+            verify($this->adapter->getSlice(2, 2))->equals([
                 ['_source' => ['id' =>'d3', 'field1' => 'value1']],
                 ['_source' => ['id' =>'d4', 'field1' => 'value1']]
             ]);
