@@ -7,6 +7,11 @@ abstract class IndexCommand extends Command
 {
 
     /**
+     * The number of items to index in one go during bulk indexing
+     */
+    const BULK_SIZE_DEFAULT = 500;
+
+    /**
      * The name and signature of the console command.
      *
      * @var string
@@ -64,14 +69,26 @@ abstract class IndexCommand extends Command
         $bar = $this->output->createProgressBar(count($data));
 
         foreach ($data as $item) {
-            $service->index([
-                'index' => $this->getIndex(),
-                'type'  => $this->getType(),
-                'id'    => $this->getItemId($item),
-                'body'  => $this->getItemBody($item),
-            ]);
+            $bulk['body'][] = [
+                'index' => [
+                    '_index' => $this->getIndex(),
+                    '_type'  => $this->getType(),
+                    '_id'    => $this->getItemId($item),
+                ],
+                $this->getItemBody($item),
+            ];
+
+            if (count($bulk['body']) === $this->getBulkSize()) {
+                $service->bulk($bulk);
+                $bulk = [];
+            }
 
             $bar->advance();
+        }
+
+        // Flush remaining items
+        if (!empty($bulk['body'])) {
+            $service->bulk($bulk);
         }
 
         $bar->finish();
@@ -79,6 +96,15 @@ abstract class IndexCommand extends Command
         $this->info("\nDone!");
 
         return 0;
+    }
+
+
+    /**
+     * @return int the bulk size (for bulk indexing)
+     */
+    protected function getBulkSize()
+    {
+        return self::BULK_SIZE_DEFAULT;
     }
 
 
