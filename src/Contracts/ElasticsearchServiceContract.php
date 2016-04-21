@@ -21,6 +21,13 @@ interface ElasticsearchServiceContract
      */
     public function index(array $params = []);
 
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function bulk(array $params = []);
+
 
     /**
      * @param array $params

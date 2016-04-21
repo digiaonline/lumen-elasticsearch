@@ -59,6 +59,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function bulk(array $params = [])
+    {
+        return $this->client->bulk($params);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function delete(array $params = [])
     {
         return $this->client->delete($params);
