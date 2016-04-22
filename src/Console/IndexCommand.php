@@ -2,14 +2,11 @@
 
 use Illuminate\Console\Command;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction;
+use Nord\Lumen\Elasticsearch\Queries\Bulk\BulkQuery;
 
 abstract class IndexCommand extends Command
 {
-
-    /**
-     * The number of items to index in one go during bulk indexing
-     */
-    const BULK_SIZE_DEFAULT = 500;
 
     /**
      * The name and signature of the console command.
@@ -68,27 +65,33 @@ abstract class IndexCommand extends Command
 
         $bar = $this->output->createProgressBar(count($data));
 
-        foreach ($data as $item) {
-            $bulk['body'][] = [
-                'index' => [
-                    '_index' => $this->getIndex(),
-                    '_type'  => $this->getType(),
-                    '_id'    => $this->getItemId($item),
-                ],
-                $this->getItemBody($item),
-            ];
+        $bulkQuery = new BulkQuery($this->getBulkSize());
 
-            if (count($bulk['body']) === $this->getBulkSize()) {
-                $service->bulk($bulk);
-                $bulk = [];
+        foreach ($data as $item) {
+            // Create an action for the item
+            $action = new BulkAction();
+
+            $action->setAction(BulkAction::ACTION_INDEX, [
+                '_index' => $this->getIndex(),
+                '_type'  => $this->getType(),
+                '_id'    => $this->getItemId($item),
+            ])->setBody($this->getItemBody($item));
+
+            // Add it to the bulk query
+            $bulkQuery->addAction($action);
+
+            // Flush and reset when ready
+            if ($bulkQuery->isReady()) {
+                $service->bulk($bulkQuery->toArray());
+                $bulkQuery->reset();
             }
 
             $bar->advance();
         }
 
         // Flush remaining items
-        if (!empty($bulk['body'])) {
-            $service->bulk($bulk);
+        if ($bulkQuery->hasItems()) {
+            $service->bulk($bulkQuery->toArray());
         }
 
         $bar->finish();
@@ -104,7 +107,7 @@ abstract class IndexCommand extends Command
      */
     protected function getBulkSize()
     {
-        return self::BULK_SIZE_DEFAULT;
+        return BulkQuery::BULK_SIZE_DEFAULT;
     }
 
 
