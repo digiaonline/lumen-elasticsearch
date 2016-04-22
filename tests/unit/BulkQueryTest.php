@@ -49,7 +49,9 @@ class BulkQueryTest extends \Codeception\TestCase\Test
     public function testSerialization()
     {
         $this->specify('checking serialization', function () {
-            $index = [
+            $actionName = \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction::ACTION_INDEX;
+
+            $metadata = [
                 '_index' => 'foo',
                 '_type'  => 'bar',
                 '_id'    => 'baz',
@@ -61,20 +63,19 @@ class BulkQueryTest extends \Codeception\TestCase\Test
 
             // Add two actions (same item twice)
             $action = new \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction();
-            $action->setAction(\Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction::ACTION_INDEX, $index)
-                   ->setBody($body);
+            $action->setAction($actionName, $metadata)->setBody($body);
 
             $this->query->addAction($action)->addAction($action);
 
             verify($this->query->toArray())->equals([
                 'body' => [
                     [
-                        'index' => $index,
+                        $actionName => $metadata,
                         $body,
                     ],
 
                     [
-                        'index' => $index,
+                        $actionName => $metadata,
                         $body,
                     ],
 
