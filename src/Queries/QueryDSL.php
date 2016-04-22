@@ -19,57 +19,6 @@
 abstract class QueryDSL
 {
     /**
-     * @var int
-     */
-    private $size = 100;
-
-    /**
-     * @var int
-     */
-    private $page = 1;
-
-
-    /**
-     * @param int $size
-     * @return QueryDSL
-     */
-    public function setSize($size)
-    {
-        $this->size = (int)$size;
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-
-    /**
-     * @param int $page
-     * @return QueryDSL
-     */
-    public function setPage($page)
-    {
-        $this->page = (int)$page;
-        return $this;
-    }
-
-
-    /**
-     * @return int
-     */
-    public function getPage()
-    {
-        return $this->page;
-    }
-
-
-    /**
      * @return array
      */
     abstract function toArray();

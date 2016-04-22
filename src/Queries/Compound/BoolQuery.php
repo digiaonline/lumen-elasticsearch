@@ -52,37 +52,45 @@ class BoolQuery extends AbstractQuery
 
     /**
      * @param QueryDSL $query
+     * @return BoolQuery
      */
     public function addMust(QueryDSL $query)
     {
         $this->must[] = $query;
+        return $this;
     }
 
 
     /**
      * @param QueryDSL $query
+     * @return BoolQuery
      */
     public function addFilter(QueryDSL $query)
     {
         $this->filter[] = $query;
+        return $this;
     }
 
 
     /**
      * @param QueryDSL $query
+     * @return BoolQuery
      */
     public function addShould(QueryDSL $query)
     {
         $this->should[] = $query;
+        return $this;
     }
 
 
     /**
      * @param QueryDSL $query
+     * @return BoolQuery
      */
     public function addMustNot(QueryDSL $query)
     {
         $this->mustNot[] = $query;
+        return $this;
     }
 
 
