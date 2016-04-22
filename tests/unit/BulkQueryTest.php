@@ -1,0 +1,86 @@
+<?php
+
+class BulkQueryTest extends \Codeception\TestCase\Test
+{
+
+    use \Codeception\Specify;
+
+    const BULK_SIZE = 5;
+
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
+
+    /**
+     * @var \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkQuery
+     */
+    private $query;
+
+
+    /**
+     * @inheritdoc
+     */
+    public function _before()
+    {
+        $this->query = new \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkQuery(self::BULK_SIZE);
+    }
+
+
+    public function testActionHandling()
+    {
+        $this->specify('testing item handling', function () {
+            verify($this->query->isReady())->false();
+
+            for ($i = 0; $i < self::BULK_SIZE; $i++) {
+                $this->query->addAction(new \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction());
+            }
+
+            verify($this->query->hasItems())->true();
+            verify($this->query->isReady())->true();
+
+            $this->query->reset();
+            verify($this->query->hasItems())->false();
+        });
+
+    }
+
+
+    public function testSerialization()
+    {
+        $this->specify('checking serialization', function () {
+            $index = [
+                '_index' => 'foo',
+                '_type'  => 'bar',
+                '_id'    => 'baz',
+            ];
+
+            $body = [
+                'foo' => 'bar',
+            ];
+
+            // Add two actions (same item twice)
+            $action = new \Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction();
+            $action->setAction(\Nord\Lumen\Elasticsearch\Queries\Bulk\BulkAction::ACTION_INDEX, $index)
+                   ->setBody($body);
+
+            $this->query->addAction($action)->addAction($action);
+
+            verify($this->query->toArray())->equals([
+                'body' => [
+                    [
+                        'index' => $index,
+                        $body,
+                    ],
+
+                    [
+                        'index' => $index,
+                        $body,
+                    ],
+
+                ],
+            ]);
+        });
+    }
+
+}
