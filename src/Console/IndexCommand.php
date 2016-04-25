@@ -36,18 +36,25 @@ abstract class IndexCommand extends Command
     abstract public function getType();
 
     /**
-     * @param array $item
+     * @param mixed $item
      *
      * @return array
      */
     abstract public function getItemBody($item);
 
     /**
-     * @param $item
+     * @param mixed $item
      *
      * @return string
      */
     abstract public function getItemId($item);
+
+    /**
+     * @param mixed $item
+     *
+     * @return mixed
+     */
+    abstract public function getItemParent($item);
 
 
     /**
@@ -64,12 +71,18 @@ abstract class IndexCommand extends Command
         $bar = $this->output->createProgressBar(count($data));
 
         foreach ($data as $item) {
-            $service->index([
+            $document = [
                 'index' => $this->getIndex(),
                 'type'  => $this->getType(),
                 'id'    => $this->getItemId($item),
                 'body'  => $this->getItemBody($item),
-            ]);
+            ];
+
+            if (($parent = $this->getItemParent($item)) !== null) {
+                $document['parent'] = $parent;
+            }
+
+            $service->index($document);
 
             $bar->advance();
         }

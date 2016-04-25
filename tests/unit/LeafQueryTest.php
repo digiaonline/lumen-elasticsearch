@@ -15,6 +15,11 @@ class LeafQueryTest extends \Codeception\TestCase\Test
      */
     protected $service;
 
+    /**
+     * @var \Nord\Lumen\Elasticsearch\QueryBuilder
+     */
+    protected $queryBuilder;
+
 
     /**
      * @inheritdoc
@@ -22,6 +27,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     public function _before()
     {
         $this->service = new \Nord\Lumen\Elasticsearch\ElasticsearchService(\Elasticsearch\ClientBuilder::fromConfig([]));
+        $this->queryBuilder = $this->service->createQueryBuilder();
     }
 
 
@@ -31,12 +37,12 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     public function testTermQuery()
     {
         $this->specify('term query was created', function () {
-            $query = $this->service->createTermQuery();
+            $query = $this->queryBuilder->createTermQuery();
             verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\TermQuery');
         });
 
         $this->specify('term query format', function () {
-            $query = $this->service->createTermQuery();
+            $query = $this->queryBuilder->createTermQuery();
             $query
                 ->setField('field')
                 ->setValue('value');
@@ -47,7 +53,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('term query format with boost', function () {
-            $query = $this->service->createTermQuery();
+            $query = $this->queryBuilder->createTermQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -66,17 +72,40 @@ class LeafQueryTest extends \Codeception\TestCase\Test
 
 
     /**
+     * Tests the Terms Query.
+     */
+    public function testTermsQuery()
+    {
+        $this->specify('terms query was created', function () {
+            $query = $this->queryBuilder->createTermsQuery();
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\TermsQuery');
+        });
+
+        $this->specify('terms query format', function () {
+            $query = $this->queryBuilder->createTermsQuery();
+            $query
+                ->setField('field')
+                ->setValues(['val1', 'val2']);
+            $array = $query->toArray();
+            verify($array)->equals([
+                'terms' => ['field' => ['val1', 'val2']]
+            ]);
+        });
+    }
+
+
+    /**
      * Tests the Range Query.
      */
     public function testRangeQuery()
     {
         $this->specify('range query was created', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\RangeQuery');
         });
 
         $this->specify('range query format with gte', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             $query
                 ->setField('field')
                 ->setGreaterThanOrEquals(10);
@@ -91,7 +120,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('range query format with gt', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             $query
                 ->setField('field')
                 ->setGreaterThan(10);
@@ -106,7 +135,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('range query format with lte', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             $query
                 ->setField('field')
                 ->setLessThanOrEquals(10);
@@ -121,7 +150,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('range query format with lt', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             $query
                 ->setField('field')
                 ->setLessThan(10);
@@ -136,7 +165,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('range query format with boost', function () {
-            $query = $this->service->createRangeQuery();
+            $query = $this->queryBuilder->createRangeQuery();
             $query
                 ->setField('field')
                 ->setBoost(2.0);
@@ -158,12 +187,12 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     public function testGeoDistanceQuery()
     {
         $this->specify('geo distance query was created', function () {
-            $query = $this->service->createGeoDistanceQuery();
+            $query = $this->queryBuilder->createGeoDistanceQuery();
             verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Geo\GeoDistanceQuery');
         });
 
         $this->specify('geo distance query format', function () {
-            $query = $this->service->createGeoDistanceQuery();
+            $query = $this->queryBuilder->createGeoDistanceQuery();
             $query
                 ->setLocation(60.169856, 24.938379)
                 ->setDistance('10km')
@@ -181,7 +210,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('geo distance query format with distance type', function () {
-            $query = $this->service->createGeoDistanceQuery();
+            $query = $this->queryBuilder->createGeoDistanceQuery();
             $query
                 ->setLocation(60.169856, 24.938379)
                 ->setDistance('10km')
@@ -208,12 +237,12 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     public function testMatchQuery()
     {
         $this->specify('match query was created', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\FullText\MatchQuery');
         });
 
         $this->specify('match query format', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value');
@@ -226,7 +255,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with operator', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -243,7 +272,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with zero_terms_query', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -260,7 +289,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with cutoff_frequency', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -277,7 +306,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with type', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -294,7 +323,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with type and slop', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -313,7 +342,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with type and slop and max_expansions', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -332,7 +361,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match query format with analyzer', function () {
-            $query = $this->service->createMatchQuery();
+            $query = $this->queryBuilder->createMatchQuery();
             $query
                 ->setField('field')
                 ->setValue('value')
@@ -344,6 +373,64 @@ class LeafQueryTest extends \Codeception\TestCase\Test
                         'query' => 'value',
                         'analyzer' => 'custom_analyzer'
                     ]
+                ]
+            ]);
+        });
+    }
+
+
+    /**
+     * Tests the MultiMatch Query.
+     */
+    public function testMultiMatchQuery()
+    {
+        $this->specify('multiMatch query was created', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery');
+        });
+
+        $this->specify('multiMatch query format', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setFields(['field1', 'field2'])
+                ->setValue('value');
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2']
+                ]
+            ]);
+        });
+
+        $this->specify('multiMatch query format with tie_breaker', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setTieBreaker(0.3)
+                ->setFields(['field1', 'field2'])
+                ->setValue('value');
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2'],
+                    'tie_breaker' => 0.3
+                ]
+            ]);
+        });
+
+        $this->specify('multiMatch query format with type', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setFields(['field1', 'field2'])
+                ->setValue('value')
+                ->setType(\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery::TYPE_CROSS_FIELDS);
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2'],
+                    'type' => 'cross_fields'
                 ]
             ]);
         });

@@ -16,16 +16,6 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     private $settings;
 
-    /**
-     * @var string
-     */
-    private $index;
-
-    /**
-     * @var string
-     */
-    private $type;
-
 
     /**
      * ElasticsearchService constructor.
@@ -95,78 +85,31 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
-    public function createBoolQuery()
+    public function createSearch()
     {
-        return new Queries\Compound\BoolQuery();
+        return new Search();
     }
 
 
     /**
      * @inheritdoc
      */
-    public function createMatchQuery()
+    public function createQueryBuilder()
     {
-        return new Queries\FullText\MatchQuery();
+        return new QueryBuilder();
     }
 
 
     /**
      * @inheritdoc
      */
-    public function createTermQuery()
-    {
-        return new Queries\TermLevel\TermQuery();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createRangeQuery()
-    {
-        return new Queries\TermLevel\RangeQuery();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createGeoDistanceQuery()
-    {
-        return new Queries\Geo\GeoDistanceQuery();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function execute(Queries\QueryDSL $query)
+    public function execute(Search $search)
     {
         return $this->search([
-            'index' => $this->index,
-            'type'  => $this->type,
-            'body'  => $this->buildQueryBody($query),
+            'index' => $search->getIndex(),
+            'type'  => $search->getType(),
+            'body'  => $search->buildBody(),
         ]);
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function changeIndex($index)
-    {
-        $this->index = $index;
-        return $this;
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function changeType($type)
-    {
-        $this->type = $type;
-        return $this;
     }
 
 
@@ -176,33 +119,5 @@ class ElasticsearchService implements ElasticsearchServiceContract
     public function setSettings($settings)
     {
         $this->settings = $settings;
-    }
-
-
-    /**
-     * @param Queries\QueryDSL $query
-     * @return array
-     */
-    private function buildQueryBody(Queries\QueryDSL $query)
-    {
-        $body = [];
-
-        $body['query'] = $query->toArray();
-        if (empty($body['query'])) {
-            $body['query'] = ['match_all' => []];
-        }
-
-        // Set how many results to return.
-        if ($query->getSize() > 0) {
-            $body['size'] = $query->getSize();
-        }
-
-        // Set which "page" of results to return.
-        if ($query->getPage() > 0) {
-            $page = $query->getPage() - 1;
-            $body['from'] = isset($body['size']) ? ($page * $body['size']) : 0;
-        }
-
-        return $body;
     }
 }

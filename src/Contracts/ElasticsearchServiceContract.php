@@ -1,7 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Contracts;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
-use Nord\Lumen\Elasticsearch\Queries;
+use Nord\Lumen\Elasticsearch\QueryBuilder;
+use Nord\Lumen\Elasticsearch\Search;
 
 interface ElasticsearchServiceContract
 {
@@ -53,52 +54,20 @@ interface ElasticsearchServiceContract
 
 
     /**
-     * @return Queries\Compound\BoolQuery
+     * @return Search
      */
-    public function createBoolQuery();
+    public function createSearch();
 
 
     /**
-     * @return Queries\FullText\MatchQuery
+     * @return QueryBuilder
      */
-    public function createMatchQuery();
+    public function createQueryBuilder();
 
 
     /**
-     * @return Queries\TermLevel\TermQuery
-     */
-    public function createTermQuery();
-
-
-    /**
-     * @return Queries\TermLevel\RangeQuery
-     */
-    public function createRangeQuery();
-
-
-    /**
-     * @return Queries\Geo\GeoDistanceQuery
-     */
-    public function createGeoDistanceQuery();
-
-
-    /**
-     * @param Queries\QueryDSL $query
+     * @param Search $search
      * @return array
      */
-    public function execute(Queries\QueryDSL $query);
-
-
-    /**
-     * @param string $index
-     * @return ElasticsearchServiceContract
-     */
-    public function changeIndex($index);
-
-
-    /**
-     * @param string $type
-     * @return ElasticsearchServiceContract
-     */
-    public function changeType($type);
+    public function execute(Search $search);
 }
