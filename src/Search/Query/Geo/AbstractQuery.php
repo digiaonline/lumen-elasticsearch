@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Geo;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * Elasticsearch supports two types of geo data: geo_point fields which support lat/lon pairs, and geo_shape fields,

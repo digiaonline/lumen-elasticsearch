@@ -15,6 +15,11 @@ class CompoundQueryTest extends \Codeception\TestCase\Test
      */
     protected $service;
 
+    /**
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder
+     */
+    protected $queryBuilder;
+
 
     /**
      * @inheritdoc
@@ -22,6 +27,7 @@ class CompoundQueryTest extends \Codeception\TestCase\Test
     public function _before()
     {
         $this->service = new \Nord\Lumen\Elasticsearch\ElasticsearchService(\Elasticsearch\ClientBuilder::fromConfig([]));
+        $this->queryBuilder = $this->service->createQueryBuilder();
     }
 
 
@@ -31,18 +37,18 @@ class CompoundQueryTest extends \Codeception\TestCase\Test
     public function testBoolQuery()
     {
         $this->specify('bool query was created', function () {
-            $query = $this->service->createBoolQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery');
+            $query = $this->queryBuilder->createBoolQuery();
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery');
         });
 
 
         $this->specify('bool query with leaf queries ', function () {
-            $query = $this->service->createBoolQuery();
-            $query->addMust($this->service->createTermQuery()->setField('field1')->setValue('value1'));
-            $query->addFilter($this->service->createTermQuery()->setField('field2')->setValue('value2'));
-            $query->addMustNot($this->service->createRangeQuery()->setField('field3')->setGreaterThanOrEquals(1)->setLessThanOrEquals(2));
-            $query->addShould($this->service->createTermQuery()->setField('field4')->setValue('value3'));
-            $query->addShould($this->service->createTermQuery()->setField('field4')->setValue('value4'));
+            $query = $this->queryBuilder->createBoolQuery();
+            $query->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+            $query->addFilter($this->queryBuilder->createTermQuery()->setField('field2')->setValue('value2'));
+            $query->addMustNot($this->queryBuilder->createRangeQuery()->setField('field3')->setGreaterThanOrEquals(1)->setLessThanOrEquals(2));
+            $query->addShould($this->queryBuilder->createTermQuery()->setField('field4')->setValue('value3'));
+            $query->addShould($this->queryBuilder->createTermQuery()->setField('field4')->setValue('value4'));
             $array = $query->toArray();
             verify($array)->equals([
                 'bool' => [

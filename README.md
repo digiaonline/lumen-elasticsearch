@@ -5,7 +5,8 @@
 [![Code Climate](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch/badges/gpa.svg)](https://codeclimate.com/github/nordsoftware/lumen-elasticsearch)
 [![Latest Stable Version](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/version)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
 [![Total Downloads](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/downloads)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
-[![License](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/license)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Gitter](https://img.shields.io/gitter/room/norsoftware/chat.svg?maxAge=2592000)](https://gitter.im/nordsoftware/chat)
 
 Simple wrapper of [Elasticsearch-PHP](https://github.com/elastic/elasticsearch-php) for the [Lumen PHP framework](http://lumen.laravel.com/).
 
@@ -49,15 +50,39 @@ Using the query builder:
 ```php
 $service = app(ElasticsearchServiceContract::class);
 
-$query = $service->createBoolQuery();
-$query->addMust($service->createTermQuery()->setField('user')->setValue('kimchy'));
-$query->addFilter($service->createTermQuery()->setField('tag')->setValue('tech'));
-$query->addMustNot($service->createRangeQuery()->setField('age')->setGreaterThanOrEquals(10)->setLessThanOrEquals(20));
-$query->addShould($service->createTermQuery()->setField('tag')->setValue('wow'));
-$query->addShould($service->createTermQuery()->setField('tag')->setValue('elasticsearch'));
-$query->setSize(50)->setPage(1);
+$queryBuilder = $service->createQueryBuilder();
 
-$result = $service->changeIndex('index')->changeType('document')->execute($query);
+$query = $queryBuilder->createBoolQuery()
+    ->addMust(
+        $queryBuilder->createTermQuery()
+            ->setField('user')
+            ->setValue('kimchy'))
+    ->addFilter(
+        $queryBuilder->createTermQuery()
+            ->setField('tag')
+            ->setValue('tech'))
+    ->addMustNot(
+        $queryBuilder->createRangeQuery()
+            ->setField('age')
+            ->setGreaterThanOrEquals(18)
+            ->setLessThanOrEquals(40))
+    ->addShould(
+        $queryBuilder->createTermQuery()
+            ->setField('tag')
+            ->setValue('wow'))
+    ->addShould(
+        $queryBuilder->createTermQuery()
+            ->setField('tag')
+            ->setValue('elasticsearch'));
+
+$search = $service->createSearch()
+    ->setIndex('index')
+    ->setType('document')
+    ->setQuery($query)
+    ->setSize(50)
+    ->setPage(1);
+
+$result = $service->execute($search);
 ```
 
 Raw arrays:

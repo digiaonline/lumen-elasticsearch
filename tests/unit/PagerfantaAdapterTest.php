@@ -16,7 +16,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     protected $service;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery()
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery()
      */
     protected $query;
 
@@ -25,6 +25,10 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
      */
     protected $adapter;
 
+    /**
+     * @var \Nord\Lumen\Elasticsearch\Search\Search
+     */
+    protected $search;
 
     /**
      * @inheritdoc
@@ -35,12 +39,14 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->query = new \Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery();
-        $termQuery = new \Nord\Lumen\Elasticsearch\Queries\TermLevel\TermQuery();
+        $this->query = new \Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery();
+        $termQuery = new \Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery();
         $this->query->addMust($termQuery->setField('field1')->setValue('value1'));
-        $this->query->setPage(1)->setSize(2);
 
-        $this->adapter = new \Nord\Lumen\Elasticsearch\Pagerfanta\Adapter\ElasticsearchAdapter($this->service, $this->query);
+        $this->search = new \Nord\Lumen\Elasticsearch\Search\Search();
+        $this->search->setPage(1)->setSize(2)->setQuery($this->query);
+
+        $this->adapter = new \Nord\Lumen\Elasticsearch\Pagerfanta\Adapter\ElasticsearchAdapter($this->service, $this->search);
     }
 
 
@@ -51,7 +57,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     {
         $this->service->expects($this->any())
             ->method('execute')
-            ->with($this->query)
+            ->with($this->search)
             ->will($this->returnValue([
                 'hits' => [
                     'total' => 2,
@@ -75,7 +81,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     {
         $this->service->expects($this->any())
             ->method('execute')
-            ->with($this->query)
+            ->with($this->search)
             ->will($this->returnValue([
                 'hits' => [
                     'total' => 2,
@@ -103,7 +109,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     {
         $this->service->expects($this->any())
             ->method('execute')
-            ->with($this->query)
+            ->with($this->search)
             ->will($this->returnValue([
                 'hits' => [
                     'total' => 4,

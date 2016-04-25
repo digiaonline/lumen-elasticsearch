@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Geo;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 

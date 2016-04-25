@@ -1,7 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Pagerfanta\Adapter;
 
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Search;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class ElasticsearchAdapter implements AdapterInterface
@@ -12,9 +12,9 @@ class ElasticsearchAdapter implements AdapterInterface
     private $elasticsearch;
 
     /**
-     * @var QueryDSL
+     * @var Search
      */
-    private $query;
+    private $search;
 
     /**
      * @var array
@@ -24,12 +24,12 @@ class ElasticsearchAdapter implements AdapterInterface
 
     /**
      * @param ElasticsearchServiceContract $elasticsearch
-     * @param QueryDSL $query
+     * @param Search $search
      */
-    public function __construct(ElasticsearchServiceContract $elasticsearch, QueryDSL $query)
+    public function __construct(ElasticsearchServiceContract $elasticsearch, Search $search)
     {
         $this->elasticsearch = $elasticsearch;
-        $this->query = $query;
+        $this->search = $search;
     }
 
 
@@ -63,15 +63,15 @@ class ElasticsearchAdapter implements AdapterInterface
         if (!is_null($offset) && !is_null($length)) {
             $page = ($offset / $length) + 1;
             $size = $length;
-            if ($page !== $this->query->getPage() || $size !== $this->query->getSize()) {
+            if ($page !== $this->search->getPage() || $size !== $this->search->getSize()) {
                 $this->result = null;
-                $this->query->setPage($page)
+                $this->search->setPage($page)
                     ->setSize($size);
             }
         }
 
         if (empty($this->result)) {
-            $this->result = $this->elasticsearch->execute($this->query);
+            $this->result = $this->elasticsearch->execute($this->search);
         }
 
         return $this->result;

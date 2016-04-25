@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\FullText;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 
@@ -27,7 +27,7 @@ class MatchQuery extends AbstractQuery
     /**
      * @var mixed the value to query for.
      */
-    protected $value;
+    private $value;
 
     /**
      * @var string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").
@@ -81,36 +81,7 @@ class MatchQuery extends AbstractQuery
     {
         $match = ['query' => $this->getValue()];
 
-        $operator = $this->getOperator();
-        if (!is_null($operator)) {
-            $match['operator'] = $operator;
-        }
-        $zeroTermsQuery = $this->getZeroTermsQuery();
-        if (!is_null($zeroTermsQuery)) {
-            $match['zero_terms_query'] = $zeroTermsQuery;
-        }
-        $cutOffFreq = $this->getCutOffFrequency();
-        if (!is_null($cutOffFreq)) {
-            $match['cutoff_frequency'] = $cutOffFreq;
-        }
-        $type = $this->getType();
-        if (!is_null($type)) {
-            $match['type'] = $type;
-            $slop = $this->getSlop();
-            if (!is_null($slop)) {
-                $match['slop'] = $slop;
-            }
-            if ($match['type'] === self::TYPE_PHRASE_PREFIX) {
-                $maxExp = $this->getMaxExpansions();
-                if (!is_null($maxExp)) {
-                    $match['max_expansions'] = $maxExp;
-                }
-            }
-        }
-        $analyzer = $this->getAnalyzer();
-        if (!is_null($analyzer)) {
-            $match['analyzer'] = $analyzer;
-        }
+        $match = $this->applyOptions($match);
 
         if (count($match) === 1 && isset($match['query'])) {
             $match = $match['query'];
@@ -310,6 +281,47 @@ class MatchQuery extends AbstractQuery
     public function getAnalyzer()
     {
         return $this->analyzer;
+    }
+
+
+    /**
+     * @param array $match
+     * @return array
+     */
+    protected function applyOptions(array $match)
+    {
+        $operator = $this->getOperator();
+        if (!is_null($operator)) {
+            $match['operator'] = $operator;
+        }
+        $zeroTermsQuery = $this->getZeroTermsQuery();
+        if (!is_null($zeroTermsQuery)) {
+            $match['zero_terms_query'] = $zeroTermsQuery;
+        }
+        $cutOffFreq = $this->getCutOffFrequency();
+        if (!is_null($cutOffFreq)) {
+            $match['cutoff_frequency'] = $cutOffFreq;
+        }
+        $type = $this->getType();
+        if (!is_null($type)) {
+            $match['type'] = $type;
+            $slop = $this->getSlop();
+            if (!is_null($slop)) {
+                $match['slop'] = $slop;
+            }
+            if ($match['type'] === self::TYPE_PHRASE_PREFIX) {
+                $maxExp = $this->getMaxExpansions();
+                if (!is_null($maxExp)) {
+                    $match['max_expansions'] = $maxExp;
+                }
+            }
+        }
+        $analyzer = $this->getAnalyzer();
+        if (!is_null($analyzer)) {
+            $match['analyzer'] = $analyzer;
+        }
+
+        return $match;
     }
 
 

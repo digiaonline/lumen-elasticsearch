@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\FullText;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * The high-level full text queries are usually used for running full text queries on full text fields like the body of
