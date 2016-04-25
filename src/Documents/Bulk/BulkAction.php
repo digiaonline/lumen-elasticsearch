@@ -20,11 +20,6 @@ class BulkAction
      */
     private $body;
 
-    /**
-     * @var string
-     */
-    private $parent;
-
 
     /**
      * @return string
@@ -76,23 +71,4 @@ class BulkAction
         return $this;
     }
 
-
-    /**
-     * @return string
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-
-    /**
-     * @param string $parent
-     * @return BulkAction
-     */
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-        return $this;
-    }
 }

@@ -75,23 +75,23 @@ abstract class IndexCommand extends Command
         $bulkQuery = new BulkQuery($this->getBulkSize());
 
         foreach ($data as $item) {
-            // Create an action for the item
             $action = new BulkAction();
 
-            $action->setAction(BulkAction::ACTION_INDEX, [
+            $meta = [
                 '_index' => $this->getIndex(),
                 '_type'  => $this->getType(),
                 '_id'    => $this->getItemId($item),
-            ])->setBody($this->getItemBody($item));
+            ];
 
             if (($parent = $this->getItemParent($item)) !== null) {
-                $action->setParent($parent);
+                $meta['_parent'] = $parent;
             }
 
-            // Add it to the bulk query
+            $action->setAction(BulkAction::ACTION_INDEX, $meta)
+                ->setBody($this->getItemBody($item));
+
             $bulkQuery->addAction($action);
 
-            // Flush and reset when ready
             if ($bulkQuery->isReady()) {
                 $service->bulk($bulkQuery->toArray());
                 $bulkQuery->reset();
@@ -100,7 +100,6 @@ abstract class IndexCommand extends Command
             $bar->advance();
         }
 
-        // Flush remaining items
         if ($bulkQuery->hasItems()) {
             $service->bulk($bulkQuery->toArray());
         }

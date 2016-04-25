@@ -80,13 +80,10 @@ class BulkQuery
         ];
 
         foreach ($this->actions as $i => $action) {
-            $result['body'][$i] = [
-                $action->getAction() => $action->getMetadata(),
-                $action->getBody(),
+            $result['body'][] = [
+                $action->getAction() => $action->getMetadata()
             ];
-            if (($parent = $action->getParent())) {
-                $result['body'][$i]['parent'] = $parent;
-            }
+            $result['body'][] = $action->getBody();
         }
 
         return $result;
