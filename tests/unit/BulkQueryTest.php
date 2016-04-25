@@ -61,31 +61,51 @@ class BulkQueryTest extends \Codeception\TestCase\Test
                 'foo' => 'bar',
             ];
 
-            $parent = 'doc';
-
             // Add two actions (same item twice)
             $action = new \Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction();
-            $action->setAction($actionName, $metadata)->setBody($body)->setParent($parent);
+            $action->setAction($actionName, $metadata)->setBody($body);
 
             $this->query->addAction($action)->addAction($action);
 
             verify($this->query->toArray())->equals([
                 'body' => [
-                    [
-                        $actionName => $metadata,
-                        $body,
-                        'parent' => $parent
-                    ],
+                    [$actionName => $metadata],
+                    $body,
+                    [$actionName => $metadata],
+                    $body,
+                ],
+            ]);
+        });
 
-                    [
-                        $actionName => $metadata,
-                        $body,
-                        'parent' => $parent
-                    ],
 
+        $this->specify('checking serialization with _parent', function () {
+            $actionName = \Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction::ACTION_INDEX;
+
+            $metadata = [
+                '_index'  => 'foo',
+                '_type'   => 'bar',
+                '_id'     => 'baz',
+                '_parent' => 'qux',
+            ];
+
+            $body = [
+                'foo' => 'bar',
+            ];
+
+            // Add two actions (same item twice)
+            $action = new \Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction();
+            $action->setAction($actionName, $metadata)->setBody($body);
+
+            $this->query->addAction($action)->addAction($action);
+
+            verify($this->query->toArray())->equals([
+                'body' => [
+                    [$actionName => $metadata],
+                    $body,
+                    [$actionName => $metadata],
+                    $body,
                 ],
             ]);
         });
     }
-
 }
