@@ -18,22 +18,22 @@ class RangeQuery extends AbstractQuery
     /**
      * @var mixed Greater-than or equal to.
      */
-    private $gte;
+    private $greaterThanOrEqual;
 
     /**
      * @var mixed Greater-than.
      */
-    private $gt;
+    private $greaterThan;
 
     /**
      * @var mixed Less-than or equal to.
      */
-    private $lte;
+    private $lessThanOrEqual;
 
     /**
      * @var mixed Less-than.
      */
-    private $lt;
+    private $lessThan;
 
     /**
      * @var float Sets the boost value of the query, defaults to 1.0.
@@ -48,21 +48,21 @@ class RangeQuery extends AbstractQuery
     {
         $range = [];
 
-        $gte = $this->getGreaterThanOrEquals();
-        if (!is_null($gte)) {
-            $range['gte'] = $gte;
+        $greaterThanOrEquals = $this->getGreaterThanOrEquals();
+        if (!is_null($greaterThanOrEquals)) {
+            $range['gte'] = $greaterThanOrEquals;
         }
-        $gt = $this->getGreaterThan();
-        if (!is_null($gt)) {
-            $range['gt'] = $gt;
+        $greaterThan = $this->getGreaterThan();
+        if (!is_null($greaterThan)) {
+            $range['gt'] = $greaterThan;
         }
-        $lte = $this->getLessThanOrEquals();
-        if (!is_null($lte)) {
-            $range['lte'] = $lte;
+        $lessThanOrEquals = $this->getLessThanOrEquals();
+        if (!is_null($lessThanOrEquals)) {
+            $range['lte'] = $lessThanOrEquals;
         }
-        $lt = $this->getLessThan();
-        if (!is_null($lt)) {
-            $range['lt'] = $lt;
+        $lessThan = $this->getLessThan();
+        if (!is_null($lessThan)) {
+            $range['lt'] = $lessThan;
         }
         $boost = $this->getBoost();
         if (!is_null($boost)) {
@@ -94,12 +94,12 @@ class RangeQuery extends AbstractQuery
 
 
     /**
-     * @param mixed $gte
+     * @param mixed $greaterThanOrEquals
      * @return RangeQuery
      */
-    public function setGreaterThanOrEquals($gte)
+    public function setGreaterThanOrEquals($greaterThanOrEquals)
     {
-        $this->gte = $gte;
+        $this->greaterThanOrEqual = $greaterThanOrEquals;
         return $this;
     }
 
@@ -109,17 +109,17 @@ class RangeQuery extends AbstractQuery
      */
     public function getGreaterThanOrEquals()
     {
-        return $this->gte;
+        return $this->greaterThanOrEqual;
     }
 
 
     /**
-     * @param mixed $gt
+     * @param mixed $greaterThan
      * @return RangeQuery
      */
-    public function setGreaterThan($gt)
+    public function setGreaterThan($greaterThan)
     {
-        $this->gt = $gt;
+        $this->greaterThan = $greaterThan;
         return $this;
     }
 
@@ -129,17 +129,17 @@ class RangeQuery extends AbstractQuery
      */
     public function getGreaterThan()
     {
-        return $this->gt;
+        return $this->greaterThan;
     }
 
 
     /**
-     * @param mixed $lte
+     * @param mixed $lessThanOrEqual
      * @return RangeQuery
      */
-    public function setLessThanOrEquals($lte)
+    public function setLessThanOrEquals($lessThanOrEqual)
     {
-        $this->lte = $lte;
+        $this->lessThanOrEqual = $lessThanOrEqual;
         return $this;
     }
 
@@ -149,17 +149,17 @@ class RangeQuery extends AbstractQuery
      */
     public function getLessThanOrEquals()
     {
-        return $this->lte;
+        return $this->lessThanOrEqual;
     }
 
 
     /**
-     * @param mixed $lt
+     * @param mixed $lessThan
      * @return RangeQuery
      */
-    public function setLessThan($lt)
+    public function setLessThan($lessThan)
     {
-        $this->lt = $lt;
+        $this->lessThan = $lessThan;
         return $this;
     }
 
@@ -169,7 +169,7 @@ class RangeQuery extends AbstractQuery
      */
     public function getLessThan()
     {
-        return $this->lt;
+        return $this->lessThan;
     }
 
 
