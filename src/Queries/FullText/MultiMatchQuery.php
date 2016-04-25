@@ -36,7 +36,7 @@ class MultiMatchQuery extends MatchQuery
             'fields' => $this->getFields()
         ];
 
-        $this->applyOptions($multiMatch);
+        $multiMatch = $this->applyOptions($multiMatch);
 
         return ['multi_match' => $multiMatch];
     }
@@ -89,14 +89,14 @@ class MultiMatchQuery extends MatchQuery
      */
     protected function applyOptions(array $match)
     {
-        $match = parent::applyOptions($match);
+        $multiMatch = parent::applyOptions($match);
 
         $tieBreaker = $this->getTieBreaker();
         if (!is_null($tieBreaker)) {
             $multiMatch['tie_breaker'] = $tieBreaker;
         }
 
-        return $match;
+        return $multiMatch;
     }
 
 

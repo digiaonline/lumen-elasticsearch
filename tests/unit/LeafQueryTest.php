@@ -72,6 +72,29 @@ class LeafQueryTest extends \Codeception\TestCase\Test
 
 
     /**
+     * Tests the Terms Query.
+     */
+    public function testTermsQuery()
+    {
+        $this->specify('terms query was created', function () {
+            $query = $this->queryBuilder->createTermsQuery();
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\TermsQuery');
+        });
+
+        $this->specify('terms query format', function () {
+            $query = $this->queryBuilder->createTermsQuery();
+            $query
+                ->setField('field')
+                ->setValues(['val1', 'val2']);
+            $array = $query->toArray();
+            verify($array)->equals([
+                'terms' => ['field' => ['val1', 'val2']]
+            ]);
+        });
+    }
+
+
+    /**
      * Tests the Range Query.
      */
     public function testRangeQuery()
@@ -350,6 +373,64 @@ class LeafQueryTest extends \Codeception\TestCase\Test
                         'query' => 'value',
                         'analyzer' => 'custom_analyzer'
                     ]
+                ]
+            ]);
+        });
+    }
+
+
+    /**
+     * Tests the MultiMatch Query.
+     */
+    public function testMultiMatchQuery()
+    {
+        $this->specify('multiMatch query was created', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery');
+        });
+
+        $this->specify('multiMatch query format', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setFields(['field1', 'field2'])
+                ->setValue('value');
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2']
+                ]
+            ]);
+        });
+
+        $this->specify('multiMatch query format with tie_breaker', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setTieBreaker(0.3)
+                ->setFields(['field1', 'field2'])
+                ->setValue('value');
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2'],
+                    'tie_breaker' => 0.3
+                ]
+            ]);
+        });
+
+        $this->specify('multiMatch query format with type', function () {
+            $query = $this->queryBuilder->createMultiMatchQuery();
+            $query
+                ->setFields(['field1', 'field2'])
+                ->setValue('value')
+                ->setType(\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery::TYPE_CROSS_FIELDS);
+            $array = $query->toArray();
+            verify($array)->equals([
+                'multi_match' => [
+                    'query'  => 'value',
+                    'fields' => ['field1', 'field2'],
+                    'type' => 'cross_fields'
                 ]
             ]);
         });
