@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Joining;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * Performing full SQL-style joins in a distributed system like Elasticsearch is prohibitively expensive.

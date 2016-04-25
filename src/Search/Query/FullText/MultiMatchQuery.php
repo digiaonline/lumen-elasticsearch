@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\FullText;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 

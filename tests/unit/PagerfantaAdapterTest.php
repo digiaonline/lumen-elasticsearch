@@ -16,7 +16,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     protected $service;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery()
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery()
      */
     protected $query;
 
@@ -26,7 +26,7 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
     protected $adapter;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\Search
+     * @var \Nord\Lumen\Elasticsearch\Search\Search
      */
     protected $search;
 
@@ -39,11 +39,11 @@ class PagerfantaAdapterTest extends \Codeception\TestCase\Test
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->query = new \Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery();
-        $termQuery = new \Nord\Lumen\Elasticsearch\Queries\TermLevel\TermQuery();
+        $this->query = new \Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery();
+        $termQuery = new \Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery();
         $this->query->addMust($termQuery->setField('field1')->setValue('value1'));
 
-        $this->search = new \Nord\Lumen\Elasticsearch\Search();
+        $this->search = new \Nord\Lumen\Elasticsearch\Search\Search();
         $this->search->setPage(1)->setSize(2)->setQuery($this->query);
 
         $this->adapter = new \Nord\Lumen\Elasticsearch\Pagerfanta\Adapter\ElasticsearchAdapter($this->service, $this->search);

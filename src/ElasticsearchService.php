@@ -2,6 +2,8 @@
 
 use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
+use Nord\Lumen\Elasticsearch\Search\Search;
 
 class ElasticsearchService implements ElasticsearchServiceContract
 {

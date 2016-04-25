@@ -16,7 +16,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
     protected $service;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\QueryBuilder
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder
      */
     protected $queryBuilder;
 
@@ -38,7 +38,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('nested query was created', function () {
             $query = $this->queryBuilder->createNestedQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Joining\NestedQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery');
         });
 
 
@@ -81,7 +81,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValue('value')
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Queries\Joining\NestedQuery::SCORE_MODE_AVG);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery::SCORE_MODE_AVG);
             $array = $query->toArray();
             verify($array)->equals([
                 'nested' => [
@@ -107,7 +107,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('hasParent query was created', function () {
             $query = $this->queryBuilder->createHasParentQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Joining\HasParentQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery');
         });
 
         $this->specify('hasParent query format', function () {
@@ -147,7 +147,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValues(['ID1', 'ID2'])
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Queries\Joining\HasParentQuery::SCORE_MODE_SCORE);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery::SCORE_MODE_SCORE);
             $array = $query->toArray();
             verify($array)->equals([
                 'has_parent' => [
@@ -173,7 +173,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('hasChild query was created', function () {
             $query = $this->queryBuilder->createHasChildQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Joining\HasChildQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery');
         });
 
         $this->specify('hasChild query format', function () {
@@ -213,7 +213,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValues(['ID1', 'ID2'])
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Queries\Joining\HasChildQuery::SCORE_MODE_SUM);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery::SCORE_MODE_SUM);
             $array = $query->toArray();
             verify($array)->equals([
                 'has_child' => [

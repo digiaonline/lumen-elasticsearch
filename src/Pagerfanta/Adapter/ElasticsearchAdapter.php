@@ -1,7 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Pagerfanta\Adapter;
 
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\Search;
+use Nord\Lumen\Elasticsearch\Search\Search;
 use Pagerfanta\Adapter\AdapterInterface;
 
 class ElasticsearchAdapter implements AdapterInterface

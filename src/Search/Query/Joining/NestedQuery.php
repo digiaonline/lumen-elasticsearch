@@ -1,24 +1,28 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Joining;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
- * The has_parent query accepts a query and a parent type. The query is executed in the parent document space, which is
- * specified by the parent type. This query returns child documents which associated parents have matched. For the rest
- * has_parent query has the same options and works in the same manner as the has_child query.
+ * Nested query allows to query nested objects / docs (see nested mapping).
  *
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-parent-query.html
+ * The query is executed against the nested objects / docs as if they were indexed as separate docs (they are,
+ * internally) and resulting in the root parent doc (or parent nested mapping).
+ *
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-nested-query.html
  */
-class HasParentQuery extends AbstractQuery
+class NestedQuery extends AbstractQuery
 {
-    const SCORE_MODE_SCORE  = 'score';
-    const SCORE_MODE_NONE   = 'none';
+    const SCORE_MODE_AVG  = 'avg';
+    const SCORE_MODE_SUM  = 'sum';
+    const SCORE_MODE_MIN  = 'min';
+    const SCORE_MODE_MAX  = 'max';
+    const SCORE_MODE_NONE = 'none';
 
     /**
      * @var string
      */
-    private $type;
+    private $path;
 
     /**
      * @var string
@@ -36,27 +40,27 @@ class HasParentQuery extends AbstractQuery
      */
     public function toArray()
     {
-        $hasParent = [
-            'parent_type'  => $this->getType(),
-            'query'        => $this->getQuery()->toArray(),
+        $nested = [
+            'path'  => $this->getPath(),
+            'query' => $this->getQuery()->toArray(),
         ];
 
         $scoreMode = $this->getScoreMode();
         if (!is_null($scoreMode)) {
-            $hasParent['score_mode'] = $scoreMode;
+            $nested['score_mode'] = $scoreMode;
         }
 
-        return ['has_parent' => $hasParent];
+        return ['nested' => $nested];
     }
 
 
     /**
-     * @param string $type
-     * @return HasParentQuery
+     * @param string $path
+     * @return NestedQuery
      */
-    public function setType($type)
+    public function setPath($path)
     {
-        $this->type = $type;
+        $this->path = $path;
         return $this;
     }
 
@@ -64,15 +68,15 @@ class HasParentQuery extends AbstractQuery
     /**
      * @return string
      */
-    public function getType()
+    public function getPath()
     {
-        return $this->type;
+        return $this->path;
     }
 
 
     /**
      * @param string $scoreMode
-     * @return HasParentQuery
+     * @return NestedQuery
      */
     public function setScoreMode($scoreMode)
     {
@@ -93,7 +97,7 @@ class HasParentQuery extends AbstractQuery
 
     /**
      * @param QueryDSL $query
-     * @return HasParentQuery
+     * @return NestedQuery
      */
     public function setQuery(QueryDSL $query)
     {
@@ -118,12 +122,15 @@ class HasParentQuery extends AbstractQuery
     protected function assertScoreMode($scoreMode)
     {
         $validModes = [
-            self::SCORE_MODE_SCORE,
+            self::SCORE_MODE_AVG,
+            self::SCORE_MODE_SUM,
+            self::SCORE_MODE_MIN,
+            self::SCORE_MODE_MAX,
             self::SCORE_MODE_NONE
         ];
         if (!in_array($scoreMode, $validModes)) {
             throw new InvalidArgument(sprintf(
-                'HasParent Query `score_mode` must be one of "%s", "%s" given.',
+                'Nested Query `score_mode` must be one of "%s", "%s" given.',
                 implode(', ', $validModes),
                 $scoreMode
             ));

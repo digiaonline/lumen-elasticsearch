@@ -16,7 +16,7 @@ class CompoundQueryTest extends \Codeception\TestCase\Test
     protected $service;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\QueryBuilder
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder
      */
     protected $queryBuilder;
 
@@ -38,7 +38,7 @@ class CompoundQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('bool query was created', function () {
             $query = $this->queryBuilder->createBoolQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery');
         });
 
 

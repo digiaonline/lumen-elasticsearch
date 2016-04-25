@@ -11,12 +11,12 @@ class SearchTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\Search
+     * @var \Nord\Lumen\Elasticsearch\Search\Search
      */
     protected $search;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery
      */
     protected $query;
 
@@ -28,7 +28,7 @@ class SearchTest extends \Codeception\TestCase\Test
         $service = new \Nord\Lumen\Elasticsearch\ElasticsearchService(\Elasticsearch\ClientBuilder::fromConfig([]));
         $queryBuilder = $service->createQueryBuilder();
 
-        $this->search = new \Nord\Lumen\Elasticsearch\Search();
+        $this->search = $service->createSearch();
         $this->query = $queryBuilder->createBoolQuery();
         $this->query->addMust($queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
     }
@@ -53,7 +53,7 @@ class SearchTest extends \Codeception\TestCase\Test
 
         $this->specify('query can be set and get', function () {
             $this->search->setQuery($this->query);
-            verify($this->search->getQuery())->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Compound\BoolQuery');
+            verify($this->search->getQuery())->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery');
         });
 
 

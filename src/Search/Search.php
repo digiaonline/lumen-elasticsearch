@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch;
+<?php namespace Nord\Lumen\Elasticsearch\Search;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 class Search
 {

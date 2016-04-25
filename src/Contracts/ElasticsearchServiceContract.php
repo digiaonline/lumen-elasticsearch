@@ -1,8 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Contracts;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
-use Nord\Lumen\Elasticsearch\QueryBuilder;
-use Nord\Lumen\Elasticsearch\Search;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
+use Nord\Lumen\Elasticsearch\Search\Search;
 
 interface ElasticsearchServiceContract
 {

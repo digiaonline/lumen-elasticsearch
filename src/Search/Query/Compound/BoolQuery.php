@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Compound;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * A query that matches documents matching boolean combinations of other queries.

@@ -16,7 +16,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     protected $service;
 
     /**
-     * @var \Nord\Lumen\Elasticsearch\QueryBuilder
+     * @var \Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder
      */
     protected $queryBuilder;
 
@@ -38,7 +38,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('term query was created', function () {
             $query = $this->queryBuilder->createTermQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\TermQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery');
         });
 
         $this->specify('term query format', function () {
@@ -78,7 +78,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('terms query was created', function () {
             $query = $this->queryBuilder->createTermsQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\TermsQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery');
         });
 
         $this->specify('terms query format', function () {
@@ -101,7 +101,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('range query was created', function () {
             $query = $this->queryBuilder->createRangeQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\TermLevel\RangeQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery');
         });
 
         $this->specify('range query format with gte', function () {
@@ -188,7 +188,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('geo distance query was created', function () {
             $query = $this->queryBuilder->createGeoDistanceQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\Geo\GeoDistanceQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\Geo\GeoDistanceQuery');
         });
 
         $this->specify('geo distance query format', function () {
@@ -238,7 +238,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('match query was created', function () {
             $query = $this->queryBuilder->createMatchQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\FullText\MatchQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery');
         });
 
         $this->specify('match query format', function () {
@@ -386,7 +386,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
     {
         $this->specify('multiMatch query was created', function () {
             $query = $this->queryBuilder->createMultiMatchQuery();
-            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery');
+            verify($query)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Query\FullText\MultiMatchQuery');
         });
 
         $this->specify('multiMatch query format', function () {
@@ -424,7 +424,7 @@ class LeafQueryTest extends \Codeception\TestCase\Test
             $query
                 ->setFields(['field1', 'field2'])
                 ->setValue('value')
-                ->setType(\Nord\Lumen\Elasticsearch\Queries\FullText\MultiMatchQuery::TYPE_CROSS_FIELDS);
+                ->setType(\Nord\Lumen\Elasticsearch\Search\Query\FullText\MultiMatchQuery::TYPE_CROSS_FIELDS);
             $array = $query->toArray();
             verify($array)->equals([
                 'multi_match' => [

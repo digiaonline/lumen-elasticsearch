@@ -1,6 +1,6 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Compound;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * Compound queries wrap other compound or leaf queries, either to combine their results and scores,

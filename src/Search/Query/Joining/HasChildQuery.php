@@ -1,7 +1,7 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\Joining;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Queries\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * The has_child filter accepts a query and the child type to run against, and results in parent documents that have

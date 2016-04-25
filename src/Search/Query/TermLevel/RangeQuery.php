@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\TermLevel;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 

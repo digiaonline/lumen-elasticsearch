@@ -1,4 +1,4 @@
-<?php namespace Nord\Lumen\Elasticsearch\Queries\TermLevel;
+<?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
 /**
  * Filters documents that have fields that match any of the provided terms (not analyzed).
