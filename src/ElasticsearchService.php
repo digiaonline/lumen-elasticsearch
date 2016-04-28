@@ -14,11 +14,6 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     private $client;
 
-    /**
-     * @var array
-     */
-    private $settings;
-
 
     /**
      * ElasticsearchService constructor.
@@ -142,12 +137,4 @@ class ElasticsearchService implements ElasticsearchServiceContract
         ]);
     }
 
-
-    /**
-     * @param array $settings
-     */
-    public function setSettings($settings)
-    {
-        $this->settings = $settings;
-    }
 }
