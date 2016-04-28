@@ -4,6 +4,7 @@ use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Search\Search;
+use Nord\Lumen\Elasticsearch\Search\Sort;
 
 class ElasticsearchService implements ElasticsearchServiceContract
 {
@@ -105,9 +106,27 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function createSort()
+    {
+        return new Sort();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function createQueryBuilder()
     {
         return new QueryBuilder();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
+    public function createSortBuilder()
+    {
+        return new Sort\SortBuilder();
     }
 
 
