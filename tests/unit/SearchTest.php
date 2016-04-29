@@ -21,6 +21,12 @@ class SearchTest extends \Codeception\TestCase\Test
     protected $query;
 
     /**
+     * @var \Nord\Lumen\Elasticsearch\Search\Sort
+     */
+    protected $sort;
+
+
+    /**
      * @inheritdoc
      */
     public function _before()
@@ -31,6 +37,10 @@ class SearchTest extends \Codeception\TestCase\Test
         $this->search = $service->createSearch();
         $this->query = $queryBuilder->createBoolQuery();
         $this->query->addMust($queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+
+        $sortBuilder = $service->createSortBuilder();
+        $this->sort = $service->createSort();
+        $this->sort->addSort($sortBuilder->createScoreSort());
     }
 
 
@@ -66,6 +76,12 @@ class SearchTest extends \Codeception\TestCase\Test
         $this->specify('size can be set and get', function () {
             $this->search->setSize(100);
             verify($this->search->getSize())->equals(100);
+        });
+
+
+        $this->specify('sort can be set and get', function () {
+            $this->search->setSort($this->sort);
+            verify($this->search->getSort())->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Sort');
         });
     }
 
@@ -111,6 +127,17 @@ class SearchTest extends \Codeception\TestCase\Test
                         ],
                     ]
                 ],
+                'size'  => 100,
+                'from'  => 0,
+            ]);
+        });
+
+
+        $this->specify('match all query with sort body', function () {
+            $this->search->setSort($this->sort);
+            verify($this->search->buildBody())->equals([
+                'query' => ['match_all' => []],
+                'sort'  => ['_score'],
                 'size'  => 100,
                 'from'  => 0,
             ]);

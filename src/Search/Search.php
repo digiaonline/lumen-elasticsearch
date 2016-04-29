@@ -20,6 +20,11 @@ class Search
     private $query;
 
     /**
+     * @var Sort
+     */
+    private $sort;
+
+    /**
      * @var int
      */
     private $size = 100;
@@ -91,6 +96,26 @@ class Search
 
 
     /**
+     * @param Sort $sort
+     * @return Search
+     */
+    public function setSort(Sort $sort)
+    {
+        $this->sort = $sort;
+        return $this;
+    }
+
+
+    /**
+     * @return Sort
+     */
+    public function getSort()
+    {
+        return $this->sort;
+    }
+
+
+    /**
      * @param int $page
      * @return Search
      */
@@ -137,11 +162,19 @@ class Search
     {
         $body = [];
 
-        if (($query = $this->getQuery()) !== null) {
-            $body['query'] = $query->toArray();
+        if (($query = $this->getQuery())) {
+            if (!empty($query)) {
+                $body['query'] = $query->toArray();
+            }
         }
         if (empty($body['query'])) {
             $body['query'] = ['match_all' => []];
+        }
+
+        if (($sort = $this->getSort())) {
+            if (!empty($sort)) {
+                $body['sort'] = $sort->toArray();
+            }
         }
 
         // Set how many results to return.
