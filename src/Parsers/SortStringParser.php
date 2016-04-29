@@ -29,26 +29,24 @@ class SortStringParser extends AbstractStringParser
                  * - 2 = mode (min/max/sum/avg/median)
                  */
 
-                if (!isset($item[0])) {
-                    continue;
-                }
+                if (isset($item[0])) {
+                    if ($item[0] === '_score') {
+                        $sort = $sortBuilder->createScoreSort();
+                    } elseif ($item[0] === '_doc') {
+                        $sort = $sortBuilder->createDocSort();
+                    } else {
+                        $sort = $sortBuilder->createFieldSort()->setField($item[0]);
+                    }
 
-                if ($item[0] === '_score') {
-                    $sort = $sortBuilder->createScoreSort();
-                } elseif ($item[0] === '_doc') {
-                    $sort = $sortBuilder->createDocSort();
-                } else {
-                    $sort = $sortBuilder->createFieldSort()->setField($item[0]);
-                }
+                    if (isset($item[1])) {
+                        $sort->setOrder($item[1]);
+                    }
+                    if (isset($item[2])) {
+                        $sort->setMode($item[2]);
+                    }
 
-                if (isset($item[1])) {
-                    $sort->setOrder($item[1]);
+                    $sorts[] = $sort;
                 }
-                if (isset($item[2])) {
-                    $sort->setMode($item[2]);
-                }
-
-                $sorts[] = $sort;
             }
         }
 
