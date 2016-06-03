@@ -146,5 +146,4 @@ class ElasticsearchService implements ElasticsearchServiceContract
             'body'  => $search->buildBody(),
         ]);
     }
-
 }

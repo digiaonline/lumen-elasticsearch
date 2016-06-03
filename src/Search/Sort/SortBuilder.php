@@ -28,5 +28,4 @@ class SortBuilder
     {
         return new DocSort();
     }
-
 }

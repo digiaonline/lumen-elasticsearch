@@ -2,7 +2,6 @@
 
 class BulkQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     const BULK_SIZE = 5;
@@ -42,7 +41,6 @@ class BulkQueryTest extends \Codeception\TestCase\Test
             $this->query->reset();
             verify($this->query->hasItems())->false();
         });
-
     }
 
 

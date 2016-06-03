@@ -2,7 +2,6 @@
 
 class SortStringParserTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

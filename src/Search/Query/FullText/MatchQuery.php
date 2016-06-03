@@ -9,7 +9,6 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class MatchQuery extends AbstractQuery
 {
-
     const OPERATOR_OR = 'or';
     const OPERATOR_AND = 'and';
 
@@ -194,7 +193,6 @@ class MatchQuery extends AbstractQuery
     public function getCutOffFrequency()
     {
         return $this->cutOffFrequency;
-
     }
 
 
