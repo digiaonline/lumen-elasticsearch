@@ -2,7 +2,6 @@
 
 class SearchTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

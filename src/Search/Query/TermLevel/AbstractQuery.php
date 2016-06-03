@@ -50,5 +50,4 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
-
 }

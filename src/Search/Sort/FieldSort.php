@@ -107,5 +107,4 @@ class FieldSort extends AbstractSort
     {
         return $this->unmappedType;
     }
-
 }

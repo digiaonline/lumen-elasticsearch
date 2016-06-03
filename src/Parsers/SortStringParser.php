@@ -52,5 +52,4 @@ class SortStringParser extends AbstractStringParser
 
         return $sorts;
     }
-
 }

@@ -2,7 +2,6 @@
 
 class ScoreSortTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

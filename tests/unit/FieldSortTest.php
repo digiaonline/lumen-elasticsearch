@@ -2,7 +2,6 @@
 
 class FieldSortTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
