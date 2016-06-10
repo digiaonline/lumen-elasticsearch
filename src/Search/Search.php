@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search;
 
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Aggregation;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 class Search
@@ -25,6 +27,11 @@ class Search
     private $sort;
 
     /**
+     * @var AggregationCollection
+     */
+    private $aggregations;
+
+    /**
      * @var int
      */
     private $size = 100;
@@ -33,6 +40,15 @@ class Search
      * @var int
      */
     private $page = 1;
+
+
+    /**
+     * Constructor.
+     */
+    public function __construct()
+    {
+        $this->aggregations = new AggregationCollection();
+    }
 
 
     /**
@@ -116,6 +132,26 @@ class Search
 
 
     /**
+     * @return AggregationCollection
+     */
+    public function getAggregations()
+    {
+        return $this->aggregations;
+    }
+
+
+    /**
+     * @param Aggregation $aggregation
+     * @return Search
+     */
+    public function addAggregation(Aggregation $aggregation)
+    {
+        $this->aggregations->add($aggregation);
+        return $this;
+    }
+
+
+    /**
      * @param int $page
      * @return Search
      */
@@ -175,6 +211,11 @@ class Search
             if (!empty($sort)) {
                 $body['sort'] = $sort->toArray();
             }
+        }
+
+        $aggregations = $this->getAggregations();
+        if ($aggregations->count() > 0) {
+            $body['aggs'] = $aggregations->toArray();
         }
 
         // Set how many results to return.
