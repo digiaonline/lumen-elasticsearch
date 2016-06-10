@@ -107,7 +107,7 @@ class ServiceTest extends \Codeception\TestCase\Test
             ->with($input)
             ->will($this->returnValue($output));
 
-        $this->specify('method bulk is ran', function () use ($input,$output) {
+        $this->specify('method bulk is ran', function () use ($input, $output) {
             verify($this->service->bulk($input))->equals($output);
         });
     }
@@ -137,7 +137,7 @@ class ServiceTest extends \Codeception\TestCase\Test
             ->with($input)
             ->will($this->returnValue($output));
 
-        $this->specify('method delete is ran', function () use ($input,$output) {
+        $this->specify('method delete is ran', function () use ($input, $output) {
             verify($this->service->delete($input))->equals($output);
         });
     }
@@ -167,7 +167,7 @@ class ServiceTest extends \Codeception\TestCase\Test
             ->with($input)
             ->will($this->returnValue($output));
 
-        $this->specify('method create is ran', function () use ($input,$output) {
+        $this->specify('method create is ran', function () use ($input, $output) {
             verify($this->service->create($input))->equals($output);
         });
     }
@@ -187,7 +187,7 @@ class ServiceTest extends \Codeception\TestCase\Test
             ->with($input)
             ->will($this->returnValue($output));
 
-        $this->specify('method exists is ran', function () use ($input,$output) {
+        $this->specify('method exists is ran', function () use ($input, $output) {
             verify($this->service->exists($input))->equals($output);
         });
     }
