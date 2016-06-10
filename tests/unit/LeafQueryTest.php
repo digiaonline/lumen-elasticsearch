@@ -2,7 +2,6 @@
 
 class LeafQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

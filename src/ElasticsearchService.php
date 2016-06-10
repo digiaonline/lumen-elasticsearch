@@ -3,6 +3,7 @@
 use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Parsers\SortStringParser;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
@@ -138,6 +139,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function createAggregationBuilder()
+    {
+        return new AggregationBuilder();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function execute(Search $search)
     {
         return $this->search([
@@ -146,5 +156,4 @@ class ElasticsearchService implements ElasticsearchServiceContract
             'body'  => $search->buildBody(),
         ]);
     }
-
 }

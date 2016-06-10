@@ -2,7 +2,6 @@
 
 class SortTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
@@ -51,5 +50,4 @@ class SortTest extends \Codeception\TestCase\Test
             verify($this->sort->getSorts())->count(1);
         });
     }
-
 }

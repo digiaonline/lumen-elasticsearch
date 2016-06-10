@@ -2,7 +2,6 @@
 
 class CompoundQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

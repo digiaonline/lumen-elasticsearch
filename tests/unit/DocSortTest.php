@@ -2,7 +2,6 @@
 
 class DocSortTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

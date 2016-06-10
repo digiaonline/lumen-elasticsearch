@@ -2,7 +2,6 @@
 
 class BulkAction
 {
-
     const ACTION_INDEX = 'index';
 
     /**
@@ -70,5 +69,4 @@ class BulkAction
         $this->body = $body;
         return $this;
     }
-
 }

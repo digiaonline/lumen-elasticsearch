@@ -21,7 +21,8 @@ class Sort
     /**
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $result = [];
         foreach ($this->getSorts() as $sort) {
             $result[] = $sort->toArray();
@@ -60,5 +61,4 @@ class Sort
     {
         return $this->sorts;
     }
-
 }

@@ -2,7 +2,6 @@
 
 class JoiningQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

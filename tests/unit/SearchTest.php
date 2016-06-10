@@ -2,7 +2,6 @@
 
 class SearchTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
@@ -25,6 +24,11 @@ class SearchTest extends \Codeception\TestCase\Test
      */
     protected $sort;
 
+    /**
+     * @var \Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation
+     */
+    protected $aggregation;
+
 
     /**
      * @inheritdoc
@@ -41,6 +45,17 @@ class SearchTest extends \Codeception\TestCase\Test
         $sortBuilder = $service->createSortBuilder();
         $this->sort = $service->createSort();
         $this->sort->addSort($sortBuilder->createScoreSort());
+
+        $aggregationBuilder = $service->createAggregationBuilder();
+
+        $this->aggregation = $aggregationBuilder->createGlobalAggregation();
+        $this->aggregation->setName('global_name');
+        $this->aggregation->addAggregation(
+            $aggregationBuilder->createMinAggregation()->setField('field_name')->setName('min_name')
+        );
+        $this->aggregation->addAggregation(
+            $aggregationBuilder->createMaxAggregation()->setField('field_name')->setName('max_name')
+        );
     }
 
 
@@ -82,6 +97,13 @@ class SearchTest extends \Codeception\TestCase\Test
         $this->specify('sort can be set and get', function () {
             $this->search->setSort($this->sort);
             verify($this->search->getSort())->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Sort');
+        });
+
+
+        $this->specify('aggregation can be added and collection retrieved', function () {
+            $this->search->addAggregation($this->aggregation);
+            $collection = $this->search->getAggregations();
+            verify($collection)->isInstanceOf('\Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection');
         });
     }
 
@@ -138,6 +160,25 @@ class SearchTest extends \Codeception\TestCase\Test
             verify($this->search->buildBody())->equals([
                 'query' => ['match_all' => []],
                 'sort'  => ['_score'],
+                'size'  => 100,
+                'from'  => 0,
+            ]);
+        });
+
+
+        $this->specify('match all query with global aggregation', function () {
+            $this->search->addAggregation($this->aggregation);
+            verify($this->search->buildBody())->equals([
+                'query' => ['match_all' => []],
+                'aggs'  => [
+                    'global_name' => [
+                        'global' => new stdClass(),
+                        'aggs' => [
+                            'min_name' => ['min' => ['field' => 'field_name']],
+                            'max_name' => ['max' => ['field' => 'field_name']],
+                        ]
+                    ]
+                ],
                 'size'  => 100,
                 'from'  => 0,
             ]);

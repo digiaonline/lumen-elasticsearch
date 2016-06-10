@@ -2,6 +2,7 @@
 
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Nord\Lumen\Elasticsearch\Parsers\SortStringParser;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
@@ -92,6 +93,12 @@ interface ElasticsearchServiceContract
      * @return SortStringParser
      */
     public function createSortStringParser(array $config = []);
+
+
+    /**
+     * @return AggregationBuilder
+     */
+    public function createAggregationBuilder();
 
 
     /**

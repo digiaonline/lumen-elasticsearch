@@ -2,7 +2,6 @@
 
 class PagerfantaAdapterTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**

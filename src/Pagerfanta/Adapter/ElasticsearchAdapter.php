@@ -39,7 +39,7 @@ class ElasticsearchAdapter implements AdapterInterface
     public function getNbResults()
     {
         $result = $this->getResult();
-        return $result['hits']['total'];
+        return isset($result['hits']['total']) ? $result['hits']['total'] : 0;
     }
 
 
@@ -49,7 +49,7 @@ class ElasticsearchAdapter implements AdapterInterface
     public function getSlice($offset, $length)
     {
         $result = $this->getResult($offset, $length);
-        return $result['hits']['hits'];
+        return isset($result['hits']['hits']) ? $result['hits']['hits'] : [];
     }
 
 
@@ -75,5 +75,15 @@ class ElasticsearchAdapter implements AdapterInterface
         }
 
         return $this->result;
+    }
+
+
+    /**
+     * @return array
+     */
+    public function getAggregations()
+    {
+        $result = $this->getResult();
+        return isset($result['aggregations']) ? $result['aggregations'] : [];
     }
 }

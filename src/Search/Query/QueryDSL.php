@@ -21,5 +21,5 @@ abstract class QueryDSL
     /**
      * @return array
      */
-    abstract function toArray();
+    abstract public function toArray();
 }
