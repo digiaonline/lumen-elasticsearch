@@ -1,25 +1,35 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query;
 
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\FunctionScoreQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MultiMatchQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Geo\GeoDistanceQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\ExistsQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
 
 class QueryBuilder
 {
-
     /**
      * @return BoolQuery
      */
     public function createBoolQuery()
     {
         return new BoolQuery();
+    }
+
+
+    /**
+     * @return FunctionScoreQuery
+     */
+    public function createFunctionScoreQuery()
+    {
+        return new FunctionScoreQuery();
     }
 
 
@@ -65,6 +75,15 @@ class QueryBuilder
     public function createRangeQuery()
     {
         return new RangeQuery();
+    }
+
+
+    /**
+     * @return ExistsQuery
+     */
+    public function createExistsQuery()
+    {
+        return new ExistsQuery();
     }
 
 
