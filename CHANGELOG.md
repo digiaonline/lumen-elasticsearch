@@ -20,6 +20,10 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 ### Security
 - To invite users to upgrade in case of vulnerabilities.
 
+## [1.0.1] - 2017-02-09
+### Changed
+- Composer.lock.
+
 ## [1.0.0] - 2017-02-09
 ### Added
 - CHANGELOG.md
