@@ -30,13 +30,7 @@ class ElasticsearchServiceProvider extends ServiceProvider
         $config = $this->app['config']->get('elasticsearch', []);
 
         $this->app->singleton(ElasticsearchServiceContract::class, function () use ($config) {
-            $elasticsearchService = new ElasticsearchService(ClientBuilder::fromConfig($config));
-
-            if (isset($config[self::CONFIG_KEY]['settings'])) {
-                $elasticsearchService->setSettings($config[self::CONFIG_KEY]['settings']);
-            }
-
-            return $elasticsearchService;
+            return new ElasticsearchService(ClientBuilder::fromConfig($config));
         });
     }
 }
