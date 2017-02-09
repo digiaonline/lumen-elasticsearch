@@ -14,7 +14,7 @@
         "elasticsearch/elasticsearch": "^2.1"
     },
     "require-dev": {
-        "laravel/lumen-framework": "^5.2",
+        "laravel/lumen-framework": "^5.4",
         "codeception/codeception": "^2.1",
         "codeception/specify": "^0.4",
         "codeception/verify": "^0.3",
