@@ -64,7 +64,7 @@ abstract class IndexCommand extends Command
      */
     public function handle()
     {
-        $this->info('Indexing data ...');
+        $this->info(sprintf('Indexing data of type "%s" into "%s"', $this->getType(), $this->getIndex()));
 
         $service = $this->getElasticsearchService();
 
