@@ -6,6 +6,7 @@ sudo: false
 php:
   - 5.6
   - 7.0
+  - 7.1
 
 before_script:
   - mkdir -p /home/travis/.phpenv/versions/$(phpenv version-name)/etc/conf.d
