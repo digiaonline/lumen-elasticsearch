@@ -87,6 +87,10 @@ class SearchTest extends \Codeception\TestCase\Test
             verify($this->search->getPage())->equals(1);
         });
 
+        $this->specify('from can be set and get', function () {
+            $this->search->setFrom(10);
+            verify($this->search->getFrom())->equals(10);
+        });
 
         $this->specify('size can be set and get', function () {
             $this->search->setSize(100);
@@ -134,6 +138,18 @@ class SearchTest extends \Codeception\TestCase\Test
             ]);
         });
 
+        $this->specify('match all query body from and size', function () {
+            // Reset "page" from previous test cases
+            $this->search->setPage(0);
+            
+            $this->search->setFrom(10);
+            $this->search->setSize(10);
+            verify($this->search->buildBody())->equals([
+                'query' => ['match_all' => []],
+                'from'  => 10,
+                'size'  => 10,
+            ]);
+        });
 
         $this->specify('bool query body page 1', function () {
             $this->search->setPage(1);
