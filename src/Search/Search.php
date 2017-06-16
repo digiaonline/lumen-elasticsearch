@@ -34,6 +34,11 @@ class Search
     /**
      * @var int
      */
+    private $from = 0;
+
+    /**
+     * @var int
+     */
     private $size = 100;
 
     /**
@@ -161,6 +166,26 @@ class Search
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getFrom()
+    {
+        return $this->from;
+    }
+
+    /**
+     * @param int $from
+     *
+     * @return Search
+     */
+    public function setFrom($from)
+    {
+        $this->from = $from;
+
+        return $this;
+    }
+
 
     /**
      * @return int
@@ -223,11 +248,14 @@ class Search
             $body['size'] = $this->getSize();
         }
 
-        // Set which "page" of results to return.
+        // Use "page" to determine from if it is set
         if ($this->getPage() > 0) {
-            $page = $this->getPage() - 1;
-            $body['from'] = isset($body['size']) ? ($page * $body['size']) : 0;
+            $from = ($this->getPage() - 1) * $this->getSize();
+        } else {
+            $from = $this->getFrom();
         }
+
+        $body['from'] = $from;
 
         return $body;
     }
