@@ -139,9 +139,6 @@ class SearchTest extends \Codeception\TestCase\Test
         });
 
         $this->specify('match all query body from and size', function () {
-            // Reset "page" from previous test cases
-            $this->search->setPage(0);
-            
             $this->search->setFrom(10);
             $this->search->setSize(10);
             verify($this->search->buildBody())->equals([

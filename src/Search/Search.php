@@ -248,11 +248,11 @@ class Search
             $body['size'] = $this->getSize();
         }
 
-        // Use "page" to determine from if it is set
-        if ($this->getPage() > 0) {
-            $from = ($this->getPage() - 1) * $this->getSize();
-        } else {
+        // Use "from" to determine "from, if it's not set we determine it from the "page"
+        if ($this->getFrom() > 0) {
             $from = $this->getFrom();
+        } else {
+            $from = ($this->getPage() - 1) * $this->getSize();
         }
 
         $body['from'] = $from;
