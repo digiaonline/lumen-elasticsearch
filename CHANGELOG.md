@@ -9,16 +9,37 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 ## [Unreleased] - YYYY-MM-DD
 ### Added
 - For new features.
+
 ### Changed
 - For changes in existing functionality.
+
 ### Deprecated
 - For once-stable features removed in upcoming releases.
+
 ### Removed
 - For deprecated features removed in this release.
+
 ### Fixed
 - For any bug fixes.
+
 ### Security
 - To invite users to upgrade in case of vulnerabilities.
+
+## [1.2.0] - 2017-06-21
+### Added
+- Function for getting the total count.
+
+## [1.1.2] - 2017-06-16
+### Fixed
+- Invert the logic to determine the correct "from" value.
+
+## [1.1.1] - 2017-06-16
+### Added
+- PHP 7.1 to Travis CI.
+
+## [1.1.0] - 2017-06-16
+### Added
+- Ability to specify "from" directly, bypassing the "page" abstraction
 
 ## [1.0.1] - 2017-02-09
 ### Changed
@@ -105,7 +126,11 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 - Project files.
 - Service provider that exposes a configurable elasticsearch client.
 
-[Unreleased]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.2...1.2.0
+[1.1.2]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.1...1.1.2
+[1.1.1]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.0...1.1.1
+[1.1.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/0.7.0...1.0.0
 [0.7.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/0.6.0...0.7.0
 [0.6.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/0.5.0...0.6.0

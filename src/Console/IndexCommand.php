@@ -58,7 +58,6 @@ abstract class IndexCommand extends Command
      */
     abstract public function getItemParent($item);
 
-
     /**
      * @inheritdoc
      */
@@ -70,7 +69,7 @@ abstract class IndexCommand extends Command
 
         $data = $this->getData();
 
-        $bar = $this->output->createProgressBar(count($data));
+        $bar = $this->output->createProgressBar($this->getCount());
 
         $bulkQuery = new BulkQuery($this->getBulkSize());
 
@@ -120,6 +119,16 @@ abstract class IndexCommand extends Command
         return BulkQuery::BULK_SIZE_DEFAULT;
     }
 
+
+    /**
+     * Get the total count.
+     *
+     * @return int
+     */
+    protected function getCount()
+    {
+        return count($this->getData());
+    }
 
     /**
      * @return ElasticsearchServiceContract
