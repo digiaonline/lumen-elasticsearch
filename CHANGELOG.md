@@ -6,9 +6,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy updating.
 
-## [Unreleased] - 2017-06-21
+## [Unreleased] - YYYY-MM-DD
 ### Added
-- getCount() function to get total amount of items.
+- For new features.
 
 ### Changed
 - For changes in existing functionality.
@@ -24,6 +24,10 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 
 ### Security
 - To invite users to upgrade in case of vulnerabilities.
+
+## [1.2.0] - 2017-06-21
+### Added
+- Function for getting the total count.
 
 ## [1.1.2] - 2017-06-16
 ### Fixed
@@ -122,7 +126,8 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 - Project files.
 - Service provider that exposes a configurable elasticsearch client.
 
-[Unreleased]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.2...HEAD
+[Unreleased]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.2.0...HEAD
+[1.2.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.2...1.2.0
 [1.1.2]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.1...1.1.2
 [1.1.1]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/nordsoftware/lumen-elasticsearch/compare/1.0.0...1.1.0
