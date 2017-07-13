@@ -8,6 +8,8 @@ use Nord\Lumen\Elasticsearch\Search\Query\Geo\GeoDistanceQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Partial\RegexpQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Partial\WildcardQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\ExistsQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
@@ -121,4 +123,21 @@ class QueryBuilder
     {
         return new HasParentQuery();
     }
+    
+    /**
+     * @return WildcardQuery
+     */
+    public function createWildcardQuery()
+    {
+        return new WildcardQuery();
+    }
+
+    /**
+     * @return RegexpQuery
+     */
+    public function createRegexpQuery()
+    {
+        return new RegexpQuery();
+    }
+    
 }
