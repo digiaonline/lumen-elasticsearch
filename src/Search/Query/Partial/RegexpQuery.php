@@ -16,5 +16,4 @@ class RegexpQuery extends AbstractQuery
     {
         return 'regexp';
     }
-
 }

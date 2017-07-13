@@ -5,7 +5,6 @@
  */
 class PartialQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
@@ -67,5 +66,4 @@ class PartialQueryTest extends \Codeception\TestCase\Test
             ]);
         });
     }
-
 }

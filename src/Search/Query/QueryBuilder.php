@@ -139,5 +139,4 @@ class QueryBuilder
     {
         return new RegexpQuery();
     }
-    
 }

@@ -84,5 +84,4 @@ abstract class AbstractQuery extends QueryDSL
 
         return $this;
     }
-
 }

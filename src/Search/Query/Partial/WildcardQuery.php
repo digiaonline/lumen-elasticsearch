@@ -16,5 +16,4 @@ class WildcardQuery extends AbstractQuery
     {
         return 'wildcard';
     }
-
 }
