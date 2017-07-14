@@ -95,7 +95,42 @@ class PartialQueryTest extends \Codeception\TestCase\Test
                     ],
                 ],
             ]);
+
+            // Value + boost + flags
+            $query->setFlags([
+                \Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RegexpQuery::FLAG_COMPLEMENT,
+                \Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RegexpQuery::FLAG_INTERSECTION,
+                \Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RegexpQuery::FLAG_EMPTY,
+            ]);
+
+            verify($query->toArray())->equals([
+                'regexp' => [
+                    'foo' => [
+                        'value' => 'bar[0-9]',
+                        'boost' => 2.0,
+                        'flags' => 'COMPLEMENT|INTERSECTION|EMPTY',
+                    ],
+                ],
+            ]);
+
+            // Value + boost + flags + max_determinized_states
+            $query->setMaxDeterminizedStates(20000);
+
+            verify($query->toArray())->equals([
+                'regexp' => [
+                    'foo' => [
+                        'value'                   => 'bar[0-9]',
+                        'boost'                   => 2.0,
+                        'flags'                   => 'COMPLEMENT|INTERSECTION|EMPTY',
+                        'max_determinized_states' => 20000,
+                    ],
+                ],
+            ]);
         });
+
+        $this->specify('exception is thrown when invalid max_determinized_states is set', function () {
+            $this->queryBuilder->createRegexpQuery()->setMaxDeterminizedStates('foo');
+        }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
     }
 
 } 
