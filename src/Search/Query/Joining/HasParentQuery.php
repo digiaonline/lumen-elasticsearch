@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
-
 /**
  * The has_parent query accepts a query and a parent type. The query is executed in the parent document space, which is
  * specified by the parent type. This query returns child documents which associated parents have matched. For the rest
@@ -16,11 +14,6 @@ class HasParentQuery extends AbstractQuery
      * @var string
      */
     private $type;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -69,25 +62,5 @@ class HasParentQuery extends AbstractQuery
     public function getType()
     {
         return $this->type;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasParentQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 }

@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
-
 /**
  * Nested query allows to query nested objects / docs (see nested mapping).
  *
@@ -16,11 +14,6 @@ class NestedQuery extends AbstractQuery
      * @var string
      */
     private $path;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -73,25 +66,5 @@ class NestedQuery extends AbstractQuery
     public function getPath()
     {
         return $this->path;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return NestedQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 }

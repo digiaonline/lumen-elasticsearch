@@ -1,7 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * The has_child filter accepts a query and the child type to run against, and results in parent documents that have
@@ -26,11 +25,6 @@ class HasChildQuery extends AbstractQuery
      * @var int
      */
     private $maxChildren;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -134,26 +128,6 @@ class HasChildQuery extends AbstractQuery
     public function getMaxChildren()
     {
         return $this->maxChildren;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasChildQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 
 
