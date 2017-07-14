@@ -38,11 +38,26 @@ class PartialQueryTest extends \Codeception\TestCase\Test
         }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
 
         $this->specify('query array format is correct', function () {
+            // Basic value-only query
             $query = $this->queryBuilder->createWildcardQuery()->setField('foo')->setValue('bar?baz*qux');
 
             verify($query->toArray())->equals([
                 'wildcard' => [
-                    'foo' => 'bar?baz*qux',
+                    'foo' => [
+                        'value' => 'bar?baz*qux',
+                    ],
+                ],
+            ]);
+
+            // Value + boost
+            $query->setBoost(2.0);
+
+            verify($query->toArray())->equals([
+                'wildcard' => [
+                    'foo' => [
+                        'value' => 'bar?baz*qux',
+                        'boost' => 2.0,
+                    ],
                 ],
             ]);
         });
@@ -58,11 +73,26 @@ class PartialQueryTest extends \Codeception\TestCase\Test
         }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
 
         $this->specify('query array format is correct', function () {
+            // Basic value-only query
             $query = $this->queryBuilder->createRegexpQuery()->setField('foo')->setValue('bar[0-9]');
 
             verify($query->toArray())->equals([
                 'regexp' => [
-                    'foo' => 'bar[0-9]',
+                    'foo' => [
+                        'value' => 'bar[0-9]',
+                    ],
+                ],
+            ]);
+
+            // Value + boost
+            $query->setBoost(2.0);
+
+            verify($query->toArray())->equals([
+                'regexp' => [
+                    'foo' => [
+                        'value' => 'bar[0-9]',
+                        'boost' => 2.0,
+                    ],
                 ],
             ]);
         });
