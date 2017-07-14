@@ -5,7 +5,6 @@
  */
 class QueryTraitsTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
@@ -58,7 +57,6 @@ class QueryTraitsTest extends \Codeception\TestCase\Test
  */
 class TraitTesterQuery extends \Nord\Lumen\Elasticsearch\Search\Query\QueryDSL
 {
-
     use \Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
     use \Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
     use \Nord\Lumen\Elasticsearch\Search\Query\Traits\HasFields;
@@ -78,5 +76,4 @@ class TraitTesterQuery extends \Nord\Lumen\Elasticsearch\Search\Query\QueryDSL
             'values' => $this->getValues(),
         ];
     }
-
 }

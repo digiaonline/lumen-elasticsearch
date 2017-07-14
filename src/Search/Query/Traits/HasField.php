@@ -33,5 +33,4 @@ trait HasField
 
         return $this;
     }
-    
 }
