@@ -20,7 +20,6 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
-
     const SCORE_MODE_AVG   = 'avg';
     const SCORE_MODE_SUM   = 'sum';
     const SCORE_MODE_MIN   = 'min';
@@ -76,5 +75,4 @@ abstract class AbstractQuery extends QueryDSL
             ));
         }
     }
-
 }
