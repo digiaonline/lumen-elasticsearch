@@ -11,6 +11,8 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 class WildcardQuery extends AbstractQuery
 {
 
+    use BoostableQuery;
+
     /**
      * @var string
      */
@@ -27,9 +29,17 @@ class WildcardQuery extends AbstractQuery
             throw new InvalidArgument('"field" and "value" must be set for this type of query');
         }
 
+        $definition = [
+            'value' => $this->getValue(),
+        ];
+
+        if ($this->hasBoost()) {
+            $definition['boost'] = $this->getBoost();
+        }
+
         return [
             'wildcard' => [
-                $this->getField() => $this->getValue(),
+                $this->getField() => $definition,
             ],
         ];
     }

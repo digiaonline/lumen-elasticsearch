@@ -40,6 +40,14 @@ trait BoostableQuery
     }
 
     /**
+     * @return bool
+     */
+    public function hasBoost()
+    {
+        return $this->boost !== null;
+    }
+
+    /**
      * @param float $boost
      *
      * @throws InvalidArgument
