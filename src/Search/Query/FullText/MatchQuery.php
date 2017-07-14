@@ -1,6 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 
 /**
  * A family of match queries that accepts text/numerics/dates, analyzes them, and constructs a query.
@@ -9,6 +11,9 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class MatchQuery extends AbstractQuery
 {
+    use HasField;
+    use HasValue;
+    
     const OPERATOR_OR = 'or';
     const OPERATOR_AND = 'and';
 
@@ -17,16 +22,6 @@ class MatchQuery extends AbstractQuery
 
     const TYPE_PHRASE = 'phrase';
     const TYPE_PHRASE_PREFIX = 'phrase_prefix';
-
-    /**
-     * @var string The field in the index to query on.
-     */
-    private $field;
-
-    /**
-     * @var mixed the value to query for.
-     */
-    private $value;
 
     /**
      * @var string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").
@@ -87,46 +82,6 @@ class MatchQuery extends AbstractQuery
         }
 
         return ['match' => [$this->getField() => $match]];
-    }
-
-
-    /**
-     * @param mixed $value
-     * @return MatchQuery
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-
-    /**
-     * @param string $field
-     * @return MatchQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 
