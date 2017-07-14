@@ -20,12 +20,18 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
+
     const SCORE_MODE_AVG   = 'avg';
     const SCORE_MODE_SUM   = 'sum';
     const SCORE_MODE_MIN   = 'min';
     const SCORE_MODE_MAX   = 'max';
     const SCORE_MODE_SCORE = 'score';
     const SCORE_MODE_NONE  = 'none';
+
+    /**
+     * @var QueryDSL;
+     */
+    protected $query;
 
     /**
      * @var string
@@ -36,6 +42,26 @@ abstract class AbstractQuery extends QueryDSL
      * @return array
      */
     abstract protected function getValidScoreModes();
+
+    /**
+     * @return QueryDSL
+     */
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    /**
+     * @param QueryDSL $query
+     *
+     * @return $this
+     */
+    public function setQuery(QueryDSL $query)
+    {
+        $this->query = $query;
+
+        return $this;
+    }
 
     /**
      * @return string
@@ -66,7 +92,7 @@ abstract class AbstractQuery extends QueryDSL
     protected function assertScoreMode($scoreMode)
     {
         $validModes = $this->getValidScoreModes();
-        
+
         if (!in_array($scoreMode, $validModes)) {
             throw new InvalidArgument(sprintf(
                 '`score_mode` must be one of "%s", "%s" given.',
