@@ -2,7 +2,6 @@
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
  * The function_score allows you to modify the score of documents that are retrieved by a query. This can be useful if,
@@ -16,17 +15,14 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class FunctionScoreQuery extends AbstractQuery
 {
+    use HasQuery;
+    
     const SCORE_MODE_MULTIPLY = 'multiply';
     const SCORE_MODE_SUM = 'sum';
     const SCORE_MODE_AVG = 'avg';
     const SCORE_MODE_FIRST = 'first';
     const SCORE_MODE_MAX = 'max';
     const SCORE_MODE_MIN = 'min';
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
     /**
      * @var AbstractScoringFunction[]
@@ -70,26 +66,6 @@ class FunctionScoreQuery extends AbstractQuery
         }
 
         return ['function_score' => $array];
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return FunctionScoreQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
     }
 
 
