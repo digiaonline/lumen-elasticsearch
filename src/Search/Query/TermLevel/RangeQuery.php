@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 /**
  * Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the
  * field type, for string fields, the TermRangeQuery, while for number/date fields, the query is a NumericRangeQuery.
@@ -10,6 +8,8 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class RangeQuery extends AbstractQuery
 {
+    
+    use BoostableQuery;
 
     /**
      * @var mixed Greater-than or equal to.
@@ -30,11 +30,6 @@ class RangeQuery extends AbstractQuery
      * @var mixed Less-than.
      */
     private $lessThan;
-
-    /**
-     * @var float Sets the boost value of the query, defaults to 1.0.
-     */
-    private $boost;
 
 
     /**
@@ -146,42 +141,5 @@ class RangeQuery extends AbstractQuery
     public function getLessThan()
     {
         return $this->lessThan;
-    }
-
-
-    /**
-     * @param float $boost
-     * @return RangeQuery
-     * @throws InvalidArgument
-     */
-    public function setBoost($boost)
-    {
-        $this->assertBoost($boost);
-        $this->boost = $boost;
-        return $this;
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getBoost()
-    {
-        return $this->boost;
-    }
-
-
-    /**
-     * @param float $boost
-     * @throws InvalidArgument
-     */
-    protected function assertBoost($boost)
-    {
-        if (!is_float($boost)) {
-            throw new InvalidArgument(sprintf(
-                'Range Query `boost` must be a float value, "%s" given.',
-                gettype($boost)
-            ));
-        }
     }
 }
