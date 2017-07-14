@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
 
 /**
  * Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the
@@ -10,10 +10,7 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class RangeQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
+    use BoostableQuery;
 
     /**
      * @var mixed Greater-than or equal to.
@@ -34,11 +31,6 @@ class RangeQuery extends AbstractQuery
      * @var mixed Less-than.
      */
     private $lessThan;
-
-    /**
-     * @var float Sets the boost value of the query, defaults to 1.0.
-     */
-    private $boost;
 
 
     /**
@@ -70,26 +62,6 @@ class RangeQuery extends AbstractQuery
         }
 
         return ['range' => [$this->getField() => $range]];
-    }
-
-
-    /**
-     * @param string $field
-     * @return RangeQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 
@@ -170,42 +142,5 @@ class RangeQuery extends AbstractQuery
     public function getLessThan()
     {
         return $this->lessThan;
-    }
-
-
-    /**
-     * @param float $boost
-     * @return RangeQuery
-     * @throws InvalidArgument
-     */
-    public function setBoost($boost)
-    {
-        $this->assertBoost($boost);
-        $this->boost = $boost;
-        return $this;
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getBoost()
-    {
-        return $this->boost;
-    }
-
-
-    /**
-     * @param float $boost
-     * @throws InvalidArgument
-     */
-    protected function assertBoost($boost)
-    {
-        if (!is_float($boost)) {
-            throw new InvalidArgument(sprintf(
-                'Range Query `boost` must be a float value, "%s" given.',
-                gettype($boost)
-            ));
-        }
     }
 }

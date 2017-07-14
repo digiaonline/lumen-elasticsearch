@@ -10,8 +10,10 @@ use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\ExistsQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RegexpQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\WildcardQuery;
 
 class QueryBuilder
 {
@@ -120,5 +122,21 @@ class QueryBuilder
     public function createHasParentQuery()
     {
         return new HasParentQuery();
+    }
+
+    /**
+     * @return RegexpQuery
+     */
+    public function createRegexpQuery()
+    {
+        return new RegexpQuery();
+    }
+
+    /**
+     * @return WildcardQuery
+     */
+    public function createWildcardQuery()
+    {
+        return new WildcardQuery();
     }
 }
