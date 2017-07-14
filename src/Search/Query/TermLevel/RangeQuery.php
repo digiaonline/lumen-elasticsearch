@@ -8,7 +8,6 @@
  */
 class RangeQuery extends AbstractQuery
 {
-    
     use BoostableQuery;
 
     /**

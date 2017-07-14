@@ -5,7 +5,6 @@
  */
 class PartialQueryTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
@@ -132,5 +131,4 @@ class PartialQueryTest extends \Codeception\TestCase\Test
             $this->queryBuilder->createRegexpQuery()->setMaxDeterminizedStates('foo');
         }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
     }
-
-} 
+}

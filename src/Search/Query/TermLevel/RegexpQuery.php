@@ -10,7 +10,6 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class RegexpQuery extends AbstractQuery
 {
-
     use BoostableQuery;
 
     const FLAG_ALL          = 'ALL';
@@ -143,5 +142,4 @@ class RegexpQuery extends AbstractQuery
 
         return $this;
     }
-
 }
