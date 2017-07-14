@@ -67,7 +67,7 @@ abstract class AbstractQuery extends QueryDSL
     /**
      * @param string $field
      *
-     * @return AbstractQuery
+     * @return $this
      */
     public function setField($field)
     {
