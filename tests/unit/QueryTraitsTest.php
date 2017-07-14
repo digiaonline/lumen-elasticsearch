@@ -5,7 +5,6 @@
  */
 class QueryTraitsTest extends \Codeception\TestCase\Test
 {
-
     use \Codeception\Specify;
 
     /**
