@@ -10,10 +10,6 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class RangeQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
 
     /**
      * @var mixed Greater-than or equal to.
@@ -70,26 +66,6 @@ class RangeQuery extends AbstractQuery
         }
 
         return ['range' => [$this->getField() => $range]];
-    }
-
-
-    /**
-     * @param string $field
-     * @return RangeQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 

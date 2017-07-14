@@ -9,10 +9,6 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class TermQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
 
     /**
      * @var mixed
@@ -42,26 +38,6 @@ class TermQuery extends AbstractQuery
         }
 
         return ['term' => [$this->getField() => $term]];
-    }
-
-
-    /**
-     * @param string $field
-     * @return TermQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 

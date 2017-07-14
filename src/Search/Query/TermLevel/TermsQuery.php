@@ -7,10 +7,6 @@
  */
 class TermsQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
 
     /**
      * @var array
@@ -28,26 +24,6 @@ class TermsQuery extends AbstractQuery
                 $this->getField() => $this->getValues()
             ]
         ];
-    }
-
-
-    /**
-     * @param string $field
-     * @return TermsQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 
