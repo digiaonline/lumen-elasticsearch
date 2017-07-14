@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
@@ -12,18 +11,11 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasParentQuery extends AbstractQuery
 {
-    const SCORE_MODE_SCORE  = 'score';
-    const SCORE_MODE_NONE   = 'none';
 
     /**
      * @var string
      */
     private $type;
-
-    /**
-     * @var string
-     */
-    private $scoreMode;
 
     /**
      * @var QueryDSL
@@ -49,6 +41,16 @@ class HasParentQuery extends AbstractQuery
         return ['has_parent' => $hasParent];
     }
 
+    /**
+     * @inheritdoc
+     */
+    protected function getValidScoreModes()
+    {
+        return [
+            self::SCORE_MODE_SCORE,
+            self::SCORE_MODE_NONE
+        ];
+    }
 
     /**
      * @param string $type
@@ -71,27 +73,6 @@ class HasParentQuery extends AbstractQuery
 
 
     /**
-     * @param string $scoreMode
-     * @return HasParentQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
-    }
-
-
-    /**
      * @param QueryDSL $query
      * @return HasParentQuery
      */
@@ -108,25 +89,5 @@ class HasParentQuery extends AbstractQuery
     public function getQuery()
     {
         return $this->query;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_SCORE,
-            self::SCORE_MODE_NONE
-        ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'HasParent Query `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 }
