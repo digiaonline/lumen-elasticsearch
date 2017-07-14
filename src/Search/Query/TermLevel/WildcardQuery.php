@@ -7,6 +7,8 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 /**
  * Class WildcardQuery
  * @package Nord\Lumen\Elasticsearch\Search\Query\TermLevel
+ *
+ * @see     https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-wildcard-query.html
  */
 class WildcardQuery extends AbstractQuery
 {

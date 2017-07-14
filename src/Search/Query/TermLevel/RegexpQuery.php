@@ -7,6 +7,8 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 /**
  * Class RegexpQuery
  * @package Nord\Lumen\Elasticsearch\Search\Query\TermLevel
+ *
+ * @see     https://www.elastic.co/guide/en/elasticsearch/reference/2.4/query-dsl-regexp-query.html
  */
 class RegexpQuery extends AbstractQuery
 {
