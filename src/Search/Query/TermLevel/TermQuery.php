@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 /**
  * The term query finds documents that contain the exact term specified in the inverted index.
  *
@@ -9,16 +7,13 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class TermQuery extends AbstractQuery
 {
+    
+    use BoostableQuery;
 
     /**
      * @var mixed
      */
     private $value;
-
-    /**
-     * @var float A boost can be specified to give this term query a higher relevance score than another query.
-     */
-    private $boost;
 
 
     /**
@@ -58,42 +53,5 @@ class TermQuery extends AbstractQuery
     public function getValue()
     {
         return $this->value;
-    }
-
-
-    /**
-     * @param float $boost
-     * @return TermQuery
-     * @throws InvalidArgument
-     */
-    public function setBoost($boost)
-    {
-        $this->assertBoost($boost);
-        $this->boost = $boost;
-        return $this;
-    }
-
-
-    /**
-     * @return float
-     */
-    public function getBoost()
-    {
-        return $this->boost;
-    }
-
-
-    /**
-     * @param float $boost
-     * @throws InvalidArgument
-     */
-    protected function assertBoost($boost)
-    {
-        if (!is_float($boost)) {
-            throw new InvalidArgument(sprintf(
-                'Term Query `boost` must be a float value, "%s" given.',
-                gettype($boost)
-            ));
-        }
     }
 }
