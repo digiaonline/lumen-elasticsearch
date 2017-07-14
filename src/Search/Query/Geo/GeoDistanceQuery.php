@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
 
 /**
  * Filters documents that include only hits that exists within a specific distance from a geo point.
@@ -9,14 +10,11 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class GeoDistanceQuery extends AbstractQuery
 {
+    use HasField;
+    
     const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
     const DISTANCE_TYPE_ARC = 'arc';
     const DISTANCE_TYPE_PLANE = 'plane';
-
-    /**
-     * @var string
-     */
-    private $field;
 
     /**
      * @var mixed
@@ -62,26 +60,6 @@ class GeoDistanceQuery extends AbstractQuery
         }
 
         return ['geo_distance' => $geoDistance];
-    }
-
-
-    /**
-     * @param string $field
-     * @return GeoDistanceQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 
