@@ -2,6 +2,7 @@
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 
 /**
@@ -12,6 +13,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 class MatchQuery extends AbstractQuery
 {
     use HasField;
+    use HasType;
     use HasValue;
     
     const OPERATOR_OR = 'or';
@@ -42,13 +44,6 @@ class MatchQuery extends AbstractQuery
      * of an and operator match.
      */
     private $cutOffFrequency;
-
-    /**
-     * @var string The "phrase" type analyzes the text and creates a phrase query out of the analyzed text. The
-     * "phrase_prefix" type is the same as "phrase", except that it allows for prefix matches on the last term in the
-     * text.
-     */
-    private $type;
 
     /**
      * @var int A phrase query matches terms up to a configurable slop (which defaults to 0) in any order.
@@ -161,15 +156,6 @@ class MatchQuery extends AbstractQuery
         $this->assertType($type);
         $this->type = $type;
         return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
 

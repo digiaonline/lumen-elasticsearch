@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
+
 /**
  * The has_parent query accepts a query and a parent type. The query is executed in the parent document space, which is
  * specified by the parent type. This query returns child documents which associated parents have matched. For the rest
@@ -9,11 +11,7 @@
  */
 class HasParentQuery extends AbstractQuery
 {
-
-    /**
-     * @var string
-     */
-    private $type;
+    use HasType;
 
 
     /**
@@ -43,24 +41,5 @@ class HasParentQuery extends AbstractQuery
             self::SCORE_MODE_SCORE,
             self::SCORE_MODE_NONE
         ];
-    }
-
-    /**
-     * @param string $type
-     * @return HasParentQuery
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 }

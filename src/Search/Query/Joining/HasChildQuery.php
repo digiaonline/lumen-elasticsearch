@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
  * The has_child filter accepts a query and the child type to run against, and results in parent documents that have
@@ -10,11 +11,7 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class HasChildQuery extends AbstractQuery
 {
-
-    /**
-     * @var string
-     */
-    private $type;
+    use HasType;
 
     /**
      * @var int
@@ -67,25 +64,6 @@ class HasChildQuery extends AbstractQuery
             self::SCORE_MODE_MAX,
             self::SCORE_MODE_NONE,
         ];
-    }
-
-    /**
-     * @param string $type
-     * @return HasChildQuery
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
 
