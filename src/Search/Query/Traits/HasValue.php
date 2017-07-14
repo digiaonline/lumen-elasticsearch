@@ -33,5 +33,4 @@ trait HasValue
 
         return $this;
     }
-
 }
