@@ -1,12 +1,12 @@
 <?php
 
-namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
+namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 
 /**
  * Trait BoostableQuery
- * @package Nord\Lumen\Elasticsearch\Search\Query\TermLevel
+ * @package Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits
  */
 trait BoostableQuery
 {

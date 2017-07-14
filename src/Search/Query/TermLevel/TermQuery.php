@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
+
 /**
  * The term query finds documents that contain the exact term specified in the inverted index.
  *
