@@ -114,6 +114,7 @@ class BoolQuery extends AbstractQuery
             if (!empty($property)) {
                 $array['bool'][$fieldName] = [];
                 foreach ($property as $query) {
+                    /** @var QueryDSL $query */
                     $array['bool'][$fieldName][] = $query->toArray();
                 }
             }
