@@ -1,5 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
@@ -38,8 +39,8 @@ class HasParentQuery extends AbstractQuery
     protected function getValidScoreModes()
     {
         return [
-            self::SCORE_MODE_SCORE,
-            self::SCORE_MODE_NONE
+            ScoreMode::MODE_SCORE,
+            ScoreMode::MODE_NONE
         ];
     }
 }

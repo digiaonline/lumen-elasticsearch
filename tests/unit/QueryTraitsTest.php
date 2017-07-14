@@ -5,6 +5,7 @@
  */
 class QueryTraitsTest extends \Codeception\TestCase\Test
 {
+
     use \Codeception\Specify;
 
     /**
@@ -13,35 +14,24 @@ class QueryTraitsTest extends \Codeception\TestCase\Test
     protected $tester;
 
     /**
-     * @var TraitTesterQuery
-     */
-    protected $testQuery;
-
-    /**
-     * @inheritdoc
-     */
-    public function _before()
-    {
-        $this->testQuery = new TraitTesterQuery();
-    }
-
-    /**
      * Tests that the traits correctly set and get values
      */
     public function testTraits()
     {
         $this->specify('exception is thrown when invalid boost value is specified', function () {
-            $this->testQuery->setBoost('foo');
+            $query = new TraitTesterQuery();
+            $query->setBoost('foo');
         }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
 
         $this->specify('traits behave correctly', function () {
-            $this->testQuery->setBoost(2.0)
-                            ->setField('field')
-                            ->setValue('value')
-                            ->setFields(['otherField'])
-                            ->setValues(['otherValue']);
+            $query = new TraitTesterQuery();
+            $query->setBoost(2.0)
+                  ->setField('field')
+                  ->setValue('value')
+                  ->setFields(['otherField'])
+                  ->setValues(['otherValue']);
 
-            verify($this->testQuery->toArray())->equals([
+            verify($query->toArray())->equals([
                 'boost'  => 2.0,
                 'field'  => 'field',
                 'value'  => 'value',
@@ -49,6 +39,17 @@ class QueryTraitsTest extends \Codeception\TestCase\Test
                 'values' => ['otherValue'],
             ]);
         });
+    }
+
+    /**
+     * Tests the HasScoreMode trait
+     */
+    public function testHasScoreModeTrait()
+    {
+        $this->specify('exception is thrown when invalid score mode is specified', function () {
+            $query = new ScoreModeTesterQuery();
+            $query->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_SUM);
+        }, ['throws' => new \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument()]);
     }
 }
 
@@ -74,6 +75,34 @@ class TraitTesterQuery extends \Nord\Lumen\Elasticsearch\Search\Query\QueryDSL
             'value'  => $this->getValue(),
             'fields' => $this->getFields(),
             'values' => $this->getValues(),
+        ];
+    }
+}
+
+/**
+ * Class ScoreModeTesterQuery
+ */
+class ScoreModeTesterQuery extends \Nord\Lumen\Elasticsearch\Search\Query\QueryDSL
+{
+    use \Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
+
+    /**
+     * @inheritdoc
+     */
+    protected function getValidScoreModes()
+    {
+        return [
+            \Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_MAX,
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function toArray()
+    {
+        return [
+            'score_mode' => $this->getScoreMode(),
         ];
     }
 }

@@ -1,6 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
 
 /**
@@ -16,23 +18,12 @@ use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
 class FunctionScoreQuery extends AbstractQuery
 {
     use HasQuery;
-    
-    const SCORE_MODE_MULTIPLY = 'multiply';
-    const SCORE_MODE_SUM = 'sum';
-    const SCORE_MODE_AVG = 'avg';
-    const SCORE_MODE_FIRST = 'first';
-    const SCORE_MODE_MAX = 'max';
-    const SCORE_MODE_MIN = 'min';
+    use HasScoreMode;
 
     /**
      * @var AbstractScoringFunction[]
      */
     private $functions = [];
-
-    /**
-     * @var string One of the `SCORE_MODE_` constants. Default is `multiply`.
-     */
-    private $scoreMode;
 
     /**
      * @inheritdoc
@@ -68,6 +59,20 @@ class FunctionScoreQuery extends AbstractQuery
         return ['function_score' => $array];
     }
 
+    /**
+     * @inheritdoc
+     */
+    protected function getValidScoreModes()
+    {
+        return [
+            ScoreMode::MODE_MULTIPLY,
+            ScoreMode::MODE_SUM,
+            ScoreMode::MODE_AVG,
+            ScoreMode::MODE_FIRST,
+            ScoreMode::MODE_MAX,
+            ScoreMode::MODE_MIN
+        ];
+    }
 
     /**
      * @return AbstractScoringFunction[]
@@ -100,50 +105,5 @@ class FunctionScoreQuery extends AbstractQuery
     {
         $this->functions[] = $function;
         return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @return FunctionScoreQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_MULTIPLY,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_FIRST,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_MIN
-        ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'FunctionScoreQuery `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 }
