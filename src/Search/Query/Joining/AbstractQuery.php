@@ -1,5 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
@@ -19,4 +20,59 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
+    const SCORE_MODE_AVG   = 'avg';
+    const SCORE_MODE_SUM   = 'sum';
+    const SCORE_MODE_MIN   = 'min';
+    const SCORE_MODE_MAX   = 'max';
+    const SCORE_MODE_SCORE = 'score';
+    const SCORE_MODE_NONE  = 'none';
+
+    /**
+     * @var string
+     */
+    protected $scoreMode;
+
+    /**
+     * @return array
+     */
+    abstract protected function getValidScoreModes();
+
+    /**
+     * @return string
+     */
+    public function getScoreMode()
+    {
+        return $this->scoreMode;
+    }
+
+    /**
+     * @param string $scoreMode
+     *
+     * @return $this
+     */
+    public function setScoreMode($scoreMode)
+    {
+        $this->assertScoreMode($scoreMode);
+        $this->scoreMode = $scoreMode;
+
+        return $this;
+    }
+
+    /**
+     * @param string $scoreMode
+     *
+     * @throws InvalidArgument
+     */
+    protected function assertScoreMode($scoreMode)
+    {
+        $validModes = $this->getValidScoreModes();
+        
+        if (!in_array($scoreMode, $validModes)) {
+            throw new InvalidArgument(sprintf(
+                '`score_mode` must be one of "%s", "%s" given.',
+                implode(', ', $validModes),
+                $scoreMode
+            ));
+        }
+    }
 }

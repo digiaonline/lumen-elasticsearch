@@ -11,21 +11,11 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasChildQuery extends AbstractQuery
 {
-    const SCORE_MODE_AVG  = 'avg';
-    const SCORE_MODE_SUM  = 'sum';
-    const SCORE_MODE_MIN  = 'min';
-    const SCORE_MODE_MAX  = 'max';
-    const SCORE_MODE_NONE = 'none';
 
     /**
      * @var string
      */
     private $type;
-
-    /**
-     * @var string
-     */
-    private $scoreMode;
 
     /**
      * @var int
@@ -71,6 +61,19 @@ class HasChildQuery extends AbstractQuery
         return ['has_child' => $hasChild];
     }
 
+    /**
+     * @inheritdoc
+     */
+    protected function getValidScoreModes()
+    {
+        return [
+            self::SCORE_MODE_AVG,
+            self::SCORE_MODE_SUM,
+            self::SCORE_MODE_MIN,
+            self::SCORE_MODE_MAX,
+            self::SCORE_MODE_NONE,
+        ];
+    }
 
     /**
      * @param string $type
@@ -89,27 +92,6 @@ class HasChildQuery extends AbstractQuery
     public function getType()
     {
         return $this->type;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @return HasChildQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
     }
 
 
@@ -172,29 +154,6 @@ class HasChildQuery extends AbstractQuery
     public function getQuery()
     {
         return $this->query;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_MIN,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_NONE
-        ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 
 

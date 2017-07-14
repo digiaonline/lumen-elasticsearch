@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 /**
@@ -13,21 +12,10 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class NestedQuery extends AbstractQuery
 {
-    const SCORE_MODE_AVG  = 'avg';
-    const SCORE_MODE_SUM  = 'sum';
-    const SCORE_MODE_MIN  = 'min';
-    const SCORE_MODE_MAX  = 'max';
-    const SCORE_MODE_NONE = 'none';
-
     /**
      * @var string
      */
     private $path;
-
-    /**
-     * @var string
-     */
-    private $scoreMode;
 
     /**
      * @var QueryDSL
@@ -53,6 +41,20 @@ class NestedQuery extends AbstractQuery
         return ['nested' => $nested];
     }
 
+    /**
+     * @inheritdoc
+     */
+    protected function getValidScoreModes()
+    {
+        return [
+            self::SCORE_MODE_AVG,
+            self::SCORE_MODE_SUM,
+            self::SCORE_MODE_MIN,
+            self::SCORE_MODE_MAX,
+            self::SCORE_MODE_NONE,
+        ];
+    }
+
 
     /**
      * @param string $path
@@ -75,27 +77,6 @@ class NestedQuery extends AbstractQuery
 
 
     /**
-     * @param string $scoreMode
-     * @return NestedQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
-    }
-
-
-    /**
      * @param QueryDSL $query
      * @return NestedQuery
      */
@@ -112,28 +93,5 @@ class NestedQuery extends AbstractQuery
     public function getQuery()
     {
         return $this->query;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_MIN,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_NONE
-        ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'Nested Query `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 }
