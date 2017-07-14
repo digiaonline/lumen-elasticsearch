@@ -3,7 +3,7 @@
 namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 
 /**
  * Class WildcardQuery
@@ -13,7 +13,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
  */
 class WildcardQuery extends AbstractQuery
 {
-    use BoostableQuery;
+    use HasBoost;
 
     /**
      * @var string
