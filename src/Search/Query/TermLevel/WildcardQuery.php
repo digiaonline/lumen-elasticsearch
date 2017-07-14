@@ -10,7 +10,6 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class WildcardQuery extends AbstractQuery
 {
-
     use BoostableQuery;
 
     /**

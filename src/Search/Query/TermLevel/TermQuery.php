@@ -7,7 +7,6 @@
  */
 class TermQuery extends AbstractQuery
 {
-    
     use BoostableQuery;
 
     /**
