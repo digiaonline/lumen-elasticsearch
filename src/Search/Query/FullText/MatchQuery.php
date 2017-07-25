@@ -1,7 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 

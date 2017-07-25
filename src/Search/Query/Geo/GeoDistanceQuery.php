@@ -1,7 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasField;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
  * Filters documents that include only hits that exists within a specific distance from a geo point.

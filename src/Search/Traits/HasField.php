@@ -1,10 +1,10 @@
 <?php
 
-namespace Nord\Lumen\Elasticsearch\Search\Query\Traits;
+namespace Nord\Lumen\Elasticsearch\Search\Traits;
 
 /**
  * Trait HasField
- * @package Nord\Lumen\Elasticsearch\Search\Query\Traits
+ * @package Nord\Lumen\Elasticsearch\Search\Traits
  */
 trait HasField
 {
