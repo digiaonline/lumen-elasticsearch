@@ -39,17 +39,164 @@ $app->register(Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class);
 
 You can now get the service instance using ```app(ElasticsearchServiceContract::class)``` or inject the ```ElasticsearchServiceContract``` where needed.
 
-### Quickstart
+### Configuring your indexes
 
-[Bool Query](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html)
+You can create and delete indexes using the provided console commands. Start by adding the commands to your console 
+kernel:
 
-Using the query builder:
+```php
+protected $commands = [
+	...
+	CreateCommand::class,
+	DeleteCommand::class,
+];
+```
+
+To create an index you need a configuration file that describes how the index should look. To create an index called 
+`my-index`, create a file named `my-index.php` in the `config/elasticsearch` directory (create the directory if it 
+doesn't exist) with the following contents:
+
+```php
+<?php
+
+return [
+    'index' => 'my-index',
+    'body' => [
+        'mappings' => [
+            'my-model' => [
+                'properties' => [
+                    'id' => ['type' => 'string', 'index' => 'not_analyzed'],
+                    'name' => ['type' => 'string'],
+                ],
+            ],
+        ],
+        'settings' => [
+            'analysis' => [
+                'filter' => [
+                    'finnish_stop' => [
+                        'type' => 'stop',
+                        'stopwords' => '_finnish_',
+                    ],
+                    'finnish_stemmer' => [
+                        'type' => 'stemmer',
+                        'language' => 'finnish',
+                    ],
+                ],
+                'analyzer' => [
+                    'finnish' => [
+                        'tokenizer' => 'standard',
+                        'filter' => [
+                            'lowercase',
+                            'finnish_stop',
+                            'finnish_stemmer',
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+Please refer to the official Elasticsearch documentation for more information on how to define indexes.
+
+Now that you have a configuration file for your index, create it by running 
+`php artisan elastic:index:create config/elasticsearch/my-index.php`.
+
+To delete the index, run `php artisan elastic:index:delete my-index`.
+
+### Indexing your data
+
+To index data into your newly created indexes you need to create a new console command that extends 
+`Nord\Lumen\Elasticsearch\Console\IndexCommand`, then register that command in your console kernel. A sample 
+implementation can look like this:
+
+```php
+<?php
+
+use Nord\Lumen\Elasticsearch\Console\IndexCommand;
+
+class IndexPersonsCommand extends IndexCommand
+{
+
+    protected $signature = 'app:index:persons';
+
+    protected $description = 'Indexes all persons into the search index';
+
+    public function getData()
+    {
+        return [
+            new Person('Joe'),
+            new Person('Jane'),
+        ];
+    }
+
+    public function getIndex()
+    {
+        return 'persons';
+    }
+
+    public function getType()
+    {
+        return 'person';
+    }
+
+    public function getItemBody($item)
+    {
+        // Item is an instance of Person in this case
+        return $item->getName();
+    }
+
+    public function getItemId($item)
+    {
+        // Item is an instance of Person in this case
+        return $item->getId();
+    }
+
+    public function getItemParent($item)
+    {
+        // Return null if your objects don't have any parent/child relationship
+        return $item->getParent();
+    }
+
+}
+```
+
+Now, run `php artisan app:index:persons` to index the data. You can now create additional commands for your other data 
+types that need to be indexed.
+
+#### Indexing single items
+
+The console commands are useful when you want to index all items of a particular type, e.g. all persons in your 
+database. However, if you update a single person you probably want to reindex just that person.
+
+Here's an example:
 
 ```php
 $service = app(ElasticsearchServiceContract::class);
 
+$service->index([
+	'index' => 'persons',
+	'type'  => 'person',
+	'id'    => $person->getId(),
+	'body'  => $person->getName(),
+]);
+```
+
+### Running queries
+
+Queries against the search index are run by creating a query using the query builder, then creating a search using the 
+query and finally executing the query using the provided service.
+
+Here's an example:
+
+```php
+$service = app(ElasticsearchServiceContract::class);
+
+// Create a query builder
 $queryBuilder = $service->createQueryBuilder();
 
+// Create the query
 $query = $queryBuilder->createBoolQuery()
     ->addMust(
         $queryBuilder->createTermQuery()
@@ -73,6 +220,7 @@ $query = $queryBuilder->createBoolQuery()
             ->setField('tag')
             ->setValue('elasticsearch'));
 
+// Create the search
 $search = $service->createSearch()
     ->setIndex('index')
     ->setType('document')
@@ -80,10 +228,11 @@ $search = $service->createSearch()
     ->setSize(50)
     ->setPage(1);
 
+// Execute the search to retrieve the results
 $result = $service->execute($search);
 ```
 
-Raw arrays:
+You can also perform raw queries:
 
 ```php
 $service = app(ElasticsearchServiceContract::class);
