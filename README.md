@@ -17,7 +17,6 @@ Simple wrapper of [Elasticsearch-PHP](https://github.com/elastic/elasticsearch-p
 ## Requirements
 
 - PHP 5.6 or newer
-- [Composer](http://getcomposer.org)
 
 ## Usage
 
