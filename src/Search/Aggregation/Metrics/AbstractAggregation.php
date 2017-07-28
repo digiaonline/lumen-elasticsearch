@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics;
 
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Aggregation;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
  * The aggregations in this family compute metrics based on values extracted in one way or another from the documents
@@ -18,4 +19,5 @@ use Nord\Lumen\Elasticsearch\Search\Aggregation\Aggregation;
  */
 abstract class AbstractAggregation extends Aggregation
 {
+    use HasField;
 }

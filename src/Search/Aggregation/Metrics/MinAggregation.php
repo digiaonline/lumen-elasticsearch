@@ -10,12 +10,6 @@
 class MinAggregation extends AbstractAggregation
 {
     /**
-     * @var string
-     */
-    private $field;
-
-
-    /**
      * @inheritdoc
      */
     public function toArray()
@@ -25,25 +19,5 @@ class MinAggregation extends AbstractAggregation
                 'field' => $this->getField()
             ]
         ];
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-
-    /**
-     * @param string $field
-     * @return MinAggregation
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
     }
 }

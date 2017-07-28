@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 
 /**
  * The term query finds documents that contain the exact term specified in the inverted index.
@@ -9,13 +10,8 @@ use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
  */
 class TermQuery extends AbstractQuery
 {
-    use BoostableQuery;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
+    use HasBoost;
+    use HasValue;
 
     /**
      * @inheritdoc
@@ -34,25 +30,5 @@ class TermQuery extends AbstractQuery
         }
 
         return ['term' => [$this->getField() => $term]];
-    }
-
-
-    /**
-     * @param mixed $value
-     * @return TermQuery
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-        return $this;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
     }
 }

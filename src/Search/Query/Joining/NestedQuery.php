@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 
 /**
  * Nested query allows to query nested objects / docs (see nested mapping).
@@ -16,11 +16,6 @@ class NestedQuery extends AbstractQuery
      * @var string
      */
     private $path;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -47,11 +42,11 @@ class NestedQuery extends AbstractQuery
     protected function getValidScoreModes()
     {
         return [
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_MIN,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_NONE,
+            ScoreMode::MODE_AVG,
+            ScoreMode::MODE_SUM,
+            ScoreMode::MODE_MIN,
+            ScoreMode::MODE_MAX,
+            ScoreMode::MODE_NONE,
         ];
     }
 
@@ -73,25 +68,5 @@ class NestedQuery extends AbstractQuery
     public function getPath()
     {
         return $this->path;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return NestedQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 }

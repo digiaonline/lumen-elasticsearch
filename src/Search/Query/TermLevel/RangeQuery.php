@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
-use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 
 /**
  * Matches documents with fields that have terms within a certain range. The type of the Lucene query depends on the
@@ -10,7 +10,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
  */
 class RangeQuery extends AbstractQuery
 {
-    use BoostableQuery;
+    use HasBoost;
 
     /**
      * @var mixed Greater-than or equal to.

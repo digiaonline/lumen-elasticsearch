@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
  * The has_parent query accepts a query and a parent type. The query is executed in the parent document space, which is
@@ -11,16 +12,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasParentQuery extends AbstractQuery
 {
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
+    use HasType;
 
 
     /**
@@ -47,47 +39,8 @@ class HasParentQuery extends AbstractQuery
     protected function getValidScoreModes()
     {
         return [
-            self::SCORE_MODE_SCORE,
-            self::SCORE_MODE_NONE
+            ScoreMode::MODE_SCORE,
+            ScoreMode::MODE_NONE
         ];
-    }
-
-    /**
-     * @param string $type
-     * @return HasParentQuery
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasParentQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 }

@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
  * While the full text queries will analyze the query string before executing, the term-level queries operate on the
@@ -50,29 +51,5 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
-
-    /**
-     * @var string
-     */
-    protected $field;
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-    /**
-     * @param string $field
-     *
-     * @return $this
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-
-        return $this;
-    }
+    use HasField;
 }

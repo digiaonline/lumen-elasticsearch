@@ -3,7 +3,8 @@
 namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
 
 /**
  * Class RegexpQuery
@@ -13,7 +14,8 @@ use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\Traits\BoostableQuery;
  */
 class RegexpQuery extends AbstractQuery
 {
-    use BoostableQuery;
+    use HasBoost;
+    use HasValue;
 
     const FLAG_ALL          = 'ALL';
     const FLAG_ANYSTRING    = 'ANYSTRING';
@@ -22,11 +24,6 @@ class RegexpQuery extends AbstractQuery
     const FLAG_INTERSECTION = 'INTERSECTION';
     const FLAG_INTERVAL     = 'INTERVAL';
     const FLAG_NONE         = 'NONE';
-
-    /**
-     * @var string
-     */
-    private $value;
 
     /**
      * @var array
@@ -70,26 +67,6 @@ class RegexpQuery extends AbstractQuery
                 $this->getField() => $definition,
             ],
         ];
-    }
-
-    /**
-     * @return string
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return $this
-     */
-    public function setValue($value)
-    {
-        $this->value = $value;
-
-        return $this;
     }
 
     /**

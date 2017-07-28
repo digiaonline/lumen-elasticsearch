@@ -1,7 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
  * The has_child filter accepts a query and the child type to run against, and results in parent documents that have
@@ -11,11 +12,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasChildQuery extends AbstractQuery
 {
-
-    /**
-     * @var string
-     */
-    private $type;
+    use HasType;
 
     /**
      * @var int
@@ -26,11 +23,6 @@ class HasChildQuery extends AbstractQuery
      * @var int
      */
     private $maxChildren;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -67,31 +59,12 @@ class HasChildQuery extends AbstractQuery
     protected function getValidScoreModes()
     {
         return [
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_MIN,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_NONE,
+            ScoreMode::MODE_AVG,
+            ScoreMode::MODE_SUM,
+            ScoreMode::MODE_MIN,
+            ScoreMode::MODE_MAX,
+            ScoreMode::MODE_NONE,
         ];
-    }
-
-    /**
-     * @param string $type
-     * @return HasChildQuery
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
 
@@ -134,26 +107,6 @@ class HasChildQuery extends AbstractQuery
     public function getMaxChildren()
     {
         return $this->maxChildren;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasChildQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
     }
 
 

@@ -10,12 +10,6 @@
 class MaxAggregation extends AbstractAggregation
 {
     /**
-     * @var string
-     */
-    private $field;
-
-
-    /**
      * @inheritdoc
      */
     public function toArray()
@@ -25,25 +19,5 @@ class MaxAggregation extends AbstractAggregation
                 'field' => $this->getField()
             ]
         ];
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-
-    /**
-     * @param string $field
-     * @return MaxAggregation
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
     }
 }
