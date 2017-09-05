@@ -49,6 +49,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function reindex(array $params = [])
+    {
+        return $this->client->reindex($params);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function bulk(array $params = [])
     {
         return $this->client->bulk($params);
