@@ -58,6 +58,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function updateByQuery(array $params = [])
+    {
+        return $this->client->updateByQuery($params);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function bulk(array $params = [])
     {
         return $this->client->bulk($params);
