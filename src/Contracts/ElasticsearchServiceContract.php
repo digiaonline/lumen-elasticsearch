@@ -39,6 +39,14 @@ interface ElasticsearchServiceContract
      *
      * @return array
      */
+    public function updateByQuery(array $params = []);
+
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function bulk(array $params = []);
 
 
