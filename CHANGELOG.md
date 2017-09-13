@@ -25,6 +25,17 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 ### Security
 - To invite users to upgrade in case of vulnerabilities.
 
+## [1.3.0] - 2017-09-13
+### Added
+- Support for wildcard and regexp queries
+- Better documentation in the README
+- Support re-indexing
+- Support update by query
+
+### Fixed
+- Fixed some badges in the README
+- Reduced some code duplication by using traits
+
 ## [1.2.0] - 2017-06-21
 ### Added
 - Function for getting the total count.
