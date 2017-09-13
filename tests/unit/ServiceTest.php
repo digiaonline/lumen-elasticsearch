@@ -92,6 +92,75 @@ class ServiceTest extends \Codeception\TestCase\Test
         });
     }
 
+    /**
+     * Tests the reindex method.
+     */
+    public function testMethodReindex()
+    {
+        $input = [
+            'source' => [
+                'index' => 'my_src_index'
+            ],
+            'dest'   => [
+                'index' => 'my_dest_index'
+            ]
+        ];
+
+        $output = [
+            'took'                   => 3104,
+            'timed_out'              => false,
+            'total'                  => 270,
+            'updated'                => 0,
+            'created'                => 270,
+            'batches'                => 1,
+            'version_conflicts'      => 0,
+            'noops'                  => 0,
+            'retries'                => 0,
+            'throttled_millis'       => 0,
+            'requests_per_second'    => 'unlimited',
+            'throttled_until_millis' => 0,
+            'failures'               => []
+        ];
+
+        $this->client->expects($this->any())
+            ->method('reindex')
+            ->with($input)
+            ->will($this->returnValue($output));
+
+        $this->specify('method reindex is ran', function () use ($input, $output) {
+            verify($this->service->reindex($input))->equals($output);
+        });
+    }
+
+    public function testMethodUpdateByQuery()
+    {
+        $input = [];
+
+        $output = [
+            "took"                   => 5164,
+            "timed_out"              => false,
+            "total"                  => 270,
+            "updated"                => 270,
+            "batches"                => 1,
+            "version_conflicts"      => 0,
+            "noops"                  => 0,
+            "retries"                => 0,
+            "throttled_millis"       => 0,
+            "requests_per_second"    => "unlimited",
+            "throttled_until_millis" => 0,
+            "failures"               => []
+        ];
+
+        $this->client->expects($this->any())
+            ->method('updateByQuery')
+            ->with($input)
+            ->will($this->returnValue($output));
+
+        $this->specify('method updateByQuery is ran', function () use ($input, $output) {
+            verify($this->service->updateByQuery($input))->equals($output);
+        });
+    }
+
 
     /**
      * Tests the bulk method.

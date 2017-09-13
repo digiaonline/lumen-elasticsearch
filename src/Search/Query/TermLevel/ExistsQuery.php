@@ -7,11 +7,6 @@
  */
 class ExistsQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
-
 
     /**
      * @inheritdoc
@@ -19,25 +14,5 @@ class ExistsQuery extends AbstractQuery
     public function toArray()
     {
         return ['exists' => ['field' => $this->getField()]];
-    }
-
-
-    /**
-     * @param string $field
-     * @return ExistsQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 }

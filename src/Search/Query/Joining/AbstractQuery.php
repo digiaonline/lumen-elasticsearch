@@ -1,6 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
 
 /**
  * Performing full SQL-style joins in a distributed system like Elasticsearch is prohibitively expensive.
@@ -19,4 +21,6 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 abstract class AbstractQuery extends QueryDSL
 {
+    use HasQuery;
+    use HasScoreMode;
 }

@@ -1,14 +1,13 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Sort;
 
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
+
 class FieldSort extends AbstractSort
 {
+    use HasField;
+    
     const MISSING_FIRST = '_first';
     const MISSING_LAST  = '_last';
-
-    /**
-     * @var string the field name to sort on.
-     */
-    private $field;
 
     /**
      * @var string The missing parameter specifies how docs which are missing the field should be treated. The missing
@@ -46,26 +45,6 @@ class FieldSort extends AbstractSort
         } else {
             return [$this->getField() => $options];
         }
-    }
-
-
-    /**
-     * @param string $field
-     * @return FieldSort
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
     }
 
 

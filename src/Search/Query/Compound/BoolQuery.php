@@ -101,31 +101,22 @@ class BoolQuery extends AbstractQuery
     {
         $array = [];
 
-        if (!empty($this->must)) {
-            $array['bool']['must'] = [];
-            foreach ($this->must as $query) {
-                $array['bool']['must'][] = $query->toArray();
-            }
-        }
+        $fields = [
+            'must'    => 'must',
+            'filter'  => 'filter',
+            'should'  => 'should',
+            'mustNot' => 'must_not',
+        ];
 
-        if (!empty($this->filter)) {
-            $array['bool']['filter'] = [];
-            foreach ($this->filter as $query) {
-                $array['bool']['filter'][] = $query->toArray();
-            }
-        }
+        foreach ($fields as $propertyName => $fieldName) {
+            $property = $this->{$propertyName};
 
-        if (!empty($this->should)) {
-            $array['bool']['should'] = [];
-            foreach ($this->should as $query) {
-                $array['bool']['should'][] = $query->toArray();
-            }
-        }
-
-        if (!empty($this->mustNot)) {
-            $array['bool']['must_not'] = [];
-            foreach ($this->mustNot as $query) {
-                $array['bool']['must_not'][] = $query->toArray();
+            if (!empty($property)) {
+                $array['bool'][$fieldName] = [];
+                foreach ($property as $query) {
+                    /** @var QueryDSL $query */
+                    $array['bool'][$fieldName][] = $query->toArray();
+                }
             }
         }
 

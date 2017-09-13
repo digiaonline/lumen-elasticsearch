@@ -1,7 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
  * The has_child filter accepts a query and the child type to run against, and results in parent documents that have
@@ -11,21 +12,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasChildQuery extends AbstractQuery
 {
-    const SCORE_MODE_AVG  = 'avg';
-    const SCORE_MODE_SUM  = 'sum';
-    const SCORE_MODE_MIN  = 'min';
-    const SCORE_MODE_MAX  = 'max';
-    const SCORE_MODE_NONE = 'none';
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $scoreMode;
+    use HasType;
 
     /**
      * @var int
@@ -36,11 +23,6 @@ class HasChildQuery extends AbstractQuery
      * @var int
      */
     private $maxChildren;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
 
 
     /**
@@ -71,45 +53,18 @@ class HasChildQuery extends AbstractQuery
         return ['has_child' => $hasChild];
     }
 
-
     /**
-     * @param string $type
-     * @return HasChildQuery
+     * @inheritdoc
      */
-    public function setType($type)
+    protected function getValidScoreModes()
     {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @return HasChildQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
+        return [
+            ScoreMode::MODE_AVG,
+            ScoreMode::MODE_SUM,
+            ScoreMode::MODE_MIN,
+            ScoreMode::MODE_MAX,
+            ScoreMode::MODE_NONE,
+        ];
     }
 
 
@@ -152,49 +107,6 @@ class HasChildQuery extends AbstractQuery
     public function getMaxChildren()
     {
         return $this->maxChildren;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasChildQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_AVG,
-            self::SCORE_MODE_SUM,
-            self::SCORE_MODE_MIN,
-            self::SCORE_MODE_MAX,
-            self::SCORE_MODE_NONE
-        ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 
 

@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Scoring\Functions;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
  * Decay functions score a document with a function that decays depending on the distance of a numeric field value of
@@ -10,14 +11,11 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 class DecayScoringFunction extends AbstractScoringFunction
 {
+    use HasField;
+    
     const DECAY_FUNCTION_LINEAR = 'linear';
     const DECAY_FUNCTION_EXPONENTIAL = 'exp';
     const DECAY_FUNCTION_GAUSSIAN = 'gauss';
-
-    /**
-     * @var string
-     */
-    private $field;
 
     /**
      * @var string One of the `DECAY_FUNCTION_` constants.
@@ -74,26 +72,6 @@ class DecayScoringFunction extends AbstractScoringFunction
                 $this->getField() => $options
             ],
         ];
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-
-    /**
-     * @param string $field
-     * @return DecayScoringFunction
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
     }
 
 

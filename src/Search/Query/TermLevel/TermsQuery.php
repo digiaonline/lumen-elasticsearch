@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValues;
+
 /**
  * Filters documents that have fields that match any of the provided terms (not analyzed).
  *
@@ -7,16 +9,7 @@
  */
 class TermsQuery extends AbstractQuery
 {
-    /**
-     * @var string
-     */
-    private $field;
-
-    /**
-     * @var array
-     */
-    private $values;
-
+    use HasValues;
 
     /**
      * @inheritdoc
@@ -28,45 +21,5 @@ class TermsQuery extends AbstractQuery
                 $this->getField() => $this->getValues()
             ]
         ];
-    }
-
-
-    /**
-     * @param string $field
-     * @return TermsQuery
-     */
-    public function setField($field)
-    {
-        $this->field = $field;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getField()
-    {
-        return $this->field;
-    }
-
-
-    /**
-     * @param array $values
-     * @return TermsQuery
-     */
-    public function setValues($values)
-    {
-        $this->values = $values;
-        return $this;
-    }
-
-
-    /**
-     * @return array
-     */
-    public function getValues()
-    {
-        return $this->values;
     }
 }

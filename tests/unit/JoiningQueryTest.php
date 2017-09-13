@@ -80,7 +80,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValue('value')
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery::SCORE_MODE_AVG);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_AVG);
             $array = $query->toArray();
             verify($array)->equals([
                 'nested' => [
@@ -146,7 +146,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValues(['ID1', 'ID2'])
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery::SCORE_MODE_SCORE);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_SCORE);
             $array = $query->toArray();
             verify($array)->equals([
                 'has_parent' => [
@@ -212,7 +212,7 @@ class JoiningQueryTest extends \Codeception\TestCase\Test
                                 ->setValues(['ID1', 'ID2'])
                         )
                 )
-                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery::SCORE_MODE_SUM);
+                ->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_SUM);
             $array = $query->toArray();
             verify($array)->equals([
                 'has_child' => [

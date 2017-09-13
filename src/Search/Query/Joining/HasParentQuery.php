@@ -1,7 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
+use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
  * The has_parent query accepts a query and a parent type. The query is executed in the parent document space, which is
@@ -12,23 +12,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
  */
 class HasParentQuery extends AbstractQuery
 {
-    const SCORE_MODE_SCORE  = 'score';
-    const SCORE_MODE_NONE   = 'none';
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * @var string
-     */
-    private $scoreMode;
-
-    /**
-     * @var QueryDSL
-     */
-    private $query;
+    use HasType;
 
 
     /**
@@ -49,84 +33,14 @@ class HasParentQuery extends AbstractQuery
         return ['has_parent' => $hasParent];
     }
 
-
     /**
-     * @param string $type
-     * @return HasParentQuery
+     * @inheritdoc
      */
-    public function setType($type)
+    protected function getValidScoreModes()
     {
-        $this->type = $type;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @return HasParentQuery
-     */
-    public function setScoreMode($scoreMode)
-    {
-        $this->assertScoreMode($scoreMode);
-        $this->scoreMode = $scoreMode;
-        return $this;
-    }
-
-
-    /**
-     * @return string
-     */
-    public function getScoreMode()
-    {
-        return $this->scoreMode;
-    }
-
-
-    /**
-     * @param QueryDSL $query
-     * @return HasParentQuery
-     */
-    public function setQuery(QueryDSL $query)
-    {
-        $this->query = $query;
-        return $this;
-    }
-
-
-    /**
-     * @return QueryDSL
-     */
-    public function getQuery()
-    {
-        return $this->query;
-    }
-
-
-    /**
-     * @param string $scoreMode
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = [
-            self::SCORE_MODE_SCORE,
-            self::SCORE_MODE_NONE
+        return [
+            ScoreMode::MODE_SCORE,
+            ScoreMode::MODE_NONE
         ];
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'HasParent Query `score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 }
