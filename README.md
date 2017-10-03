@@ -12,7 +12,13 @@
 
 Simple wrapper of [Elasticsearch-PHP](https://github.com/elastic/elasticsearch-php) for the [Lumen PHP framework](http://lumen.laravel.com/).
 
-**NOTE**: Branch 5.2 is using Lumen framework 5.2. Only bug fixes for 0.7.X should be tagged in the 5.2 branch.
+## Version support
+
+| Lumen | Elasticsearch | Library |
+|-------|---------------|---------|
+| 5.4.x | 5.x           | 2.x     |
+| 5.4.x | 2.x           | 1.x     |
+| 5.2.x | 2.x           | 0.7.x   |
 
 ## Requirements
 
