@@ -25,6 +25,10 @@ NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy up
 ### Security
 - To invite users to upgrade in case of vulnerabilities.
 
+## [2.0.0] - 2017-10-03
+
+- Initial support for Elasticsearch 5.x 
+
 ## [1.3.0] - 2017-09-13
 ### Added
 - Support for wildcard and regexp queries
