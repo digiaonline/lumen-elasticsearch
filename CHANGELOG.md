@@ -1,29 +1,6 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](http://keepachangelog.com/) 
-and this project adheres to [Semantic Versioning](http://semver.org/).
-
-NOTE: Always keep an Unreleased version at the top of this CHANGELOG for easy updating.
-
-## [Unreleased] - YYYY-MM-DD
-### Added
-- For new features.
-
-### Changed
-- For changes in existing functionality.
-
-### Deprecated
-- For once-stable features removed in upcoming releases.
-
-### Removed
-- For deprecated features removed in this release.
-
-### Fixed
-- For any bug fixes.
-
-### Security
-- To invite users to upgrade in case of vulnerabilities.
 
 ## [2.0.0] - 2017-10-03
 
