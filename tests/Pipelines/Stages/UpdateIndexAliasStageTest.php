@@ -140,5 +140,4 @@ class UpdateIndexAliasStageTest extends TestCase
 
         $stage($payload);
     }
-
 }

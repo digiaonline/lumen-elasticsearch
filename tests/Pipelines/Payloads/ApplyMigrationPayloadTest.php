@@ -26,5 +26,4 @@ class ApplyMigrationPayloadTest extends TestCase
         $this->assertTrue(is_array($payload->getTargetConfiguration()));
         $this->assertEquals('content_7', $payload->getTargetVersionName());
     }
-
 }

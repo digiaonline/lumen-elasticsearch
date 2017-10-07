@@ -23,7 +23,6 @@ class CreateMigrationPayloadTest extends TestCase
         $this->assertEquals(12345, $payload->getVersionName());
         $this->assertEquals('content_12345', $payload->getIndexVersionName());
     }
-
 }
 
 /**
@@ -42,5 +41,4 @@ class StaticVersionCreateMigrationPayload extends CreateMigrationPayload
 
         $this->versionName = '12345';
     }
-
 }
