@@ -20,7 +20,7 @@ class ApplyMigrationCommand extends AbstractCommand
     /**
      * @var string
      */
-    protected $signature = 'search:migrations:migrate {config : The path to the index configuration file}';
+    protected $signature = 'elastic:migrations:migrate {config : The path to the index configuration file}';
 
     /**
      * The console command description.
