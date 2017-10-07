@@ -7,14 +7,19 @@
         {
             "name": "Christoffer Lindqvist",
             "email": "christoffer.lindqvist@nordsoftware.com"
+        },
+        {
+            "name": "Sam Stenvall",
+            "email": "sam.stenvall@digia.com"
         }
     ],
     "require": {
         "php": ">=5.6",
-        "elasticsearch/elasticsearch": "^5.3"
+        "elasticsearch/elasticsearch": "^5.3",
+        "illuminate/support": "^5.4",
+        "illuminate/console": "^5.4"
     },
     "require-dev": {
-        "laravel/lumen-framework": "^5.4",
         "codeception/codeception": "^2.1",
         "codeception/specify": "^0.4",
         "codeception/verify": "^0.3",
@@ -24,6 +29,11 @@
     "autoload": {
         "psr-4": {
             "Nord\\Lumen\\Elasticsearch\\": "src"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "5.6.4"
         }
     }
 }
