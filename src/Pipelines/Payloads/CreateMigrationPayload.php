@@ -12,7 +12,7 @@ class CreateMigrationPayload extends MigrationPayload
     /**
      * @var int
      */
-    private $versionName;
+    protected $versionName;
 
     /**
      * IndexMigrationPayload constructor.
