@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "a84e0a33562c43cc583d72a4cc2ca8c7",
+    "content-hash": "f8a845226919b4ae6473c506c34ac732",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -378,6 +378,53 @@
             "description": "The Illuminate Support package.",
             "homepage": "https://laravel.com",
             "time": "2017-08-15T13:25:41+00:00"
+        },
+        {
+            "name": "league/pipeline",
+            "version": "0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/pipeline.git",
+                "reference": "27dc18166c30d6429c75d1320f41e8238c59c3d4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/pipeline/zipball/27dc18166c30d6429c75d1320f41e8238c59c3d4",
+                "reference": "27dc18166c30d6429c75d1320f41e8238c59c3d4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "henrikbjorn/phpspec-code-coverage": "^1.0",
+                "phpspec/phpspec": "^2.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Pipeline\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frank de Jonge",
+                    "email": "info@frenky.net"
+                }
+            ],
+            "description": "A plug and play pipeline implementation.",
+            "keywords": [
+                "composition",
+                "design pattern",
+                "pattern",
+                "pipeline",
+                "sequential"
+            ],
+            "time": "2016-10-13T20:53:39+00:00"
         },
         {
             "name": "nesbot/carbon",
