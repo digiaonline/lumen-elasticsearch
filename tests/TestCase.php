@@ -27,4 +27,12 @@ class TestCase extends \PHPUnit_Framework_TestCase
 
         $this->service = new ElasticsearchService(ClientBuilder::fromConfig([]));
     }
+
+    /**
+     * @return string
+     */
+    protected function getResourcesBasePath()
+    {
+        return __DIR__ . '/Resources';
+    }
 }

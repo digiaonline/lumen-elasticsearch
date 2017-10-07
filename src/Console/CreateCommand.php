@@ -1,9 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Console;
 
-use Illuminate\Console\Command;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-
-class CreateCommand extends Command
+class CreateCommand extends AbstractCommand
 {
 
     /**
@@ -20,13 +17,12 @@ class CreateCommand extends Command
      */
     protected $description = 'Creates an Elasticsearch index from a configuration file.';
 
-
     /**
      * @inheritdoc
      */
     public function handle()
     {
-        $config = $this->argument('config');
+        $config = (string)$this->argument('config');
 
         $filePath = realpath($config);
 
@@ -40,20 +36,10 @@ class CreateCommand extends Command
 
         $this->info('Creating index ...');
 
-        $service = $this->getElasticsearchService();
-        $service->indices()->create($params);
+        $this->elasticsearchService->indices()->create($params);
 
         $this->info(sprintf("Index '%s' created.", $params['index']));
 
         return 0;
-    }
-
-
-    /**
-     * @return ElasticsearchServiceContract
-     */
-    private function getElasticsearchService()
-    {
-        return app(ElasticsearchServiceContract::class);
     }
 }
