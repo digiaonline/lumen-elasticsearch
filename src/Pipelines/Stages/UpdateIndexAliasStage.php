@@ -72,5 +72,7 @@ class UpdateIndexAliasStage implements StageInterface
         foreach ($orphanedIndices as $orphanedIndex) {
             $indices->delete(['index' => $orphanedIndex]);
         }
+
+        return $payload;
     }
 }
