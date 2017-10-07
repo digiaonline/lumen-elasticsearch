@@ -73,5 +73,4 @@ class ApplyMigrationCommand extends Command
             $this->output->writeln('No migration required');
         }
     }
-
 }

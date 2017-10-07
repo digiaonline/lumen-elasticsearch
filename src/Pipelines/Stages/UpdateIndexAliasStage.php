@@ -73,5 +73,4 @@ class UpdateIndexAliasStage implements StageInterface
             $indices->delete(['index' => $orphanedIndex]);
         }
     }
-
 }

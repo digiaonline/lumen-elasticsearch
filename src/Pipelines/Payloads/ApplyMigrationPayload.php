@@ -45,5 +45,4 @@ class ApplyMigrationPayload extends MigrationPayload
     {
         return $this->getTargetConfiguration()['index'];
     }
-
 }

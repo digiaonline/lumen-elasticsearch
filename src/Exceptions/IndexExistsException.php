@@ -16,5 +16,4 @@ class IndexExistsException extends Exception
     {
         parent::__construct(sprintf('The index %s already exists', $index), $code, $previous);
     }
-
 }

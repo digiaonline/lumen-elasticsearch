@@ -29,5 +29,4 @@ class EnsureIndexConfigurationFileExistsStage implements StageInterface
 
         return $payload;
     }
-
 }

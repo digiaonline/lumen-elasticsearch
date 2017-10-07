@@ -47,5 +47,4 @@ class CreateMigrationPayload extends MigrationPayload
     {
         return sprintf('%s_%d', $this->getIndexName(), $this->getVersionName());
     }
-
 }

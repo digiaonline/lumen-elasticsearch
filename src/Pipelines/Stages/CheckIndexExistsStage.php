@@ -45,5 +45,4 @@ class CheckIndexExistsStage implements StageInterface
 
         return $payload;
     }
-
 }

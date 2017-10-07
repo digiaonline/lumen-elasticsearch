@@ -37,5 +37,4 @@ class DetermineTargetVersionStage implements StageInterface
 
         return $payload;
     }
-
 }

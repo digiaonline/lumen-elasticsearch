@@ -30,5 +30,4 @@ class CreateVersionDefinitionStage implements StageInterface
 
         return $payload;
     }
-
 }
