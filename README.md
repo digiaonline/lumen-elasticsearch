@@ -276,6 +276,32 @@ $result = $service->search([
 ]);
 ```
 
+## Creating and applying index migrations
+
+Sometimes you need to make a change to an index mapping that requires data to be re-indexed. However, most of the 
+time you don't need to actually index everything into Elasticsearch again, instead it is enough to just copy the data 
+internally from your original index to a new one. This process can be performed seamlessly without downtime.
+
+### Requirements
+
+* You must add the `CreateMigrationCommand` and `ApplyMigrationCommand` commands to your console kernel
+* Your Elasticsearch instance must support the `/_reindex` API. This is normally the case, however, Amazon 
+Elasticsearch Service doesn't support it if you're using Elasticsearch 2.3 or older.
+
+### Creating a migration
+
+* Change your index definition (e.g. `config/search/your-index.php`) according to your needs
+* Run `php artisan search:migrations:create config/search/your-index.php`)
+
+This will create a directory named `versions` as well as a timestamped copy of your index definition file.
+
+### Applying a migration
+
+* Run `php artisan search:migrations:migrate config/search/your-index.php`
+
+If you haven't run migrations before, your index will be replaced by an alias of the same name once the new index has 
+been created. The next time you apply a migration, the alias will simply be updated.
+
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).
