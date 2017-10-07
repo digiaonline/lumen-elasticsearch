@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.1.9] - 2017-10-07
+## [2.1.1] - 2017-10-07
+### Fixed
+- Fixed instructions for running unit tests in the README
+
+## [2.1.0] - 2017-10-07
 ### Added
 - Support for index migrations (see the README for more details)
 
