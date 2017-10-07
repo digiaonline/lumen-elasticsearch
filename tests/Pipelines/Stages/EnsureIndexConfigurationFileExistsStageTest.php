@@ -21,6 +21,6 @@ class EnsureIndexConfigurationFileExistsStageTest extends TestCase
         $payload = new CreateMigrationPayload('/does/not/exist');
         $stage   = new EnsureIndexConfigurationFileExistsStage();
 
-        $stage($payload);
+        $this->assertInstanceOf(CreateMigrationPayload::class, $stage($payload));
     }
 }

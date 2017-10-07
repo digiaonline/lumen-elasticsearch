@@ -44,6 +44,6 @@ class CheckIndexExistsStageTest extends TestCase
         $payload->setTargetVersionFile('1.php');
 
         $stage = new CheckIndexExistsStage($service);
-        $stage($payload);
+        $this->assertInstanceOf(ApplyMigrationPayload::class, $stage($payload));
     }
 }
