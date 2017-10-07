@@ -31,5 +31,4 @@ abstract class AbstractSortTestCase extends TestCase
 
         $this->sortBuilder = $this->service->createSortBuilder();
     }
-
 }

@@ -68,5 +68,4 @@ class HasParentQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

@@ -79,5 +79,4 @@ class RegexpQueryTest extends AbstractQueryTestCase
     {
         $this->queryBuilder->createRegexpQuery()->setMaxDeterminizedStates('foo');
     }
-
 }

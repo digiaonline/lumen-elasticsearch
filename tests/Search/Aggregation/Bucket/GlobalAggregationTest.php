@@ -39,5 +39,4 @@ class GlobalAggregationTest extends AbstractAggregationTestCase
             ],
         ], $aggregation->toArray());
     }
-
 }

@@ -97,5 +97,4 @@ class SortStringParserTest extends TestCase
         $this->assertEquals(['field2' => ['order' => 'desc', 'mode' => 'sum']], $sorts[1]->toArray());
         $this->assertEquals('_score', $sorts[2]->toArray());
     }
-
 }

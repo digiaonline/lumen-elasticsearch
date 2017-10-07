@@ -54,5 +54,4 @@ class MultiMatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

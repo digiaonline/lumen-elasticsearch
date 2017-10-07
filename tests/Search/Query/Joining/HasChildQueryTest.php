@@ -120,5 +120,4 @@ class HasChildQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

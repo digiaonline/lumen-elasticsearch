@@ -39,5 +39,4 @@ class WildcardQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

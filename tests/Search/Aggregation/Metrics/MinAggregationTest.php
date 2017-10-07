@@ -24,5 +24,4 @@ class MinAggregationTest extends AbstractAggregationTestCase
             'min' => ['field' => 'field_name'],
         ], $aggregation->toArray());
     }
-
 }

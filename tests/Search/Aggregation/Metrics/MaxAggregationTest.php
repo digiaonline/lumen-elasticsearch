@@ -24,5 +24,4 @@ class MaxAggregationTest extends AbstractAggregationTestCase
             'max' => ['field' => 'field_name'],
         ], $aggregation->toArray());
     }
-
 }

@@ -33,5 +33,4 @@ class TermQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }
