@@ -128,5 +128,4 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

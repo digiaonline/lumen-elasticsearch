@@ -38,5 +38,4 @@ class FieldSortTest extends AbstractSortTestCase
                                   ->setField('field')->setUnmappedType('long');
         $this->assertEquals(['field' => ['unmapped_type' => 'long']], $sort->toArray());
     }
-
 }

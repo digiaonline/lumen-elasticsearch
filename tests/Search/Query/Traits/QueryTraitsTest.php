@@ -64,7 +64,6 @@ class QueryTraitsTest extends TestCase
  */
 class TraitTesterQuery extends QueryDSL
 {
-
     use HasField;
     use HasBoost;
     use HasFields;
@@ -91,7 +90,6 @@ class TraitTesterQuery extends QueryDSL
  */
 class ScoreModeTesterQuery extends QueryDSL
 {
-
     use HasScoreMode;
 
     /**

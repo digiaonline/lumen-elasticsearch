@@ -20,5 +20,4 @@ class ScoreSortTest extends AbstractSortTestCase
         $sort->setOrder('asc');
         $this->assertEquals(['_score' => ['order' => 'asc']], $sort->toArray());
     }
-
 }

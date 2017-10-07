@@ -31,5 +31,4 @@ abstract class AbstractQueryTestCase extends TestCase
 
         $this->queryBuilder = $this->service->createQueryBuilder();
     }
-
 }

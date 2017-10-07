@@ -69,5 +69,4 @@ class NestedQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

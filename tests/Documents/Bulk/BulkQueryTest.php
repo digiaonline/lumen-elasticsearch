@@ -12,7 +12,6 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
  */
 class BulkQueryTest extends TestCase
 {
-
     const BULK_SIZE = 5;
 
     /**
@@ -115,5 +114,4 @@ class BulkQueryTest extends TestCase
             ],
         ], $this->query->toArray());
     }
-
 }

@@ -24,5 +24,4 @@ class TermsQueryTest extends AbstractQueryTestCase
             'terms' => ['field' => ['val1', 'val2']],
         ], $query->toArray());
     }
-
 }

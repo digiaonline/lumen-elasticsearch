@@ -48,5 +48,4 @@ class SortTest extends TestCase
         $this->sort->addSort($this->sortBuilder->createScoreSort());
         $this->assertCount(3, $this->sort->getSorts());
     }
-
 }

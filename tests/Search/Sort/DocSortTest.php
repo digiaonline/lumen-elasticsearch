@@ -26,5 +26,4 @@ class DocSortTest extends AbstractSortTestCase
         $sort->setOrder('asc');
         $this->assertEquals(['_doc' => ['order' => 'asc']], $sort->toArray());
     }
-
 }

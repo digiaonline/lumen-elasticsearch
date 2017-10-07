@@ -255,5 +255,4 @@ class ServiceTest extends TestCase
 
         $this->assertEquals($output, $this->service->indices());
     }
-
 }

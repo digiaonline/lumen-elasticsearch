@@ -62,5 +62,4 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
 
         $this->assertNull($collection->remove(0));
     }
-
 }

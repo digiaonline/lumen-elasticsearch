@@ -76,5 +76,4 @@ class RangeQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

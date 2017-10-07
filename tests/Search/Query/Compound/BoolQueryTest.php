@@ -59,5 +59,4 @@ class BoolQueryTest extends AbstractQueryTestCase
 
         $this->assertEquals($expectedArray, $query->toArray());
     }
-
 }

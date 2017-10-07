@@ -48,5 +48,4 @@ class GeoDistanceQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
-
 }

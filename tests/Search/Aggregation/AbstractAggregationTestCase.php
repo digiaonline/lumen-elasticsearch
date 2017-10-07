@@ -26,5 +26,4 @@ abstract class AbstractAggregationTestCase extends TestCase
 
         $this->aggregationBuilder = $this->service->createAggregationBuilder();
     }
-
 }
