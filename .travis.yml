@@ -12,10 +12,8 @@ before_script:
   - composer self-update
   - composer install
 
-script: vendor/bin/codecept run unit --coverage --report --coverage-xml
+script: vendor/bin/phpunit
 
 after_success:
- - mkdir -p build/logs
- - cp tests/_output/coverage.xml build/logs/clover.xml
  - wget https://github.com/php-coveralls/php-coveralls/releases/download/v1.0.1/coveralls.phar -O coveralls.phar
  - php coveralls.phar -v

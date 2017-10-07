@@ -20,15 +20,17 @@
         "illuminate/console": "^5.4"
     },
     "require-dev": {
-        "codeception/codeception": "^2.1",
-        "codeception/specify": "^0.4",
-        "codeception/verify": "^0.3",
-        "satooshi/php-coveralls": "^1.0",
+        "phpunit/phpunit": "^5.7",
         "pagerfanta/pagerfanta": "^1.0"
     },
     "autoload": {
         "psr-4": {
             "Nord\\Lumen\\Elasticsearch\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Nord\\Lumen\\Elasticsearch\\Tests\\": "tests"
         }
     },
     "config": {

@@ -1,6 +1,4 @@
 .idea
 composer.phar
 /vendor/
-/tests/_output/*
-/tests/_support/_generated/*
-!/tests/_output/.gitkeep
+/build/logs/clover.xml
