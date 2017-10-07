@@ -24,5 +24,4 @@ class EnsureIndexVersionsDirectoryExists implements StageInterface
 
         return $payload;
     }
-
 }

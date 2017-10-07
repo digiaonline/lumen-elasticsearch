@@ -53,5 +53,4 @@ class CreateIndexStage implements StageInterface
 
         return $payload;
     }
-
 }

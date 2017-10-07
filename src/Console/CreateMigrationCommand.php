@@ -46,5 +46,4 @@ class CreateMigrationCommand extends Command
 
         $this->output->writeln('Created ' . $payload->getVersionName());
     }
-
 }

@@ -25,5 +25,4 @@ class DetermineTargetVersionStageTest extends TestCase
 
         $this->assertEquals('7.php', basename($payload->getTargetVersionPath()));
     }
-
 }

@@ -63,5 +63,4 @@ class EnsureIndexVersionsDirectoryExistsTest extends TestCase
     {
         return $this->getResourcesBasePath() . '/versions/context';
     }
-
 }

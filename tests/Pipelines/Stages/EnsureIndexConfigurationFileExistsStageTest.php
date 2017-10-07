@@ -23,5 +23,4 @@ class EnsureIndexConfigurationFileExistsStageTest extends TestCase
 
         $stage($payload);
     }
-
 }
