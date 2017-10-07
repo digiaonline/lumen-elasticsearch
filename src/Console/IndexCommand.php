@@ -1,11 +1,9 @@
 <?php namespace Nord\Lumen\Elasticsearch\Console;
 
-use Illuminate\Console\Command;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkQuery;
 
-abstract class IndexCommand extends Command
+abstract class IndexCommand extends AbstractCommand
 {
 
     /**
@@ -65,8 +63,6 @@ abstract class IndexCommand extends Command
     {
         $this->info(sprintf('Indexing data of type "%s" into "%s"', $this->getType(), $this->getIndex()));
 
-        $service = $this->getElasticsearchService();
-
         $data = $this->getData();
 
         $bar = $this->output->createProgressBar($this->getCount());
@@ -87,12 +83,12 @@ abstract class IndexCommand extends Command
             }
 
             $action->setAction(BulkAction::ACTION_INDEX, $meta)
-                ->setBody($this->getItemBody($item));
+                   ->setBody($this->getItemBody($item));
 
             $bulkQuery->addAction($action);
 
             if ($bulkQuery->isReady()) {
-                $service->bulk($bulkQuery->toArray());
+                $this->elasticsearchService->bulk($bulkQuery->toArray());
                 $bulkQuery->reset();
             }
 
@@ -100,7 +96,7 @@ abstract class IndexCommand extends Command
         }
 
         if ($bulkQuery->hasItems()) {
-            $service->bulk($bulkQuery->toArray());
+            $this->elasticsearchService->bulk($bulkQuery->toArray());
         }
 
         $bar->finish();
@@ -110,7 +106,6 @@ abstract class IndexCommand extends Command
         return 0;
     }
 
-
     /**
      * @return int the bulk size (for bulk indexing)
      */
@@ -118,7 +113,6 @@ abstract class IndexCommand extends Command
     {
         return BulkQuery::BULK_SIZE_DEFAULT;
     }
-
 
     /**
      * Get the total count.
@@ -128,13 +122,5 @@ abstract class IndexCommand extends Command
     protected function getCount()
     {
         return count($this->getData());
-    }
-
-    /**
-     * @return ElasticsearchServiceContract
-     */
-    private function getElasticsearchService()
-    {
-        return app(ElasticsearchServiceContract::class);
     }
 }
