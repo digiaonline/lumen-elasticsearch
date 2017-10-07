@@ -2,8 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.0] - 2017-10-03
+## [2.1.9] - 2017-10-07
+### Added
+- Support for index migrations (see the README for more details)
 
+### Changed
+- Changed test suite to use phpunit and PSR-4
+- Changed dependencies to match real world usage
+ 
+### Fixed
+- Some minor Scrutinizer issues
+
+## [2.0.0] - 2017-10-03
+### Added
 - Initial support for Elasticsearch 5.x 
 
 ## [1.3.0] - 2017-09-13
