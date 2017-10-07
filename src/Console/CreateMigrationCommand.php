@@ -33,7 +33,7 @@ class CreateMigrationCommand extends Command
      */
     public function handle()
     {
-        $configurationPath = $this->argument('config');
+        $configurationPath = (string)$this->argument('config');
 
         $pipeline = new Pipeline([
             new EnsureIndexConfigurationFileExistsStage(),

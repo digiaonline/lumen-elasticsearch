@@ -2,9 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Console;
 
-use Illuminate\Console\Command;
 use League\Pipeline\Pipeline;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Exceptions\IndexExistsException;
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CheckIndexExistsStage;
@@ -16,7 +14,7 @@ use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
  * Class ApplyMigrationCommand
  * @package Nord\Lumen\Elasticsearch\Commands\Migrations
  */
-class ApplyMigrationCommand extends Command
+class ApplyMigrationCommand extends AbstractCommand
 {
 
     /**
@@ -32,28 +30,11 @@ class ApplyMigrationCommand extends Command
     protected $description = 'Migrates the specified index to a new index using the newest configuration version';
 
     /**
-     * @var ElasticsearchServiceContract
-     */
-    protected $elasticsearchService;
-
-    /**
-     * AbstractMigrationCommand constructor.
-     *
-     * @param ElasticsearchServiceContract $elasticsearchService
-     */
-    public function __construct(ElasticsearchServiceContract $elasticsearchService)
-    {
-        parent::__construct();
-
-        $this->elasticsearchService = $elasticsearchService;
-    }
-
-    /**
      * @inheritDoc
      */
     public function handle()
     {
-        $configurationPath = $this->argument('config');
+        $configurationPath = (string)$this->argument('config');
 
         $pipeline = new Pipeline([
             new DetermineTargetVersionStage(),
