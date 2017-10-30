@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Aggregation;
 
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\TermsAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MaxAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 
@@ -12,6 +13,15 @@ class AggregationBuilder
     public function createGlobalAggregation()
     {
         return new GlobalAggregation();
+    }
+
+
+    /**
+     * @return TermsAggregation
+     */
+    public function createTermsAggregation()
+    {
+        return new TermsAggregation();
     }
 
 
