@@ -78,7 +78,7 @@ class BoolQuery extends AbstractQuery
      */
     public function addFilters(array $filters)
     {
-        foreach($filters as $filter) {
+        foreach ($filters as $filter) {
             if ($filter instanceof QueryDSL) {
                 $this->addFilter($filter);
             }
