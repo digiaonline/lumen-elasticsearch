@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Tests\Search;
 
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\TermsAggregation;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
@@ -102,7 +103,8 @@ class SearchTest extends TestCase
             'query' => ['match_all' => []],
             'size'  => 100,
             'from'  => 0,
-        ], $this->search->buildBody());
+        ],
+            $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
         $this->search->setPage(2);
@@ -112,7 +114,8 @@ class SearchTest extends TestCase
             'query' => ['match_all' => []],
             'size'  => 100,
             'from'  => 100,
-        ], $this->search->buildBody());
+        ],
+            $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
         $this->search->setFrom(10);
@@ -122,7 +125,8 @@ class SearchTest extends TestCase
             'query' => ['match_all' => []],
             'from'  => 10,
             'size'  => 10,
-        ], $this->search->buildBody());
+        ],
+            $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
         $this->search->setPage(1);
@@ -141,7 +145,8 @@ class SearchTest extends TestCase
             ],
             'size'  => 100,
             'from'  => 0,
-        ], $this->search->buildBody());
+        ],
+            $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
         $this->search->setSort($this->sort);
@@ -151,7 +156,8 @@ class SearchTest extends TestCase
             'sort'  => ['_score'],
             'size'  => 100,
             'from'  => 0,
-        ], $this->search->buildBody());
+        ],
+            $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
         $this->search->addAggregation($this->aggregation);
@@ -166,6 +172,44 @@ class SearchTest extends TestCase
                         'max_name' => ['max' => ['field' => 'field_name']],
                     ],
                 ],
+            ],
+            'size'  => 100,
+            'from'  => 0,
+        ],
+            $this->search->buildBody());
+    }
+
+    /**
+     * Test adding man array of aggregation to Search
+     */
+    public function testAddAggregations()
+    {
+        $this->search = $this->service->createSearch();
+        $this->search->setPage(1);
+        $this->search->setSize(100);
+
+        $aggregations = [
+            (new TermsAggregation())->setName('name1')->setField('field1'),
+            (new TermsAggregation())->setName('name2')->setField('field2')
+        ];
+
+        $this->search->addAggregations($aggregations);
+
+        $this->assertInstanceOf(AggregationCollection::class, $this->search->getAggregations());
+
+        $this->assertEquals([
+            'query' => ['match_all' => []],
+            'aggs'  => [
+                'name1' => [
+                    'terms' => [
+                        'field' => 'field1'
+                    ]
+                ],
+                'name2' => [
+                    'terms' => [
+                        'field' => 'field2'
+                    ]
+                ]
             ],
             'size'  => 100,
             'from'  => 0,

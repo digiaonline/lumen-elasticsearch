@@ -157,6 +157,21 @@ class Search
 
 
     /**
+     * @param array $aggregations
+     * @return Search
+     */
+    public function addAggregations(array $aggregations)
+    {
+        foreach ($aggregations as $aggregation) {
+            if ($aggregation instanceof Aggregation) {
+                $this->addAggregation($aggregation);
+            }
+        }
+        return $this;
+    }
+
+
+    /**
      * @param int $page
      * @return Search
      */
