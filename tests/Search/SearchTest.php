@@ -191,7 +191,7 @@ class SearchTest extends TestCase
 
         $this->assertInstanceOf(AggregationCollection::class, $this->search->getAggregations());
 
-         $this->assertEquals([
+        $this->assertEquals([
              'query' => ['match_all' => []],
              'aggs'  => [
                 'name1' => [
