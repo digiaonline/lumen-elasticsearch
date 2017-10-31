@@ -215,4 +215,41 @@ class SearchTest extends TestCase
             'from'  => 0,
         ], $this->search->buildBody());
     }
+
+    /**
+     * Test adding man array of aggregation to Search
+     */
+    public function testAddAggregations()
+    {
+        $this->search = $this->service->createSearch();
+        $this->search->setPage(1);
+        $this->search->setSize(100);
+
+        $aggregations = [
+            (new TermsAggregation())->setName('name1')->setField('field1'),
+            (new TermsAggregation())->setName('name2')->setField('field2')
+        ];
+
+        $this->search->addAggregations($aggregations);
+
+        $this->assertInstanceOf(AggregationCollection::class, $this->search->getAggregations());
+
+        $this->assertEquals([
+             'query' => ['match_all' => []],
+             'aggs'  => [
+                'name1' => [
+                    'terms' => [
+                        'field' => 'field1'
+                    ]
+                ],
+                'name2' => [
+                    'terms' => [
+                        'field' => 'field2'
+                    ]
+                ]
+             ],
+             'size'  => 100,
+             'from'  => 0,
+         ], $this->search->buildBody());
+    }
 }
