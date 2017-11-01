@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2017-11-01
+### Added
+- Support for terms aggregation
+- Support for adding filters and aggregations to a query
+
+### Fixed
+- Unit test instructions in the README were wrong
+
 ## [2.1.1] - 2017-10-07
 ### Fixed
 - Fixed instructions for running unit tests in the README
