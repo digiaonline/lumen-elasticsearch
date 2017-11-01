@@ -244,7 +244,7 @@ class Search
             }
         }
         if (empty($body['query'])) {
-            $body['query'] = ['match_all' => []];
+            $body['query'] = ['match_all' => new \stdClass()];
         }
 
         if (($sort = $this->getSort())) {
