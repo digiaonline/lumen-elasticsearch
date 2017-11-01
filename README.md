@@ -45,9 +45,9 @@ $app->register(Nord\Lumen\Elasticsearch\ElasticsearchServiceProvider::class);
 
 You can now get the service instance using ```app(ElasticsearchServiceContract::class)``` or inject the ```ElasticsearchServiceContract``` where needed.
 
-### Configuring your indexes
+### Configuring your indices
 
-You can create and delete indexes using the provided console commands. Start by adding the commands to your console 
+You can create and delete indices using the provided console commands. Start by adding the commands to your console 
 kernel:
 
 ```php
@@ -104,7 +104,7 @@ return [
 ];
 ```
 
-Please refer to the official Elasticsearch documentation for more information on how to define indexes.
+Please refer to the official Elasticsearch documentation for more information on how to define indices.
 
 Now that you have a configuration file for your index, create it by running 
 `php artisan elastic:index:create config/elasticsearch/my-index.php`.
@@ -113,7 +113,7 @@ To delete the index, run `php artisan elastic:index:delete my-index`.
 
 ### Indexing your data
 
-To index data into your newly created indexes you need to create a new console command that extends 
+To index data into your newly created indices you need to create a new console command that extends 
 `Nord\Lumen\Elasticsearch\Console\IndexCommand`, then register that command in your console kernel. A sample 
 implementation can look like this:
 

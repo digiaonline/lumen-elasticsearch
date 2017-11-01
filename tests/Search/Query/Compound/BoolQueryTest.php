@@ -59,4 +59,47 @@ class BoolQueryTest extends AbstractQueryTestCase
 
         $this->assertEquals($expectedArray, $query->toArray());
     }
+
+    /**
+     * Test adding an array of filters to BoolQuery
+     */
+    public function testAddFilters()
+    {
+        $query = $this->queryBuilder->createBoolQuery();
+        $query->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+        $query->addFilter($this->queryBuilder->createTermQuery()->setField('field2')->setValue('value2'));
+
+        $filters = [
+            $this->queryBuilder->createTermsQuery()->setField('field3')->setValues(['value3']),
+            $this->queryBuilder->createTermsQuery()->setField('field4')->setValues(['value4']),
+        ];
+        $query->addFilters($filters);
+
+        $expectedArray = [
+            'bool' => [
+                'must'     => [
+                    [
+                        'term' => ['field1' => 'value1'],
+                    ],
+                ],
+                'filter'   => [
+                    [
+                        'term' => ['field2' => 'value2'],
+                    ],
+                    [
+                        'terms' => [
+                            'field3' => ['value3']
+                        ],
+                    ],
+                    [
+                        'terms' => [
+                            'field4' => ['value4']
+                        ],
+                    ]
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedArray, $query->toArray());
+    }
 }
