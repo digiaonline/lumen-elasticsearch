@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.2.1] - 2017-11-02
+### Fixed
+- Fixed an issue with empty match_all queries
+
 ## [2.2.0] - 2017-11-01
 ### Added
 - Support for terms aggregation
