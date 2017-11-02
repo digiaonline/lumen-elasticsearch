@@ -100,7 +100,7 @@ class SearchTest extends TestCase
         $this->search->setSize(100);
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'size'  => 100,
             'from'  => 0,
         ], $this->search->buildBody());
@@ -110,7 +110,7 @@ class SearchTest extends TestCase
         $this->search->setSize(100);
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'size'  => 100,
             'from'  => 100,
         ], $this->search->buildBody());
@@ -120,7 +120,7 @@ class SearchTest extends TestCase
         $this->search->setSize(10);
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'from'  => 10,
             'size'  => 10,
         ], $this->search->buildBody());
@@ -148,7 +148,7 @@ class SearchTest extends TestCase
         $this->search->setSort($this->sort);
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'sort'  => ['_score'],
             'size'  => 100,
             'from'  => 0,
@@ -158,7 +158,7 @@ class SearchTest extends TestCase
         $this->search->addAggregation($this->aggregation);
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'aggs'  => [
                 'global_name' => [
                     'global' => new \stdClass(),
@@ -192,7 +192,7 @@ class SearchTest extends TestCase
         $this->assertInstanceOf(AggregationCollection::class, $this->search->getAggregations());
 
         $this->assertEquals([
-            'query' => ['match_all' => []],
+            'query' => ['match_all' => new \stdClass()],
             'aggs'  => [
                 'name1' => [
                     'terms' => [
