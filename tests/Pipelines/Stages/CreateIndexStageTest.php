@@ -32,9 +32,9 @@ class CreateIndexStageTest extends TestCase
                       ->method('reindex')
                       ->with([
                           'body' => [
-                              'size'   => 100,
                               'source' => [
                                   'index' => 'foo',
+                                  'size'  => 100,
                               ],
                               'dest'   => [
                                   'index' => 'foo23',

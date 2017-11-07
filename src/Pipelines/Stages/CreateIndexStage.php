@@ -41,9 +41,9 @@ class CreateIndexStage implements StageInterface
         if ($this->elasticsearchService->indices()->exists(['index' => $payload->getIndexName()])) {
             $this->elasticsearchService->reindex([
                 'body' => [
-                    'size'   => $payload->getBatchSize(),
                     'source' => [
                         'index' => $payload->getIndexName(),
+                        'size'  => $payload->getBatchSize(),
                     ],
                     'dest'   => [
                         'index' => $payload->getTargetVersionName(),
