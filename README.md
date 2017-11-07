@@ -291,13 +291,13 @@ Elasticsearch Service doesn't support it if you're using Elasticsearch 2.3 or ol
 ### Creating a migration
 
 * Change your index definition (e.g. `config/search/your-index.php`) according to your needs
-* Run `php artisan search:migrations:create config/search/your-index.php`)
+* Run `php artisan elastic:migrations:create config/search/your-index.php`)
 
 This will create a directory named `versions` as well as a timestamped copy of your index definition file.
 
 ### Applying a migration
 
-* Run `php artisan search:migrations:migrate config/search/your-index.php`
+* Run `php artisan elastic:migrations:migrate config/search/your-index.php`
 
 If you haven't run migrations before, your index will be replaced by an alias of the same name once the new index has 
 been created. The next time you apply a migration, the alias will simply be updated.
