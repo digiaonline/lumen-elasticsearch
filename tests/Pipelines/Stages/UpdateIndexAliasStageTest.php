@@ -24,7 +24,7 @@ class UpdateIndexAliasStageTest extends TestCase
         /** @var IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $indices */
         $indices = $this->getMockBuilder(IndicesNamespace::class)
                         ->disableOriginalConstructor()
-                        ->setMethods(['getAlias', 'updateAliases', 'delete'])
+                        ->setMethods(['getAlias', 'updateAliases', 'delete', 'putSettings'])
                         ->getMock();
 
         // Pretend there's an alias pointing at the index "content_3"
@@ -32,6 +32,10 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->method('getAlias')
                 ->with(['name' => 'content'])
                 ->willReturn(['content_3' => 'foo']);
+
+        // Expect settings to me updated
+        $indices->expects($this->once())
+                ->method('putSettings');
 
         // Expect the alias to get updated
         $indices->expects($this->once())
@@ -66,7 +70,7 @@ class UpdateIndexAliasStageTest extends TestCase
         /** @var IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $indices */
         $indices = $this->getMockBuilder(IndicesNamespace::class)
                         ->disableOriginalConstructor()
-                        ->setMethods(['getAlias', 'updateAliases', 'exists', 'delete'])
+                        ->setMethods(['getAlias', 'updateAliases', 'exists', 'delete', 'putSettings'])
                         ->getMock();
 
         // Make it so there are no aliases
@@ -107,7 +111,7 @@ class UpdateIndexAliasStageTest extends TestCase
         /** @var IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $indices */
         $indices = $this->getMockBuilder(IndicesNamespace::class)
                         ->disableOriginalConstructor()
-                        ->setMethods(['getAlias', 'updateAliases', 'exists', 'delete'])
+                        ->setMethods(['getAlias', 'updateAliases', 'exists', 'delete', 'putSettings'])
                         ->getMock();
 
         // Make it so there are no aliases

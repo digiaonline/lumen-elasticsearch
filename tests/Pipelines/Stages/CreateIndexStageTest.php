@@ -23,10 +23,28 @@ class CreateIndexStageTest extends TestCase
         $indices       = $this->getMockedIndices();
         $searchService = $this->getMockedSearchService($indices);
 
+        // Return some fake settings
+        $indices->expects($this->once())
+                ->method('getSettings')
+                ->willReturn([
+                    'foo23' => [
+                        'settings' => [
+                            'index' => [
+                                'refresh_interval'   => '1s',
+                                'number_of_replicas' => 5,
+                            ],
+                        ],
+                    ],
+                ]);
+
         $indices->expects($this->once())
                 ->method('exists')
                 ->with(['index' => 'foo'])
                 ->willReturn(true);
+
+        // Check that index settings are applied
+        $indices->expects($this->once())
+                ->method('putSettings');
 
         $searchService->expects($this->once())
                       ->method('reindex')
@@ -73,7 +91,7 @@ class CreateIndexStageTest extends TestCase
     {
         $indices = $this->getMockBuilder(IndicesNamespace::class)
                         ->disableOriginalConstructor()
-                        ->setMethods(['create', 'exists'])
+                        ->setMethods(['create', 'exists', 'getSettings', 'putSettings'])
                         ->getMock();
 
         $indices->expects($this->once())
