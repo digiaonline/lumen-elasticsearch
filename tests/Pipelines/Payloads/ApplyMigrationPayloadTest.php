@@ -17,7 +17,7 @@ class ApplyMigrationPayloadTest extends TestCase
      */
     public function testGettersSetters()
     {
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
 
         $this->assertStringEndsWith('versions/content/', $payload->getTargetVersionPath());
 
@@ -25,5 +25,6 @@ class ApplyMigrationPayloadTest extends TestCase
         $payload->setTargetVersionFile('7.php');
         $this->assertTrue(is_array($payload->getTargetConfiguration()));
         $this->assertEquals('content_7', $payload->getTargetVersionName());
+        $this->assertEquals(100, $payload->getBatchSize());
     }
 }
