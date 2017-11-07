@@ -26,5 +26,9 @@ class ApplyMigrationPayloadTest extends TestCase
         $this->assertTrue(is_array($payload->getTargetConfiguration()));
         $this->assertEquals('content_7', $payload->getTargetVersionName());
         $this->assertEquals(100, $payload->getBatchSize());
+
+        // Test number of replicas
+        $payload->setNumberOfReplicas(5);
+        $this->assertEquals(5, $payload->getNumberOfReplicas());
     }
 }

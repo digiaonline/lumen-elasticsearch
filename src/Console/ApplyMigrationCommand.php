@@ -8,6 +8,8 @@ use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CheckIndexExistsStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CreateIndexStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\DetermineTargetVersionStage;
+use Nord\Lumen\Elasticsearch\Pipelines\Stages\ReIndexStage;
+use Nord\Lumen\Elasticsearch\Pipelines\Stages\StoreIndexSettingsStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
 
 /**
@@ -48,6 +50,8 @@ class ApplyMigrationCommand extends AbstractCommand
             new DetermineTargetVersionStage(),
             new CheckIndexExistsStage($this->elasticsearchService),
             new CreateIndexStage($this->elasticsearchService),
+            new StoreIndexSettingsStage($this->elasticsearchService),
+            new ReIndexStage($this->elasticsearchService),
             new UpdateIndexAliasStage($this->elasticsearchService),
         ]);
 
