@@ -10,6 +10,6 @@ return [
     |
     */
 
-//    'hosts' => ['localhost:9200'],
+    'hosts' => ['localhost:9200'],
 
 ];
