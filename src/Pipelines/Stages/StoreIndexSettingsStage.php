@@ -45,5 +45,4 @@ class StoreIndexSettingsStage implements StageInterface
         
         return $payload;
     }
-
 }

@@ -58,5 +58,4 @@ class ReIndexStage implements StageInterface
 
         return $payload;
     }
-
 }
