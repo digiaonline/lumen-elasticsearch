@@ -4,7 +4,6 @@ namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CreateIndexStage;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
@@ -16,69 +15,17 @@ class CreateIndexStageTest extends TestCase
 {
 
     /**
-     * Tests that we reindex from the old to the new index when the index exists
+     *
      */
-    public function testWhenIndexExists()
+    public function testStage()
     {
-        $indices       = $this->getMockedIndices();
+        $indices = $this->getMockedIndices();
+
+        $indices->expects($this->once())
+                ->method('create')
+                ->with(['index' => 'foo23']);
+
         $searchService = $this->getMockedSearchService($indices);
-
-        // Return some fake settings
-        $indices->expects($this->once())
-                ->method('getSettings')
-                ->willReturn([
-                    'foo23' => [
-                        'settings' => [
-                            'index' => [
-                                'refresh_interval'   => '1s',
-                                'number_of_replicas' => 5,
-                            ],
-                        ],
-                    ],
-                ]);
-
-        $indices->expects($this->once())
-                ->method('exists')
-                ->with(['index' => 'foo'])
-                ->willReturn(true);
-
-        // Check that index settings are applied
-        $indices->expects($this->once())
-                ->method('putSettings');
-
-        $searchService->expects($this->once())
-                      ->method('reindex')
-                      ->with([
-                          'body' => [
-                              'size'   => 100,
-                              'source' => [
-                                  'index' => 'foo',
-                              ],
-                              'dest'   => [
-                                  'index' => 'foo23',
-                              ],
-                          ],
-                      ]);
-
-        $stage = new CreateIndexStage($searchService);
-        $stage(new DummyPayload());
-    }
-
-    /**
-     * Tests that we reindex from the old to the new index when the index exists
-     */
-    public function testWhenIndexDoesNotExist()
-    {
-        $indices       = $this->getMockedIndices();
-        $searchService = $this->getMockedSearchService($indices);
-
-        $indices->expects($this->once())
-                ->method('exists')
-                ->with(['index' => 'foo'])
-                ->willReturn(false);
-
-        $searchService->expects($this->never())
-                      ->method('reindex');
 
         $stage = new CreateIndexStage($searchService);
         $stage(new DummyPayload());
@@ -89,16 +36,10 @@ class CreateIndexStageTest extends TestCase
      */
     private function getMockedIndices()
     {
-        $indices = $this->getMockBuilder(IndicesNamespace::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['create', 'exists', 'getSettings', 'putSettings'])
-                        ->getMock();
-
-        $indices->expects($this->once())
-                ->method('create')
-                ->with(['index' => 'foo23']);
-
-        return $indices;
+        return $this->getMockBuilder(IndicesNamespace::class)
+                    ->disableOriginalConstructor()
+                    ->setMethods(['create'])
+                    ->getMock();
     }
 
     /**
@@ -109,7 +50,7 @@ class CreateIndexStageTest extends TestCase
     private function getMockedSearchService($mockedIndices)
     {
         $searchService = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                              ->setMethods(['indices', 'reindex'])
+                              ->setMethods(['indices'])
                               ->getMockForAbstractClass();
 
         $searchService->method('indices')
@@ -117,44 +58,5 @@ class CreateIndexStageTest extends TestCase
 
         return $searchService;
     }
-}
 
-/**
- * Class DummyPayload
- * @package Nord\Lumen\Elasticsearch\Tests\Unit\Search\Pipelines\Stages
- */
-class DummyPayload extends ApplyMigrationPayload
-{
-
-    /**
-     * DummyPayload constructor.
-     */
-    public function __construct()
-    {
-        parent::__construct('/tmp', 100);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTargetConfiguration()
-    {
-        return ['index' => 'foo23'];
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getTargetVersionName()
-    {
-        return 'foo23';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getIndexName()
-    {
-        return 'foo';
-    }
 }
