@@ -1,6 +1,6 @@
 <?php
 
-namespace Nord\Lumen\Elasticsearch\Tests\Unit\Search\Pipelines\Stages;
+namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\CreateMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\EnsureIndexConfigurationFileExistsStage;
@@ -8,7 +8,7 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
  * Class EnsureConfigurationExistsStageTest
- * @package Nord\Lumen\Elasticsearch\Tests\Unit\Search\Pipelines\Stages
+ * @package Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages
  */
 class EnsureIndexConfigurationFileExistsStageTest extends TestCase
 {
