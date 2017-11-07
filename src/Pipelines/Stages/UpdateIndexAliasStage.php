@@ -54,6 +54,15 @@ class UpdateIndexAliasStage implements StageInterface
             }
         }
 
+        // Revert temporary index settings
+        $indices->putSettings([
+            'index' => $payload->getTargetVersionName(),
+            'body'  => [
+                'refresh_interval'   => '1s',
+                'number_of_replicas' => $payload->getNumberOfReplicas(),
+            ],
+        ]);
+
         // Update the alias definition
         $indices->updateAliases([
             'body' => [

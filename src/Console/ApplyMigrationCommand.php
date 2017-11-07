@@ -8,6 +8,8 @@ use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CheckIndexExistsStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CreateIndexStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\DetermineTargetVersionStage;
+use Nord\Lumen\Elasticsearch\Pipelines\Stages\ReIndexStage;
+use Nord\Lumen\Elasticsearch\Pipelines\Stages\StoreIndexSettingsStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
 
 /**
@@ -16,11 +18,14 @@ use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
  */
 class ApplyMigrationCommand extends AbstractCommand
 {
+    const DEFAULT_BATCH_SIZE = 1000;
 
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrations:migrate {config : The path to the index configuration file}';
+    protected $signature = 'elastic:migrations:migrate 
+                            { config : The path to the index configuration file } 
+                            { --batchSize= : The number of documents to handle per batch while re-indexing }';
 
     /**
      * The console command description.
@@ -35,15 +40,22 @@ class ApplyMigrationCommand extends AbstractCommand
     public function handle()
     {
         $configurationPath = (string)$this->argument('config');
+        $batchSize         = (int)$this->option('batchSize');
+
+        if ($batchSize === 0) {
+            $batchSize = self::DEFAULT_BATCH_SIZE;
+        }
 
         $pipeline = new Pipeline([
             new DetermineTargetVersionStage(),
             new CheckIndexExistsStage($this->elasticsearchService),
             new CreateIndexStage($this->elasticsearchService),
+            new StoreIndexSettingsStage($this->elasticsearchService),
+            new ReIndexStage($this->elasticsearchService),
             new UpdateIndexAliasStage($this->elasticsearchService),
         ]);
 
-        $payload = new ApplyMigrationPayload($configurationPath);
+        $payload = new ApplyMigrationPayload($configurationPath, $batchSize);
 
         try {
             $pipeline->process($payload);
