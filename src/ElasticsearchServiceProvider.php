@@ -15,7 +15,7 @@ class ElasticsearchServiceProvider extends ServiceProvider
     public function register()
     {
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->app->configure(self::CONFIG_KEY);
+        $this->app->/** @scrutinizer ignore-call */ configure(self::CONFIG_KEY);
 
         $this->registerBindings();
     }
@@ -29,7 +29,7 @@ class ElasticsearchServiceProvider extends ServiceProvider
         /** @noinspection PhpUndefinedMethodInspection */
         $config = $this->app['config']->get('elasticsearch', []);
 
-        $this->app->singleton(ElasticsearchServiceContract::class, function () use ($config) {
+        $this->app->/** @scrutinizer ignore-call */ singleton(ElasticsearchServiceContract::class, function () use ($config) {
             return new ElasticsearchService(ClientBuilder::fromConfig($config));
         });
     }
