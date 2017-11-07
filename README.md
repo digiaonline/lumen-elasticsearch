@@ -302,6 +302,10 @@ This will create a directory named `versions` as well as a timestamped copy of y
 If you haven't run migrations before, your index will be replaced by an alias of the same name once the new index has 
 been created. The next time you apply a migration, the alias will simply be updated.
 
+If your documents are very large you may want to decrease the batch size used during re-indexing to prevent 
+Elasticsearch from running out of memory. You can do so by passing `--batchSize=X` to the `elastic:migrations:migrate` 
+command. If the option is omitted, the default value of 1000 is used.
+
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).
