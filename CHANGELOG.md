@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] - 2017-11-07
+### Added
+- Support for controlling the batch size used during re-indexing
+- Improved re-indexing speed by tweaking some index settings before and after the re-index
+
+### Fixed
+- Fixed a few Scrutinizer issues
+- Fixed some command typos in the README
+
 ## [2.2.1] - 2017-11-02
 ### Fixed
 - Fixed an issue with empty match_all queries
