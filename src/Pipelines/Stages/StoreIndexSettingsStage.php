@@ -7,10 +7,10 @@ use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 
 /**
- * Class CreateIndexStage
+ * Class StoreIndexSettingsStage
  * @package Nord\Lumen\Elasticsearch\Pipelines\Stages
  */
-class CreateIndexStage implements StageInterface
+class StoreIndexSettingsStage implements StageInterface
 {
 
     /**
@@ -29,13 +29,19 @@ class CreateIndexStage implements StageInterface
     }
 
     /**
-     * @inheritDoc
+     * @inheritdoc
      */
     public function __invoke($payload)
     {
         /** @var ApplyMigrationPayload $payload */
-        // Create the new index
-        $this->elasticsearchService->indices()->create($payload->getTargetConfiguration());
+
+        // Store the current number_of_replicas setting value in the payload
+        $settings = $this->elasticsearchService->indices()->getSettings([
+            'index' => $payload->getTargetVersionName(),
+        ]);
+
+        $indexSettings = $settings[$payload->getTargetVersionName()]['settings']['index'];
+        $payload->setNumberOfReplicas($indexSettings['number_of_replicas']);
 
         return $payload;
     }
