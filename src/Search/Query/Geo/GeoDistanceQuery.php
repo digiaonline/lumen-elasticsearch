@@ -121,7 +121,6 @@ class GeoDistanceQuery extends AbstractQuery
      */
     public function setDistanceType($distanceType)
     {
-        $this->assertDistanceType($distanceType);
         $this->distanceType = $distanceType;
         return $this;
     }
@@ -133,22 +132,5 @@ class GeoDistanceQuery extends AbstractQuery
     public function getDistanceType()
     {
         return $this->distanceType;
-    }
-
-
-    /**
-     * @param string $distanceType
-     * @throws InvalidArgument
-     */
-    protected function assertDistanceType($distanceType)
-    {
-        $validTypes = [self::DISTANCE_TYPE_SLOPPY_ARC, self::DISTANCE_TYPE_ARC, self::DISTANCE_TYPE_PLANE];
-        if (!in_array($distanceType, $validTypes)) {
-            throw new InvalidArgument(sprintf(
-                'GeoDistance Query `distance_type` must be one of "%s", "%s" given.',
-                implode(', ', $validTypes),
-                $distanceType
-            ));
-        }
     }
 }

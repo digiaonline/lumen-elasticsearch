@@ -54,21 +54,6 @@ class HasChildQuery extends AbstractQuery
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function getValidScoreModes()
-    {
-        return [
-            ScoreMode::MODE_AVG,
-            ScoreMode::MODE_SUM,
-            ScoreMode::MODE_MIN,
-            ScoreMode::MODE_MAX,
-            ScoreMode::MODE_NONE,
-        ];
-    }
-
-
-    /**
      * @param int $minChildren
      * @return HasChildQuery
      */
