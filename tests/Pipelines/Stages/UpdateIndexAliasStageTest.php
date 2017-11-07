@@ -52,7 +52,7 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->willReturn($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
         $payload->setTargetVersionFile('7.php');
 
         $this->assertInstanceOf(ApplyMigrationPayload::class, $stage($payload));
@@ -93,7 +93,7 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->willReturn($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
         $payload->setTargetVersionFile('7.php');
 
         $stage($payload);
@@ -135,7 +135,7 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->willReturn($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
         $payload->setTargetVersionFile('7.php');
 
         $stage($payload);

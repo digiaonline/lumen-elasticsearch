@@ -18,7 +18,7 @@ class DetermineTargetVersionStageTest extends TestCase
      */
     public function testStage()
     {
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
         $stage   = new DetermineTargetVersionStage();
 
         $payload = $stage($payload);

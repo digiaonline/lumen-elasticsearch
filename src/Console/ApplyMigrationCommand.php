@@ -16,14 +16,11 @@ use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
  */
 class ApplyMigrationCommand extends AbstractCommand
 {
-    const DEFAULT_BATCH_SIZE = 1000;
 
     /**
      * @var string
      */
-    protected $signature = 'elastic:migrations:migrate 
-                            { config : The path to the index configuration file } 
-                            { --batchSize= : The number of documents to handle per batch while re-indexing }';
+    protected $signature = 'elastic:migrations:migrate {config : The path to the index configuration file}';
 
     /**
      * The console command description.
@@ -38,11 +35,6 @@ class ApplyMigrationCommand extends AbstractCommand
     public function handle()
     {
         $configurationPath = (string)$this->argument('config');
-        $batchSize         = (int)$this->option('batchSize');
-
-        if ($batchSize === 0) {
-            $batchSize = self::DEFAULT_BATCH_SIZE;
-        }
 
         $pipeline = new Pipeline([
             new DetermineTargetVersionStage(),
@@ -51,7 +43,7 @@ class ApplyMigrationCommand extends AbstractCommand
             new UpdateIndexAliasStage($this->elasticsearchService),
         ]);
 
-        $payload = new ApplyMigrationPayload($configurationPath, $batchSize);
+        $payload = new ApplyMigrationPayload($configurationPath);
 
         try {
             $pipeline->process($payload);

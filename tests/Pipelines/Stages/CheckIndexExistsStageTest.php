@@ -40,7 +40,7 @@ class CheckIndexExistsStageTest extends TestCase
                 ->method('indices')
                 ->willReturn($indices);
 
-        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
+        $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php');
         $payload->setTargetVersionFile('1.php');
 
         $stage = new CheckIndexExistsStage($service);
