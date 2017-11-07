@@ -79,4 +79,12 @@ class RegexpQueryTest extends AbstractQueryTestCase
     {
         $this->queryBuilder->createRegexpQuery()->setMaxDeterminizedStates('foo');
     }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayMissingFieldValue()
+    {
+        $this->queryBuilder->createRegexpQuery()->toArray();
+    }
 }

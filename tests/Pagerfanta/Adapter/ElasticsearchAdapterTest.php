@@ -128,4 +128,41 @@ class ElasticsearchAdapterTest extends TestCase
             ['_source' => ['id' => 'd4', 'field1' => 'value1']],
         ], $this->adapter->getSlice(2, 2));
     }
+
+    /**
+     * Tests aggregation support
+     */
+    public function testGetAggregations()
+    {
+        $this->service->expects($this->any())
+                      ->method('execute')
+                      ->with($this->search)
+                      ->will($this->returnValue([
+                          'hits'         => [
+                              'total' => 2,
+                              'hits'  => [
+                                  ['_source' => ['id' => 'd1', 'field1' => 'value1']],
+                                  ['_source' => ['id' => 'd2', 'field1' => 'value1']],
+                              ],
+                          ],
+                          'aggregations' => [
+                              'foo' => 10,
+                          ],
+                      ]));
+
+        $this->assertEquals(['foo' => 10], $this->adapter->getAggregations());
+    }
+
+    /**
+     * Tests aggregation support when no aggregations exist in the result
+     */
+    public function testGetAggregationsMissing()
+    {
+        $this->service->expects($this->any())
+                      ->method('execute')
+                      ->with($this->search)
+                      ->will($this->returnValue([]));
+
+        $this->assertEquals([], $this->adapter->getAggregations());
+    }
 }
