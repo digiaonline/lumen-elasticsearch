@@ -20,6 +20,11 @@ class ApplyMigrationPayload extends MigrationPayload
     private $batchSize;
 
     /**
+     * @var int
+     */
+    private $numberOfReplicas;
+
+    /**
      * ApplyMigrationPayload constructor.
      *
      * @param string $configurationPath
@@ -70,5 +75,21 @@ class ApplyMigrationPayload extends MigrationPayload
     public function getBatchSize()
     {
         return $this->batchSize;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfReplicas()
+    {
+        return $this->numberOfReplicas;
+    }
+
+    /**
+     * @param int $numberOfReplicas
+     */
+    public function setNumberOfReplicas($numberOfReplicas)
+    {
+        $this->numberOfReplicas = $numberOfReplicas;
     }
 }

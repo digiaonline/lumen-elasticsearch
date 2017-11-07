@@ -37,6 +37,14 @@ class CreateIndexStage implements StageInterface
         // Create the new index
         $this->elasticsearchService->indices()->create($payload->getTargetConfiguration());
 
+        // Store the current number_of_replicas setting value in the payload
+        $settings = $this->elasticsearchService->indices()->getSettings([
+            'index' => $payload->getTargetVersionName(),
+        ]);
+
+        $indexSettings = $settings[$payload->getTargetVersionName()]['settings']['index'];
+        $payload->setNumberOfReplicas($indexSettings['number_of_replicas']);
+
         // Reindex data from the old index to the new, but only if the old index exists (not true on brand new setups)
         if ($this->elasticsearchService->indices()->exists(['index' => $payload->getIndexName()])) {
             $this->elasticsearchService->reindex([
