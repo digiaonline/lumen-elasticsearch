@@ -42,5 +42,4 @@ abstract class AbstractStageTestCase extends TestCase
 
         return $searchService;
     }
-
 }
