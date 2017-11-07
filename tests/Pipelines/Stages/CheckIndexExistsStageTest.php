@@ -1,6 +1,6 @@
 <?php
 
-namespace Nord\Lumen\Elasticsearch\Tests\Unit\Search\Pipelines\Stages;
+namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
@@ -10,7 +10,7 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
  * Class CheckIndexExistsStageTest
- * @package Nord\Lumen\Elasticsearch\Tests\Unit\Search\Pipelines\Stages
+ * @package Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages
  */
 class CheckIndexExistsStageTest extends TestCase
 {
