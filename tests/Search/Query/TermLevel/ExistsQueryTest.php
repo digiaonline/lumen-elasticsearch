@@ -23,5 +23,4 @@ class ExistsQueryTest extends AbstractQueryTestCase
             'exists' => ['field' => 'foo'],
         ], $query->toArray());
     }
-
 }
