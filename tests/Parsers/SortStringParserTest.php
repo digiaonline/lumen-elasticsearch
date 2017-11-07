@@ -25,6 +25,16 @@ class SortStringParserTest extends TestCase
     }
 
     /**
+     * Tests that an exception is thrown when a non-string is parsed
+     *
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testParseException()
+    {
+        $this->service->createSortStringParser()->parse(new \stdClass());
+    }
+
+    /**
      * Tests parsing single sort item
      */
     public function testParseSingleSort()
