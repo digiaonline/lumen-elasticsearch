@@ -87,7 +87,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setOperator($operator)
     {
-        $this->assertOperator($operator);
         $this->operator = $operator;
         return $this;
     }
@@ -109,7 +108,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setZeroTermsQuery($zeroTermsQuery)
     {
-        $this->assertZeroTermsQuery($zeroTermsQuery);
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
     }
@@ -131,7 +129,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setCutOffFrequency($cutOffFrequency)
     {
-        $this->assertCutOffFrequency($cutOffFrequency);
         $this->cutOffFrequency = $cutOffFrequency;
         return $this;
     }
@@ -153,7 +150,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setType($type)
     {
-        $this->assertType($type);
         $this->type = $type;
         return $this;
     }
@@ -166,7 +162,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setSlop($slop)
     {
-        $this->assertSlop($slop);
         $this->slop = $slop;
         return $this;
     }
@@ -188,7 +183,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setMaxExpansions($maxExpansions)
     {
-        $this->assertMaxExpansions($maxExpansions);
         $this->maxExpansions = $maxExpansions;
         return $this;
     }
@@ -261,101 +255,5 @@ class MatchQuery extends AbstractQuery
         }
 
         return $match;
-    }
-
-
-    /**
-     * @param string $operator
-     * @throws InvalidArgument
-     */
-    protected function assertOperator($operator)
-    {
-        $validOperators = [self::OPERATOR_AND, self::OPERATOR_OR];
-        if (!in_array($operator, $validOperators)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `operator` must be one of "%s", "%s" given.',
-                implode(', ', $validOperators),
-                $operator
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $zeroTermsQuery
-     * @throws InvalidArgument
-     */
-    protected function assertZeroTermsQuery($zeroTermsQuery)
-    {
-        $validZeroTermQueries = [self::ZERO_TERM_QUERY_NONE, self::ZERO_TERM_QUERY_ALL];
-        if (!in_array($zeroTermsQuery, $validZeroTermQueries)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `zero_terms_query` must be one of "%s", "%s" given.',
-                implode(', ', $validZeroTermQueries),
-                $zeroTermsQuery
-            ));
-        }
-    }
-
-
-    /**
-     * @param float $cutOffFrequency
-     * @throws InvalidArgument
-     */
-    protected function assertCutOffFrequency($cutOffFrequency)
-    {
-        if (!is_float($cutOffFrequency)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `cutoff_frequency` must be a float value, "%s" given.',
-                gettype($cutOffFrequency)
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $type
-     * @throws InvalidArgument
-     */
-    protected function assertType($type)
-    {
-        $validTypes = [self::TYPE_PHRASE, self::TYPE_PHRASE_PREFIX];
-        if (!in_array($type, $validTypes)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `type` must be one of "%s", "%s" given.',
-                implode(', ', $validTypes),
-                $type
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $slop
-     * @throws InvalidArgument
-     */
-    protected function assertSlop($slop)
-    {
-        if (!is_int($slop)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `slop` must be an integer, "%s" given.',
-                gettype($slop)
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $maxExpansions
-     * @throws InvalidArgument
-     */
-    protected function assertMaxExpansions($maxExpansions)
-    {
-        if (!is_int($maxExpansions)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `max_expansions` must be an integer, "%s" given.',
-                gettype($maxExpansions)
-            ));
-        }
     }
 }

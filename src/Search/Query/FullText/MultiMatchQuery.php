@@ -79,29 +79,6 @@ class MultiMatchQuery extends MatchQuery
 
 
     /**
-     * @param string $type
-     * @throws InvalidArgument
-     */
-    protected function assertType($type)
-    {
-        $validTypes = [
-            self::TYPE_BEST_FIELDS,
-            self::TYPE_MOST_FIELDS,
-            self::TYPE_CROSS_FIELDS,
-            self::TYPE_PHRASE,
-            self::TYPE_PHRASE_PREFIX
-        ];
-        if (!in_array($type, $validTypes)) {
-            throw new InvalidArgument(sprintf(
-                'MultiMatch Query `type` must be one of "%s", "%s" given.',
-                implode(', ', $validTypes),
-                $type
-            ));
-        }
-    }
-
-
-    /**
      * @param float $tieBreaker
      * @throws InvalidArgument
      */

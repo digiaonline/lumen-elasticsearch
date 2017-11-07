@@ -17,11 +17,6 @@ trait HasScoreMode
     protected $scoreMode;
 
     /**
-     * @return array
-     */
-    abstract protected function getValidScoreModes();
-
-    /**
      * @return string
      */
     public function getScoreMode()
@@ -36,27 +31,8 @@ trait HasScoreMode
      */
     public function setScoreMode($scoreMode)
     {
-        $this->assertScoreMode($scoreMode);
         $this->scoreMode = $scoreMode;
 
         return $this;
-    }
-
-    /**
-     * @param string $scoreMode
-     *
-     * @throws InvalidArgument
-     */
-    protected function assertScoreMode($scoreMode)
-    {
-        $validModes = $this->getValidScoreModes();
-
-        if (!in_array($scoreMode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                '`score_mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $scoreMode
-            ));
-        }
     }
 }

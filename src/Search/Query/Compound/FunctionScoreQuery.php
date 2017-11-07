@@ -60,21 +60,6 @@ class FunctionScoreQuery extends AbstractQuery
     }
 
     /**
-     * @inheritdoc
-     */
-    protected function getValidScoreModes()
-    {
-        return [
-            ScoreMode::MODE_MULTIPLY,
-            ScoreMode::MODE_SUM,
-            ScoreMode::MODE_AVG,
-            ScoreMode::MODE_FIRST,
-            ScoreMode::MODE_MAX,
-            ScoreMode::MODE_MIN
-        ];
-    }
-
-    /**
      * @return AbstractScoringFunction[]
      */
     public function getFunctions()
