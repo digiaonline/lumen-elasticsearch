@@ -32,7 +32,6 @@ class CreateIndexStageTest extends TestCase
                       ->method('reindex')
                       ->with([
                           'body' => [
-                              'size'   => 100,
                               'source' => [
                                   'index' => 'foo',
                               ],
@@ -113,7 +112,7 @@ class DummyPayload extends ApplyMigrationPayload
      */
     public function __construct()
     {
-        parent::__construct('/tmp', 100);
+        parent::__construct('/tmp');
     }
 
     /**
