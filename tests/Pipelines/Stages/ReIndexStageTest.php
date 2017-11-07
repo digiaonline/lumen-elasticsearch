@@ -2,16 +2,13 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
-use Elasticsearch\Namespaces\IndicesNamespace;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\ReIndexStage;
-use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
  * Class CreateIndexStageTest
  * @package Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages
  */
-class ReIndexStageTest extends TestCase
+class ReIndexStageTest extends AbstractStageTestCase
 {
 
     /**
@@ -19,7 +16,7 @@ class ReIndexStageTest extends TestCase
      */
     public function testWhenIndexExists()
     {
-        $indices       = $this->getMockedIndices();
+        $indices       = $this->getMockedIndices(['exists', 'putSettings']);
         $searchService = $this->getMockedSearchService($indices);
 
         $indices->expects($this->once())
@@ -54,7 +51,7 @@ class ReIndexStageTest extends TestCase
      */
     public function testWhenIndexDoesNotExist()
     {
-        $indices       = $this->getMockedIndices();
+        $indices       = $this->getMockedIndices(['exists', 'putSettings']);
         $searchService = $this->getMockedSearchService($indices);
 
         $indices->expects($this->once())
@@ -71,35 +68,5 @@ class ReIndexStageTest extends TestCase
 
         $stage = new ReIndexStage($searchService);
         $stage(new DummyPayload());
-    }
-
-    /**
-     * @return IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getMockedIndices()
-    {
-        $indices = $this->getMockBuilder(IndicesNamespace::class)
-                        ->disableOriginalConstructor()
-                        ->setMethods(['exists', 'putSettings'])
-                        ->getMock();
-
-        return $indices;
-    }
-
-    /**
-     * @param IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $mockedIndices
-     *
-     * @return ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject
-     */
-    private function getMockedSearchService($mockedIndices)
-    {
-        $searchService = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                              ->setMethods(['indices', 'reindex'])
-                              ->getMockForAbstractClass();
-
-        $searchService->method('indices')
-                      ->willReturn($mockedIndices);
-
-        return $searchService;
     }
 }
