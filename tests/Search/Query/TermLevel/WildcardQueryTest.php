@@ -39,4 +39,12 @@ class WildcardQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayMissingFieldValue()
+    {
+        $this->queryBuilder->createWildcardQuery()->toArray();
+    }
 }

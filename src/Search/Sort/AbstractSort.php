@@ -59,7 +59,6 @@ abstract class AbstractSort
      */
     public function setOrder($order)
     {
-        $this->assertOrder($order);
         $this->order = $order;
         return $this;
     }
@@ -80,7 +79,6 @@ abstract class AbstractSort
      */
     public function setMode($mode)
     {
-        $this->assertMode($mode);
         $this->mode = $mode;
         return $this;
     }
@@ -99,38 +97,4 @@ abstract class AbstractSort
      * @return mixed
      */
     abstract public function toArray();
-
-
-    /**
-     * @param string $order
-     * @throws InvalidArgument
-     */
-    protected function assertOrder($order)
-    {
-        $validOrders = [self::ORDER_ASC, self::ORDER_DESC];
-        if (!in_array($order, $validOrders)) {
-            throw new InvalidArgument(sprintf(
-                'Sort `order` must be one of "%s", "%s" given.',
-                implode(', ', $validOrders),
-                $order
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $mode
-     * @throws InvalidArgument
-     */
-    protected function assertMode($mode)
-    {
-        $validModes = [self::MODE_MIN, self::MODE_MAX, self::MODE_SUM, self::MODE_AVG, self::MODE_MEDIAN];
-        if (!in_array($mode, $validModes)) {
-            throw new InvalidArgument(sprintf(
-                'Sort `mode` must be one of "%s", "%s" given.',
-                implode(', ', $validModes),
-                $mode
-            ));
-        }
-    }
 }
