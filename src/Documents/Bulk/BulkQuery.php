@@ -57,7 +57,7 @@ class BulkQuery
      */
     public function isReady()
     {
-        return count($this->actions) === $this->bulkSize;
+        return count($this->actions) == $this->bulkSize;
     }
 
 
