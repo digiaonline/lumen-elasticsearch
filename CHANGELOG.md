@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.1] - 2017-11-14
+### Fixed
+- Improve code coverage somewhat
+- Fixed a phpdoc issue that broke fluent setter usage 
+
 ## [2.3.0] - 2017-11-07
 ### Added
 - Support for controlling the batch size used during re-indexing
