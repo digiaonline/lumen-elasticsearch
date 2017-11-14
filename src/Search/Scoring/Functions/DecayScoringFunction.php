@@ -90,7 +90,6 @@ class DecayScoringFunction extends AbstractScoringFunction
      */
     public function setDecayFunction($decayFunction)
     {
-        $this->assertDecayFunction($decayFunction);
         $this->decayFunction = $decayFunction;
         return $this;
     }
@@ -173,26 +172,5 @@ class DecayScoringFunction extends AbstractScoringFunction
     {
         $this->decay = $decay;
         return $this;
-    }
-
-
-    /**
-     * @param string $decayFunction
-     * @throws InvalidArgument
-     */
-    protected function assertDecayFunction($decayFunction)
-    {
-        $validFunctions = [
-            self::DECAY_FUNCTION_LINEAR,
-            self::DECAY_FUNCTION_EXPONENTIAL,
-            self::DECAY_FUNCTION_GAUSSIAN,
-        ];
-        if (!in_array($decayFunction, $validFunctions)) {
-            throw new InvalidArgument(sprintf(
-                'DecayScoringFunction `decay_function` must be one of "%s", "%s" given.',
-                implode(', ', $validFunctions),
-                $decayFunction
-            ));
-        }
     }
 }

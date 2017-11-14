@@ -29,15 +29,6 @@ class QueryTraitsTest extends TestCase
     }
 
     /**
-     * @expectedException  \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
-     */
-    public function testInvalidScoreModeException()
-    {
-        $query = new ScoreModeTesterQuery();
-        $query->setScoreMode(\Nord\Lumen\Elasticsearch\Search\Query\ScoreMode::MODE_SUM);
-    }
-
-    /**
      * Tests that the traits correctly set and get values
      */
     public function testTraits()
@@ -91,16 +82,6 @@ class TraitTesterQuery extends QueryDSL
 class ScoreModeTesterQuery extends QueryDSL
 {
     use HasScoreMode;
-
-    /**
-     * @inheritdoc
-     */
-    protected function getValidScoreModes()
-    {
-        return [
-            ScoreMode::MODE_MAX,
-        ];
-    }
 
     /**
      * @inheritdoc

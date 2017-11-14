@@ -32,15 +32,4 @@ class HasParentQuery extends AbstractQuery
 
         return ['has_parent' => $hasParent];
     }
-
-    /**
-     * @inheritdoc
-     */
-    protected function getValidScoreModes()
-    {
-        return [
-            ScoreMode::MODE_SCORE,
-            ScoreMode::MODE_NONE
-        ];
-    }
 }

@@ -87,7 +87,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setOperator($operator)
     {
-        $this->assertOperator($operator);
         $this->operator = $operator;
         return $this;
     }
@@ -109,7 +108,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setZeroTermsQuery($zeroTermsQuery)
     {
-        $this->assertZeroTermsQuery($zeroTermsQuery);
         $this->zeroTermsQuery = $zeroTermsQuery;
         return $this;
     }
@@ -153,7 +151,6 @@ class MatchQuery extends AbstractQuery
      */
     public function setType($type)
     {
-        $this->assertType($type);
         $this->type = $type;
         return $this;
     }
@@ -261,40 +258,6 @@ class MatchQuery extends AbstractQuery
         }
 
         return $match;
-    }
-
-
-    /**
-     * @param string $operator
-     * @throws InvalidArgument
-     */
-    protected function assertOperator($operator)
-    {
-        $validOperators = [self::OPERATOR_AND, self::OPERATOR_OR];
-        if (!in_array($operator, $validOperators)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `operator` must be one of "%s", "%s" given.',
-                implode(', ', $validOperators),
-                $operator
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $zeroTermsQuery
-     * @throws InvalidArgument
-     */
-    protected function assertZeroTermsQuery($zeroTermsQuery)
-    {
-        $validZeroTermQueries = [self::ZERO_TERM_QUERY_NONE, self::ZERO_TERM_QUERY_ALL];
-        if (!in_array($zeroTermsQuery, $validZeroTermQueries)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `zero_terms_query` must be one of "%s", "%s" given.',
-                implode(', ', $validZeroTermQueries),
-                $zeroTermsQuery
-            ));
-        }
     }
 
 

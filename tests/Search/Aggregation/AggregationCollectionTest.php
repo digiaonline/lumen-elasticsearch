@@ -15,6 +15,17 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
     /**
      *
      */
+    public function testConstructorAdd()
+    {
+        $aggregation = $this->aggregationBuilder->createGlobalAggregation()->setName('global_name');
+        $collection  = new AggregationCollection([$aggregation, $aggregation]);
+
+        $this->assertEquals(2, $collection->count());
+    }
+
+    /**
+     *
+     */
     public function testAdd()
     {
         $collection = new AggregationCollection();
