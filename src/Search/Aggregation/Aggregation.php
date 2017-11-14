@@ -27,11 +27,11 @@
  */
 abstract class Aggregation
 {
+
     /**
      * @var string
      */
     private $name;
-
 
     /**
      * @return string
@@ -41,17 +41,17 @@ abstract class Aggregation
         return $this->name;
     }
 
-
     /**
      * @param string $name
-     * @return Aggregation
+     *
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
-
 
     /**
      * @return array
