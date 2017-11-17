@@ -18,7 +18,7 @@ class ArrayHelper
     {
         $rows = [];
         foreach ($response as $key => $value) {
-            if(!is_array($value)) {
+            if (!is_array($value)) {
                 $rows[] = [$key, $value];
             } else {
                 $rows[] = [$key, implode(",", $value)];
