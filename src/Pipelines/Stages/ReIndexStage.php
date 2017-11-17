@@ -43,7 +43,7 @@ class ReIndexStage implements StageInterface
                 ],
             ]);
 
-            $this->elasticsearchService->reindex([
+            $response = $this->elasticsearchService->reindex([
                 'body' => [
                     'source' => [
                         'index' => $payload->getIndexName(),
@@ -54,6 +54,8 @@ class ReIndexStage implements StageInterface
                     ],
                 ],
             ]);
+
+            $payload->setReindexResponse($response);
         }
 
         return $payload;
