@@ -64,7 +64,7 @@ class ApplyMigrationCommand extends AbstractCommand
             $this->output->writeln(sprintf('Migrated %s to %s', $payload->getIndexName(),
                 $payload->getTargetVersionName()));
 
-            $this->output->table([], ArrayHelper::arrayToTableRows($payload->getReindexResponse()));
+            $this->output->table([], ArrayHelper::toTableRowsInput($payload->getReindexResponse()));
         } catch (IndexExistsException $e) {
             $this->output->writeln('No migration required');
         }

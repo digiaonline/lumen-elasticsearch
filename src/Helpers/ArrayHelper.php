@@ -9,19 +9,21 @@ namespace Nord\Lumen\Elasticsearch\Helpers;
 class ArrayHelper
 {
     /**
-     * Transform response array to Symfony Table rows input
+     * Transform response array to symfony table rows input
      * @param array $response
      *
      * @return array
      */
-    public static function arrayToTableRows(array $response)
+    public static function toTableRowsInput(array $response)
     {
         $rows = [];
         foreach ($response as $key => $value) {
-            if(!is_array($value)) {
-                $rows[] = [$key, $value];
+            if (is_array($value)) {
+                $rows[] = [$key, count($value) ? http_build_query($value, '', ',') : '[]'];
+            } elseif (is_bool($value)) {
+                $rows[] = [$key, $value ? 'true' : 'false'];
             } else {
-                $rows[] = [$key, implode(",", $value)];
+                $rows[] = [$key, strval($value)];
             }
         }
         return $rows;
