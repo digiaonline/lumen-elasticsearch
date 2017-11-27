@@ -43,7 +43,8 @@ class ReIndexStage implements StageInterface
                 ],
             ]);
 
-            $this->elasticsearchService->reindex([
+            $task = $this->elasticsearchService->reindex([
+                'wait_for_completion' => false,
                 'body' => [
                     'source' => [
                         'index' => $payload->getIndexName(),
@@ -54,6 +55,18 @@ class ReIndexStage implements StageInterface
                     ],
                 ],
             ]);
+
+           for(;;) {
+               $response = $this->elasticsearchService->tasks()->get([
+                   'task_id' => $task['task']
+               ]);
+
+               if (boolval($response['completed']) === true) {
+                   break;
+               }
+
+               sleep(3);
+           }
         }
 
         return $payload;
