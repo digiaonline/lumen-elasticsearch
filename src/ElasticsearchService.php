@@ -85,6 +85,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function deleteByQuery(array $params = [])
+    {
+        return $this->client->deleteByQuery($params);
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function create(array $params = [])
     {
         return $this->client->create($params);

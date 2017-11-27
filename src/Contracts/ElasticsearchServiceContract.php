@@ -63,6 +63,14 @@ interface ElasticsearchServiceContract
      *
      * @return array
      */
+    public function deleteByQuery(array $params = []);
+
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function create(array $params = []);
 
 

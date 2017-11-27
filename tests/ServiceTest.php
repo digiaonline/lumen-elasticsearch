@@ -199,6 +199,33 @@ class ServiceTest extends TestCase
     }
 
     /**
+     * Tests the delete by query method.
+     */
+    public function testMethodDeleteByQuery()
+    {
+        $input = [
+            'index' => 'my_index',
+            'type'  => 'my_type',
+            'id'    => 'my_id',
+        ];
+
+        $output = [
+            'found'    => 1,
+            '_index'   => 'my_index',
+            '_type'    => 'my_type',
+            '_id'      => 'my_id',
+            '_version' => 2,
+        ];
+
+        $this->client->expects($this->any())
+                     ->method('deleteByQuery')
+                     ->with($input)
+                     ->will($this->returnValue($output));
+
+        $this->assertEquals($output, $this->service->deleteByQuery($input));
+    }
+
+    /**
      * Tests the create method.
      */
     public function testMethodCreate()
