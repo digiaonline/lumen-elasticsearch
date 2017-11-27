@@ -56,17 +56,17 @@ class ReIndexStage implements StageInterface
                 ],
             ]);
 
-           for(;;) {
-               $response = $this->elasticsearchService->tasks()->get([
+            for (;;) {
+                $response = $this->elasticsearchService->tasks()->get([
                    'task_id' => $task['task']
                ]);
 
-               if (boolval($response['completed']) === true) {
-                   break;
-               }
+                if (boolval($response['completed']) === true) {
+                    break;
+                }
 
-               sleep(3);
-           }
+                sleep(3);
+            }
         }
 
         return $payload;
