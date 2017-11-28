@@ -94,6 +94,15 @@ class ElasticsearchService implements ElasticsearchServiceContract
     /**
      * @inheritdoc
      */
+    public function tasks()
+    {
+        return $this->client->tasks();
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function create(array $params = [])
     {
         return $this->client->create($params);
