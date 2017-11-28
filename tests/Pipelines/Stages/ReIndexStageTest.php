@@ -21,12 +21,15 @@ class ReIndexStageTest extends AbstractStageTestCase
         $searchService = $this->getMockedSearchService($indices);
 
 
-        $tasks->expects($this->once())
+        $tasks->expects($this->exactly(2))
               ->method('get')
-              ->willReturn(['completed' => true]);
+              ->willReturn(
+                  ['completed' => false],
+                  ['completed' => true]
+              );
 
         $searchService
-            ->expects($this->once())
+            ->expects($this->exactly(2))
             ->method('tasks')
             ->willReturn($tasks);
 
