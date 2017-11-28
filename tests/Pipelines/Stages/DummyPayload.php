@@ -42,4 +42,9 @@ class DummyPayload extends ApplyMigrationPayload
     {
         return 'foo';
     }
+
+    public function getReindexResponse()
+    {
+        return [];
+    }
 }

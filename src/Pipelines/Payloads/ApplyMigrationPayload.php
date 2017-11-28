@@ -25,6 +25,11 @@ class ApplyMigrationPayload extends MigrationPayload
     private $numberOfReplicas;
 
     /**
+     * @var array
+     */
+    private $reindexResponse;
+
+    /**
      * ApplyMigrationPayload constructor.
      *
      * @param string $configurationPath
@@ -91,5 +96,21 @@ class ApplyMigrationPayload extends MigrationPayload
     public function setNumberOfReplicas($numberOfReplicas)
     {
         $this->numberOfReplicas = $numberOfReplicas;
+    }
+
+    /**
+     * @return array
+     */
+    public function getReindexResponse()
+    {
+        return $this->reindexResponse;
+    }
+
+    /**
+     * @param array $reindexResponse
+     */
+    public function setReindexResponse(array $reindexResponse)
+    {
+        $this->reindexResponse = $reindexResponse;
     }
 }

@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Console;
 
 use League\Pipeline\Pipeline;
 use Nord\Lumen\Elasticsearch\Exceptions\IndexExistsException;
+use Nord\Lumen\Elasticsearch\Helpers\ArrayHelper;
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CheckIndexExistsStage;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\CreateIndexStage;
@@ -62,6 +63,8 @@ class ApplyMigrationCommand extends AbstractCommand
 
             $this->output->writeln(sprintf('Migrated %s to %s', $payload->getIndexName(),
                 $payload->getTargetVersionName()));
+
+            $this->output->table([], ArrayHelper::toTableRowsInput($payload->getReindexResponse()));
         } catch (IndexExistsException $e) {
             $this->output->writeln('No migration required');
         }

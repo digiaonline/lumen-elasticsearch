@@ -40,7 +40,7 @@ class ReIndexStageTest extends AbstractStageTestCase
                                   'index' => 'foo23',
                               ],
                           ],
-                      ]);
+                      ])->willReturn([]);
 
         $stage = new ReIndexStage($searchService);
         $stage(new DummyPayload());
