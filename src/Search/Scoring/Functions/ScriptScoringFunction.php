@@ -63,7 +63,7 @@ class ScriptScoringFunction extends AbstractScoringFunction
      */
     public function toArray()
     {
-        $script =  [
+        $script = [
             'inline' => $this->getInline(),
         ];
 
