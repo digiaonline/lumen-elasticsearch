@@ -3,6 +3,7 @@
 namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
+use Elasticsearch\Namespaces\TasksNamespace;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
@@ -21,6 +22,20 @@ abstract class AbstractStageTestCase extends TestCase
     protected function getMockedIndices($methods = [])
     {
         return $this->getMockBuilder(IndicesNamespace::class)
+                    ->disableOriginalConstructor()
+                    ->setMethods($methods)
+                    ->getMock();
+    }
+
+
+    /**
+     * @param array $methods
+     *
+     * @return \PHPUnit_Framework_MockObject_MockObject
+     */
+    protected function getMockedTasks($methods = [])
+    {
+        return $this->getMockBuilder(TasksNamespace::class)
                     ->disableOriginalConstructor()
                     ->setMethods($methods)
                     ->getMock();

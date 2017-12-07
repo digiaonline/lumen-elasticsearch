@@ -17,7 +17,21 @@ class ReIndexStageTest extends AbstractStageTestCase
     public function testWhenIndexExists()
     {
         $indices       = $this->getMockedIndices(['exists', 'putSettings']);
+        $tasks         = $this->getMockedTasks(['get']);
         $searchService = $this->getMockedSearchService($indices);
+
+
+        $tasks->expects($this->exactly(2))
+              ->method('get')
+              ->willReturn(
+                  ['completed' => false],
+                  ['completed' => true]
+              );
+
+        $searchService
+            ->expects($this->exactly(2))
+            ->method('tasks')
+            ->willReturn($tasks);
 
         $indices->expects($this->once())
                 ->method('exists')
@@ -31,6 +45,7 @@ class ReIndexStageTest extends AbstractStageTestCase
         $searchService->expects($this->once())
                       ->method('reindex')
                       ->with([
+                          'wait_for_completion' => false,
                           'body' => [
                               'source' => [
                                   'index' => 'foo',

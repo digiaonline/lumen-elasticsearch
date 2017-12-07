@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Contracts;
 
 use Elasticsearch\Namespaces\IndicesNamespace;
+use Elasticsearch\Namespaces\TasksNamespace;
 use Nord\Lumen\Elasticsearch\Parsers\SortStringParser;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
@@ -63,6 +64,14 @@ interface ElasticsearchServiceContract
      *
      * @return array
      */
+    public function deleteByQuery(array $params = []);
+
+
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
     public function create(array $params = []);
 
 
@@ -72,6 +81,12 @@ interface ElasticsearchServiceContract
      * @return array|bool
      */
     public function exists(array $params = []);
+
+
+    /**
+     * @return TasksNamespace
+     */
+    public function tasks();
 
 
     /**
