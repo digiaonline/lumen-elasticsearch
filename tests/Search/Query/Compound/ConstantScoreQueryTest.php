@@ -40,5 +40,4 @@ class ConstantScoreQueryTest extends AbstractQueryTestCase
             ],
         ], $constantScoreQuery->toArray());
     }
-
 }
