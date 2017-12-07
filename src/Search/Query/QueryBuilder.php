@@ -1,6 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query;
 
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\ConstantScoreQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\FunctionScoreQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MultiMatchQuery;
@@ -25,6 +26,13 @@ class QueryBuilder
         return new BoolQuery();
     }
 
+    /**
+     * @return ConstantScoreQuery
+     */
+    public function createConstantScoreQuery()
+    {
+        return new ConstantScoreQuery();
+    }
 
     /**
      * @return FunctionScoreQuery
