@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.5] - 2017-12-07
+- Added support for using constant score queries
+
+## [2.3.4] - 2017-11-29
+- Added support for using script scoring functions 
+
+## [2.3.3] - 2017-11-28
+- Made reindex operation asynchronous to prevent potential timeouts
+
+## [2.3.2] - 2017-11-27 
+- Added "delete by query" support
+
 ## [2.3.1] - 2017-11-14
 ### Fixed
 - Improve code coverage somewhat
