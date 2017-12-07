@@ -11,7 +11,6 @@ use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
  */
 class ConstantScoreQuery extends AbstractQuery
 {
-
     use HasQuery;
     use HasBoost;
 
@@ -27,5 +26,4 @@ class ConstantScoreQuery extends AbstractQuery
             ],
         ];
     }
-
 }
