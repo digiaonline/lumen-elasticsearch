@@ -25,7 +25,8 @@ class ApplyMigrationCommand extends AbstractCommand
      */
     protected $signature = 'elastic:migrations:migrate 
                             { config : The path to the index configuration file } 
-                            { --batchSize= : The number of documents to handle per batch while re-indexing }';
+                            { --batchSize= : The number of documents to handle per batch while re-indexing }
+                            { --force : Forces update across all types }';
 
     /**
      * The console command description.
@@ -40,12 +41,9 @@ class ApplyMigrationCommand extends AbstractCommand
     public function handle()
     {
         $configurationPath = (string)$this->argument('config');
-        $batchSize         = (int)$this->option('batchSize');
-
-        if ($batchSize === 0) {
-            $batchSize = self::DEFAULT_BATCH_SIZE;
-        }
-
+        $batchSize         = (int)$this->option('batchSize',  self::DEFAULT_BATCH_SIZE);
+        $force             = (bool)$this->option('force', false);
+        
         $pipeline = new Pipeline([
             new DetermineTargetVersionStage(),
             new CheckIndexExistsStage($this->elasticsearchService),
@@ -55,7 +53,7 @@ class ApplyMigrationCommand extends AbstractCommand
             new UpdateIndexAliasStage($this->elasticsearchService),
         ]);
 
-        $payload = new ApplyMigrationPayload($configurationPath, $batchSize);
+        $payload = new ApplyMigrationPayload($configurationPath, $batchSize, $force);
 
         try {
             $pipeline->process($payload);
