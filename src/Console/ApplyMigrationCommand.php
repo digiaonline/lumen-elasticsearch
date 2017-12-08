@@ -41,7 +41,7 @@ class ApplyMigrationCommand extends AbstractCommand
     public function handle()
     {
         $configurationPath = (string)$this->argument('config');
-        $batchSize         = (int)$this->option('batchSize',  self::DEFAULT_BATCH_SIZE);
+        $batchSize         = (int)$this->option('batchSize', self::DEFAULT_BATCH_SIZE);
         $force             = (bool)$this->option('force', false);
         
         $pipeline = new Pipeline([
