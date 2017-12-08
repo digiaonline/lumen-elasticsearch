@@ -20,6 +20,11 @@ class ApplyMigrationPayload extends MigrationPayload
     private $batchSize;
 
     /**
+     * @var bool
+     */
+    private $updateAllTypes;
+
+    /**
      * @var int
      */
     private $numberOfReplicas;
@@ -29,12 +34,14 @@ class ApplyMigrationPayload extends MigrationPayload
      *
      * @param string $configurationPath
      * @param int    $batchSize
+     * @param bool   $updateAllTypes
      */
-    public function __construct($configurationPath, $batchSize)
+    public function __construct($configurationPath, $batchSize, $updateAllTypes = false)
     {
         parent::__construct($configurationPath);
 
-        $this->batchSize = $batchSize;
+        $this->batchSize      = $batchSize;
+        $this->updateAllTypes = $updateAllTypes;
     }
 
     /**
@@ -58,7 +65,13 @@ class ApplyMigrationPayload extends MigrationPayload
      */
     public function getTargetConfiguration()
     {
-        return include $this->getTargetVersionPath();
+        $config = include $this->getTargetVersionPath();
+
+        if ($this->updateAllTypes) {
+            $config['update_all_types'] = true;
+        }
+
+        return $config;
     }
 
     /**
