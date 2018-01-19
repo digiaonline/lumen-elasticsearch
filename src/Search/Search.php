@@ -22,6 +22,11 @@ class Search
     private $query;
 
     /**
+     * @var array
+     */
+    private $source;
+
+    /**
      * @var Sort
      */
     private $sort;
@@ -135,6 +140,24 @@ class Search
         return $this->sort;
     }
 
+    /**
+     * @param array $source
+     *
+     * @return $this
+     */
+    public function setSource(array $source)
+    {
+        $this->source = $source;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
 
     /**
      * @return AggregationCollection
@@ -251,6 +274,10 @@ class Search
             if (!empty($sort)) {
                 $body['sort'] = $sort->toArray();
             }
+        }
+
+        if (!empty($this->getSource())) {
+            $body['_source'] = $this->getSource();
         }
 
         $aggregations = $this->getAggregations();
