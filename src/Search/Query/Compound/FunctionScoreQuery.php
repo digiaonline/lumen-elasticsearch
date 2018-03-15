@@ -51,7 +51,7 @@ class FunctionScoreQuery extends AbstractQuery
         }
 
         $scoreMode = $this->getScoreMode();
-        if (!empty($scoreMode)) {
+        if ($scoreMode !== null) {
             $array['score_mode'] = $scoreMode;
         }
 

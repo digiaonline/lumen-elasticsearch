@@ -10,12 +10,12 @@ trait HasBoost
 {
 
     /**
-     * @var float Sets the boost value of the query, defaults to 1.0.
+     * @var ?float Sets the boost value of the query, defaults to 1.0.
      */
     protected $boost;
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getBoost()
     {

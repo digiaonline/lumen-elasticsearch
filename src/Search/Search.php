@@ -260,20 +260,20 @@ class Search
     public function buildBody()
     {
         $body = [];
-
-        if (($query = $this->getQuery())) {
-            if (!empty($query)) {
-                $body['query'] = $query->toArray();
-            }
+        $query = $this->getQuery();
+            
+        if ($query !== null) {
+            $body['query'] = $query->toArray();
         }
+            
         if (empty($body['query'])) {
             $body['query'] = ['match_all' => new \stdClass()];
         }
 
-        if (($sort = $this->getSort())) {
-            if (!empty($sort)) {
-                $body['sort'] = $sort->toArray();
-            }
+        $sort = $this->getSort();
+            
+        if ($sort !== null) {
+            $body['sort'] = $sort->toArray();
         }
 
         if (!empty($this->getSource())) {

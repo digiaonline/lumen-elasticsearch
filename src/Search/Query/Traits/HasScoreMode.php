@@ -10,12 +10,12 @@ trait HasScoreMode
 {
 
     /**
-     * @var string
+     * @var ?string
      */
     protected $scoreMode;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getScoreMode()
     {
@@ -27,7 +27,7 @@ trait HasScoreMode
      *
      * @return $this
      */
-    public function setScoreMode($scoreMode)
+    public function setScoreMode(string $scoreMode)
     {
         $this->scoreMode = $scoreMode;
 
