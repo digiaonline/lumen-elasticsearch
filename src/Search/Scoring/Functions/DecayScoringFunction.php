@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Scoring\Functions;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**

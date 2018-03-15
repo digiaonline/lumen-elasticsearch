@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
@@ -57,9 +55,8 @@ class HasChildQuery extends AbstractQuery
      * @param int $minChildren
      * @return HasChildQuery
      */
-    public function setMinChildren($minChildren)
+    public function setMinChildren(int $minChildren)
     {
-        $this->assertMinChildren($minChildren);
         $this->minChildren = $minChildren;
         return $this;
     }
@@ -78,9 +75,8 @@ class HasChildQuery extends AbstractQuery
      * @param int $maxChildren
      * @return HasChildQuery
      */
-    public function setMaxChildren($maxChildren)
+    public function setMaxChildren(int $maxChildren)
     {
-        $this->assertMaxChildren($maxChildren);
         $this->maxChildren = $maxChildren;
         return $this;
     }
@@ -92,35 +88,5 @@ class HasChildQuery extends AbstractQuery
     public function getMaxChildren()
     {
         return $this->maxChildren;
-    }
-
-
-    /**
-     * @param int $minChildren
-     * @throws InvalidArgument
-     */
-    protected function assertMinChildren($minChildren)
-    {
-        if (!is_int($minChildren)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `min_children` must be an integer, "%s" given.',
-                gettype($minChildren)
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $maxChildren
-     * @throws InvalidArgument
-     */
-    protected function assertMaxChildren($maxChildren)
-    {
-        if (!is_int($maxChildren)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `max_children` must be an integer, "%s" given.',
-                gettype($maxChildren)
-            ));
-        }
     }
 }

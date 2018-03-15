@@ -109,15 +109,9 @@ class RegexpQuery extends AbstractQuery
      * @param int $maxDeterminizedStates
      *
      * @return RegexpQuery
-     *
-     * @throws InvalidArgument
      */
-    public function setMaxDeterminizedStates($maxDeterminizedStates)
+    public function setMaxDeterminizedStates(int $maxDeterminizedStates)
     {
-        if (!is_int($maxDeterminizedStates)) {
-            throw new InvalidArgument('max_determinized_states must be an integer');
-        }
-
         $this->maxDeterminizedStates = $maxDeterminizedStates;
 
         return $this;

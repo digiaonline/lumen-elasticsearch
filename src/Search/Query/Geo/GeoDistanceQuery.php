@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
@@ -117,7 +116,6 @@ class GeoDistanceQuery extends AbstractQuery
     /**
      * @param string $distanceType
      * @return GeoDistanceQuery
-     * @throws InvalidArgument
      */
     public function setDistanceType($distanceType)
     {

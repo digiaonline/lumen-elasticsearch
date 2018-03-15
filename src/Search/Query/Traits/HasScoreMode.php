@@ -2,8 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Search\Query\Traits;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 /**
  * Trait HasScoreMode
  * @package Nord\Lumen\Elasticsearch\Search\Query\Traits

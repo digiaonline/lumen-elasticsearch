@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
@@ -83,7 +82,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $operator
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setOperator($operator)
     {
@@ -104,7 +102,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $zeroTermsQuery
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setZeroTermsQuery($zeroTermsQuery)
     {
@@ -124,12 +121,11 @@ class MatchQuery extends AbstractQuery
 
     /**
      * @param float $cutOffFrequency
+     * 
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setCutOffFrequency($cutOffFrequency)
+    public function setCutOffFrequency(float $cutOffFrequency)
     {
-        $this->assertCutOffFrequency($cutOffFrequency);
         $this->cutOffFrequency = $cutOffFrequency;
         return $this;
     }
@@ -147,7 +143,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $type
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setType($type)
     {
@@ -158,12 +153,11 @@ class MatchQuery extends AbstractQuery
 
     /**
      * @param int $slop
+     * 
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setSlop($slop)
+    public function setSlop(int $slop)
     {
-        $this->assertSlop($slop);
         $this->slop = $slop;
         return $this;
     }
@@ -181,11 +175,9 @@ class MatchQuery extends AbstractQuery
     /**
      * @param int $maxExpansions
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setMaxExpansions($maxExpansions)
+    public function setMaxExpansions(int $maxExpansions)
     {
-        $this->assertMaxExpansions($maxExpansions);
         $this->maxExpansions = $maxExpansions;
         return $this;
     }
@@ -258,67 +250,5 @@ class MatchQuery extends AbstractQuery
         }
 
         return $match;
-    }
-
-
-    /**
-     * @param float $cutOffFrequency
-     * @throws InvalidArgument
-     */
-    protected function assertCutOffFrequency($cutOffFrequency)
-    {
-        if (!is_float($cutOffFrequency)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `cutoff_frequency` must be a float value, "%s" given.',
-                gettype($cutOffFrequency)
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $type
-     * @throws InvalidArgument
-     */
-    protected function assertType($type)
-    {
-        $validTypes = [self::TYPE_PHRASE, self::TYPE_PHRASE_PREFIX];
-        if (!in_array($type, $validTypes)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `type` must be one of "%s", "%s" given.',
-                implode(', ', $validTypes),
-                $type
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $slop
-     * @throws InvalidArgument
-     */
-    protected function assertSlop($slop)
-    {
-        if (!is_int($slop)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `slop` must be an integer, "%s" given.',
-                gettype($slop)
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $maxExpansions
-     * @throws InvalidArgument
-     */
-    protected function assertMaxExpansions($maxExpansions)
-    {
-        if (!is_int($maxExpansions)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `max_expansions` must be an integer, "%s" given.',
-                gettype($maxExpansions)
-            ));
-        }
     }
 }

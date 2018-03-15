@@ -2,8 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Search\Query\Traits;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 /**
  * Trait BoostableQuery
  * @package Nord\Lumen\Elasticsearch\Search\Query\Traits
@@ -28,12 +26,9 @@ trait HasBoost
      * @param float $boost
      *
      * @return $this
-     *
-     * @throws InvalidArgument
      */
-    public function setBoost($boost)
+    public function setBoost(float $boost)
     {
-        $this->assertBoost($boost);
         $this->boost = $boost;
 
         return $this;
@@ -45,20 +40,5 @@ trait HasBoost
     public function hasBoost()
     {
         return $this->boost !== null;
-    }
-
-    /**
-     * @param float $boost
-     *
-     * @throws InvalidArgument
-     */
-    protected function assertBoost($boost)
-    {
-        if (!is_float($boost)) {
-            throw new InvalidArgument(sprintf(
-                '`boost` must be a float value, "%s" given.',
-                gettype($boost)
-            ));
-        }
     }
 }
