@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Compound;
 
+use Nord\Lumen\Elasticsearch\Search\Query\BoostMode;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\ScriptScoringFunction;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
@@ -9,6 +10,7 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
 {
     /**
      *
+     * @throws \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
      */
     public function testToArray()
     {
@@ -24,6 +26,11 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
 
         $functionScoreQuery
             ->setQuery($boolQuery)
+            ->setWeight(34.12)
+            ->setBoost(5.1)
+            ->setMaxBoost(14.3)
+            ->setBoostMode(BoostMode::MODE_MULTIPLY)
+            ->setMinScore(1)
             ->addFunction($scriptScoringFunction);
 
         $expectedArray = [
@@ -48,8 +55,43 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
                             ]
                         ]
                     ]
-                ]
+                ],
+                'weight'     => 34.12,
+                'boost'      => 5.1,
+                'max_boost'  => 14.3,
+                'boost_mode' => 'multiply',
+                'min_score'  => 1,
             ]
+        ];
+
+        $this->assertEquals($expectedArray, $functionScoreQuery->toArray());
+    }
+
+    /**
+     *
+     */
+    public function testToArrayMinimumFields()
+    {
+        $boolQuery = $this->queryBuilder->createBoolQuery();
+        $boolQuery->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+
+        $functionScoreQuery = $this->queryBuilder->createFunctionScoreQuery();
+
+        $functionScoreQuery
+            ->setQuery($boolQuery);
+
+        $expectedArray = [
+            'function_score' => [
+                'query' => [
+                    'bool' => [
+                        'must' => [
+                            [
+                                'term' => ['field1' => 'value1'],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
 
         $this->assertEquals($expectedArray, $functionScoreQuery->toArray());

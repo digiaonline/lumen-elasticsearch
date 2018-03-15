@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.9] - 2018-03-15
+
+- Added support for most of the missing function query features
+
 ## [2.3.8] - 2018-03-15
 
 - Added support for "dis max" queries
