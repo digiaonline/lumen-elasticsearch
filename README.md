@@ -323,7 +323,7 @@ composer install
 Run the following command to run the test suite:
 
 ```sh
-vendor/bin/phpunit
+composer test
 ```
 
 ## License
