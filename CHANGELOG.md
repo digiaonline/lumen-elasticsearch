@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.8] - 2018-03-15
+
+- Added support for "dis max" queries
+- Fixed a bug in option parsing in the ApplyMigrationCommand
+
 ## [2.3.7] - 2018-03-15
 
 No functional changes, 2.3.6 accidentally got tagged on the wrong branch
