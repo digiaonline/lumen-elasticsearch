@@ -71,9 +71,9 @@ class BoolQuery extends AbstractQuery
         return $this;
     }
 
-
     /**
-     * @param array $filter
+     * @param array $filters
+     *
      * @return BoolQuery
      */
     public function addFilters(array $filters)

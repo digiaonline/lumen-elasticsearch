@@ -10,7 +10,7 @@ trait HasTieBreaker
 {
 
     /**
-     * @var float
+     * @var ?float
      */
     protected $tieBreaker;
 
