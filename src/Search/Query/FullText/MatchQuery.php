@@ -121,7 +121,7 @@ class MatchQuery extends AbstractQuery
 
     /**
      * @param float $cutOffFrequency
-     * 
+     *
      * @return MatchQuery
      */
     public function setCutOffFrequency(float $cutOffFrequency)
@@ -153,7 +153,7 @@ class MatchQuery extends AbstractQuery
 
     /**
      * @param int $slop
-     * 
+     *
      * @return MatchQuery
      */
     public function setSlop(int $slop)

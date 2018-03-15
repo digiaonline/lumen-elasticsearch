@@ -16,7 +16,7 @@ class HasParentQuery extends AbstractQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @throws InvalidArgument
      */
     public function toArray()

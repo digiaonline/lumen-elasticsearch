@@ -19,7 +19,7 @@ class NestedQuery extends AbstractQuery
 
     /**
      * @inheritdoc
-     * 
+     *
      * @throws InvalidArgument
      */
     public function toArray()
