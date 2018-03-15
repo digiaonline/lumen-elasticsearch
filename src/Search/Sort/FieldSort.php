@@ -6,8 +6,8 @@ class FieldSort extends AbstractSort
 {
     use HasField;
     
-    const MISSING_FIRST = '_first';
-    const MISSING_LAST  = '_last';
+    public const MISSING_FIRST = '_first';
+    public const MISSING_LAST  = '_last';
 
     /**
      * @var string The missing parameter specifies how docs which are missing the field should be treated. The missing

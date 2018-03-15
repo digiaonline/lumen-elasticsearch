@@ -2,7 +2,7 @@
 
 class BulkAction
 {
-    const ACTION_INDEX = 'index';
+    public const ACTION_INDEX = 'index';
 
     /**
      * @var string

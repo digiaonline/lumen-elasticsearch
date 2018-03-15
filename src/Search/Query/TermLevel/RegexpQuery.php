@@ -17,13 +17,13 @@ class RegexpQuery extends AbstractQuery
     use HasBoost;
     use HasValue;
 
-    const FLAG_ALL          = 'ALL';
-    const FLAG_ANYSTRING    = 'ANYSTRING';
-    const FLAG_COMPLEMENT   = 'COMPLEMENT';
-    const FLAG_EMPTY        = 'EMPTY';
-    const FLAG_INTERSECTION = 'INTERSECTION';
-    const FLAG_INTERVAL     = 'INTERVAL';
-    const FLAG_NONE         = 'NONE';
+    public const FLAG_ALL          = 'ALL';
+    public const FLAG_ANYSTRING    = 'ANYSTRING';
+    public const FLAG_COMPLEMENT   = 'COMPLEMENT';
+    public const FLAG_EMPTY        = 'EMPTY';
+    public const FLAG_INTERSECTION = 'INTERSECTION';
+    public const FLAG_INTERVAL     = 'INTERVAL';
+    public const FLAG_NONE         = 'NONE';
 
     /**
      * @var array

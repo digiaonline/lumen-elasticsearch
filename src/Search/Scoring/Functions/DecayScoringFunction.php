@@ -12,9 +12,9 @@ class DecayScoringFunction extends AbstractScoringFunction
 {
     use HasField;
     
-    const DECAY_FUNCTION_LINEAR = 'linear';
-    const DECAY_FUNCTION_EXPONENTIAL = 'exp';
-    const DECAY_FUNCTION_GAUSSIAN = 'gauss';
+    public const DECAY_FUNCTION_LINEAR      = 'linear';
+    public const DECAY_FUNCTION_EXPONENTIAL = 'exp';
+    public const DECAY_FUNCTION_GAUSSIAN    = 'gauss';
 
     /**
      * @var string One of the `DECAY_FUNCTION_` constants.

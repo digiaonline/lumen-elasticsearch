@@ -13,9 +13,9 @@ class MultiMatchQuery extends MatchQuery
     use HasFields;
     use HasTieBreaker;
     
-    const TYPE_BEST_FIELDS   = 'best_fields';
-    const TYPE_MOST_FIELDS   = 'most_fields';
-    const TYPE_CROSS_FIELDS  = 'cross_fields';
+    public const TYPE_BEST_FIELDS  = 'best_fields';
+    public const TYPE_MOST_FIELDS  = 'most_fields';
+    public const TYPE_CROSS_FIELDS = 'cross_fields';
 
     /**
      * @inheritdoc

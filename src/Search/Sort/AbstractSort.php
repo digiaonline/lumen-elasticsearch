@@ -10,14 +10,14 @@
  */
 abstract class AbstractSort
 {
-    const ORDER_ASC  = 'asc';
-    const ORDER_DESC = 'desc';
+    public const ORDER_ASC  = 'asc';
+    public const ORDER_DESC = 'desc';
 
-    const MODE_MIN    = 'min';
-    const MODE_MAX    = 'max';
-    const MODE_SUM    = 'sum';
-    const MODE_AVG    = 'avg';
-    const MODE_MEDIAN = 'median';
+    public const MODE_MIN    = 'min';
+    public const MODE_MAX    = 'max';
+    public const MODE_SUM    = 'sum';
+    public const MODE_AVG    = 'avg';
+    public const MODE_MEDIAN = 'median';
 
     /**
      * @var string Defaults to desc when sorting on the _score, and defaults to asc when sorting on anything else.

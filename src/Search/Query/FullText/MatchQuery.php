@@ -15,14 +15,14 @@ class MatchQuery extends AbstractQuery
     use HasType;
     use HasValue;
     
-    const OPERATOR_OR = 'or';
-    const OPERATOR_AND = 'and';
+    public const OPERATOR_OR  = 'or';
+    public const OPERATOR_AND = 'and';
 
-    const ZERO_TERM_QUERY_NONE = 'none';
-    const ZERO_TERM_QUERY_ALL = 'all';
+    public const ZERO_TERM_QUERY_NONE = 'none';
+    public const ZERO_TERM_QUERY_ALL  = 'all';
 
-    const TYPE_PHRASE = 'phrase';
-    const TYPE_PHRASE_PREFIX = 'phrase_prefix';
+    public const TYPE_PHRASE        = 'phrase';
+    public const TYPE_PHRASE_PREFIX = 'phrase_prefix';
 
     /**
      * @var string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").

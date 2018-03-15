@@ -11,9 +11,9 @@ class GeoDistanceQuery extends AbstractQuery
 {
     use HasField;
     
-    const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
-    const DISTANCE_TYPE_ARC = 'arc';
-    const DISTANCE_TYPE_PLANE = 'plane';
+    public const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
+    public const DISTANCE_TYPE_ARC        = 'arc';
+    public const DISTANCE_TYPE_PLANE      = 'plane';
 
     /**
      * @var mixed

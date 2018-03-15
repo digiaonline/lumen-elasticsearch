@@ -18,7 +18,7 @@ use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
  */
 class ApplyMigrationCommand extends AbstractCommand
 {
-    const DEFAULT_BATCH_SIZE = 1000;
+    public const DEFAULT_BATCH_SIZE = 1000;
 
     /**
      * @var string
