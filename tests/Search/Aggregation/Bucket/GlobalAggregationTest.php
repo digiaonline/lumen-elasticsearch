@@ -2,7 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\Bucket;
 
-use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MaxAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 use Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\AbstractAggregationTestCase;

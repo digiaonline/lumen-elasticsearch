@@ -2,7 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\Metrics;
 
-use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 use Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\AbstractAggregationTestCase;
 
 /**

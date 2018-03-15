@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**

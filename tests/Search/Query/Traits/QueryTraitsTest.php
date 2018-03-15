@@ -3,7 +3,6 @@
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Traits;
 
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasFields;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
