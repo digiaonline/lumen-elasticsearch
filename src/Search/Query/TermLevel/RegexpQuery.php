@@ -17,13 +17,13 @@ class RegexpQuery extends AbstractQuery
     use HasBoost;
     use HasValue;
 
-    const FLAG_ALL          = 'ALL';
-    const FLAG_ANYSTRING    = 'ANYSTRING';
-    const FLAG_COMPLEMENT   = 'COMPLEMENT';
-    const FLAG_EMPTY        = 'EMPTY';
-    const FLAG_INTERSECTION = 'INTERSECTION';
-    const FLAG_INTERVAL     = 'INTERVAL';
-    const FLAG_NONE         = 'NONE';
+    public const FLAG_ALL          = 'ALL';
+    public const FLAG_ANYSTRING    = 'ANYSTRING';
+    public const FLAG_COMPLEMENT   = 'COMPLEMENT';
+    public const FLAG_EMPTY        = 'EMPTY';
+    public const FLAG_INTERSECTION = 'INTERSECTION';
+    public const FLAG_INTERVAL     = 'INTERVAL';
+    public const FLAG_NONE         = 'NONE';
 
     /**
      * @var array
@@ -42,7 +42,7 @@ class RegexpQuery extends AbstractQuery
      */
     public function toArray()
     {
-        if (!isset($this->field) || !isset($this->value)) {
+        if ($this->field === null || $this->value === null) {
             throw new InvalidArgument('"field" and "value" must be set for this type of query');
         }
 
@@ -109,15 +109,9 @@ class RegexpQuery extends AbstractQuery
      * @param int $maxDeterminizedStates
      *
      * @return RegexpQuery
-     *
-     * @throws InvalidArgument
      */
-    public function setMaxDeterminizedStates($maxDeterminizedStates)
+    public function setMaxDeterminizedStates(int $maxDeterminizedStates)
     {
-        if (!is_int($maxDeterminizedStates)) {
-            throw new InvalidArgument('max_determinized_states must be an integer');
-        }
-
         $this->maxDeterminizedStates = $maxDeterminizedStates;
 
         return $this;

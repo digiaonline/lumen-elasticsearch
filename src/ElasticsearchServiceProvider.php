@@ -6,7 +6,7 @@ use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 
 class ElasticsearchServiceProvider extends ServiceProvider
 {
-    const CONFIG_KEY = 'elasticsearch';
+    protected const CONFIG_KEY = 'elasticsearch';
 
 
     /**

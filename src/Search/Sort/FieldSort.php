@@ -6,8 +6,8 @@ class FieldSort extends AbstractSort
 {
     use HasField;
     
-    const MISSING_FIRST = '_first';
-    const MISSING_LAST  = '_last';
+    public const MISSING_FIRST = '_first';
+    public const MISSING_LAST  = '_last';
 
     /**
      * @var string The missing parameter specifies how docs which are missing the field should be treated. The missing
@@ -31,12 +31,12 @@ class FieldSort extends AbstractSort
         $options = $this->applyOptions([]);
 
         $missing = $this->getMissing();
-        if (!is_null($missing)) {
+        if (null !== $missing) {
             $options['missing'] = $missing;
         }
 
         $unmappedType = $this->getUnmappedType();
-        if (!is_null($unmappedType)) {
+        if (null !== $unmappedType) {
             $options['unmapped_type'] = $unmappedType;
         }
 

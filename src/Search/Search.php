@@ -62,10 +62,10 @@ class Search
 
 
     /**
-     * @param $index
+     * @param string $index
      * @return Search
      */
-    public function setIndex($index)
+    public function setIndex(string $index)
     {
         $this->index = $index;
         return $this;
@@ -82,10 +82,10 @@ class Search
 
 
     /**
-     * @param $type
+     * @param string $type
      * @return Search
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
         return $this;

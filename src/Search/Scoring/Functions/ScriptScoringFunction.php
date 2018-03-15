@@ -27,7 +27,7 @@ class ScriptScoringFunction extends AbstractScoringFunction
     }
 
     /**
-     * @param $params
+     * @param mixed $params
      *
      * @return $this
      */

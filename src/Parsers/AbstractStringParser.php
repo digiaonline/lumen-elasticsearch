@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Parsers;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 class AbstractStringParser
 {
     /**
@@ -27,17 +25,12 @@ class AbstractStringParser
 
 
     /**
-     * @param $string
+     * @param string $string
      *
      * @return array
-     * @throws InvalidArgument
      */
-    public function parse($string)
+    public function parse(string $string)
     {
-        if (!is_string($string)) {
-            throw new InvalidArgument('Cannot parse non-string values.');
-        }
-
         $array = [];
 
         foreach ($this->splitItems($string) as $item) {

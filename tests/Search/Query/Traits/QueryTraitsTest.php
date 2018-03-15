@@ -20,15 +20,6 @@ class QueryTraitsTest extends TestCase
 {
 
     /**
-     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
-     */
-    public function testInvalidBoostException()
-    {
-        $query = new TraitTesterQuery();
-        $query->setBoost('foo');
-    }
-
-    /**
      * Tests that the traits correctly set and get values
      */
     public function testTraits()

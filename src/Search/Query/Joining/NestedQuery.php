@@ -29,7 +29,7 @@ class NestedQuery extends AbstractQuery
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $nested['score_mode'] = $scoreMode;
         }
 

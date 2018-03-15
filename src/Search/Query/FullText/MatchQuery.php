@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
@@ -16,14 +15,14 @@ class MatchQuery extends AbstractQuery
     use HasType;
     use HasValue;
     
-    const OPERATOR_OR = 'or';
-    const OPERATOR_AND = 'and';
+    public const OPERATOR_OR  = 'or';
+    public const OPERATOR_AND = 'and';
 
-    const ZERO_TERM_QUERY_NONE = 'none';
-    const ZERO_TERM_QUERY_ALL = 'all';
+    public const ZERO_TERM_QUERY_NONE = 'none';
+    public const ZERO_TERM_QUERY_ALL  = 'all';
 
-    const TYPE_PHRASE = 'phrase';
-    const TYPE_PHRASE_PREFIX = 'phrase_prefix';
+    public const TYPE_PHRASE        = 'phrase';
+    public const TYPE_PHRASE_PREFIX = 'phrase_prefix';
 
     /**
      * @var string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").
@@ -83,7 +82,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $operator
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setOperator($operator)
     {
@@ -104,7 +102,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $zeroTermsQuery
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setZeroTermsQuery($zeroTermsQuery)
     {
@@ -125,11 +122,9 @@ class MatchQuery extends AbstractQuery
     /**
      * @param float $cutOffFrequency
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setCutOffFrequency($cutOffFrequency)
+    public function setCutOffFrequency(float $cutOffFrequency)
     {
-        $this->assertCutOffFrequency($cutOffFrequency);
         $this->cutOffFrequency = $cutOffFrequency;
         return $this;
     }
@@ -147,7 +142,6 @@ class MatchQuery extends AbstractQuery
     /**
      * @param string $type
      * @return MatchQuery
-     * @throws InvalidArgument
      */
     public function setType($type)
     {
@@ -159,11 +153,9 @@ class MatchQuery extends AbstractQuery
     /**
      * @param int $slop
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setSlop($slop)
+    public function setSlop(int $slop)
     {
-        $this->assertSlop($slop);
         $this->slop = $slop;
         return $this;
     }
@@ -181,11 +173,9 @@ class MatchQuery extends AbstractQuery
     /**
      * @param int $maxExpansions
      * @return MatchQuery
-     * @throws InvalidArgument
      */
-    public function setMaxExpansions($maxExpansions)
+    public function setMaxExpansions(int $maxExpansions)
     {
-        $this->assertMaxExpansions($maxExpansions);
         $this->maxExpansions = $maxExpansions;
         return $this;
     }
@@ -227,98 +217,36 @@ class MatchQuery extends AbstractQuery
     protected function applyOptions(array $match)
     {
         $operator = $this->getOperator();
-        if (!is_null($operator)) {
+        if (null !== $operator) {
             $match['operator'] = $operator;
         }
         $zeroTermsQuery = $this->getZeroTermsQuery();
-        if (!is_null($zeroTermsQuery)) {
+        if (null !== $zeroTermsQuery) {
             $match['zero_terms_query'] = $zeroTermsQuery;
         }
         $cutOffFreq = $this->getCutOffFrequency();
-        if (!is_null($cutOffFreq)) {
+        if (null !== $cutOffFreq) {
             $match['cutoff_frequency'] = $cutOffFreq;
         }
         $type = $this->getType();
-        if (!is_null($type)) {
+        if (null !== $type) {
             $match['type'] = $type;
             $slop = $this->getSlop();
-            if (!is_null($slop)) {
+            if (null !== $slop) {
                 $match['slop'] = $slop;
             }
             if ($match['type'] === self::TYPE_PHRASE_PREFIX) {
                 $maxExp = $this->getMaxExpansions();
-                if (!is_null($maxExp)) {
+                if (null !== $maxExp) {
                     $match['max_expansions'] = $maxExp;
                 }
             }
         }
         $analyzer = $this->getAnalyzer();
-        if (!is_null($analyzer)) {
+        if (null !== $analyzer) {
             $match['analyzer'] = $analyzer;
         }
 
         return $match;
-    }
-
-
-    /**
-     * @param float $cutOffFrequency
-     * @throws InvalidArgument
-     */
-    protected function assertCutOffFrequency($cutOffFrequency)
-    {
-        if (!is_float($cutOffFrequency)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `cutoff_frequency` must be a float value, "%s" given.',
-                gettype($cutOffFrequency)
-            ));
-        }
-    }
-
-
-    /**
-     * @param string $type
-     * @throws InvalidArgument
-     */
-    protected function assertType($type)
-    {
-        $validTypes = [self::TYPE_PHRASE, self::TYPE_PHRASE_PREFIX];
-        if (!in_array($type, $validTypes)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `type` must be one of "%s", "%s" given.',
-                implode(', ', $validTypes),
-                $type
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $slop
-     * @throws InvalidArgument
-     */
-    protected function assertSlop($slop)
-    {
-        if (!is_int($slop)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `slop` must be an integer, "%s" given.',
-                gettype($slop)
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $maxExpansions
-     * @throws InvalidArgument
-     */
-    protected function assertMaxExpansions($maxExpansions)
-    {
-        if (!is_int($maxExpansions)) {
-            throw new InvalidArgument(sprintf(
-                'Match Query `max_expansions` must be an integer, "%s" given.',
-                gettype($maxExpansions)
-            ));
-        }
     }
 }
