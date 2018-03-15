@@ -19,7 +19,6 @@ use Nord\Lumen\Elasticsearch\Search\Traits\HasTieBreaker;
  */
 class DisMaxQuery extends AbstractQuery
 {
-
     use HasBoost;
     use HasTieBreaker;
 
