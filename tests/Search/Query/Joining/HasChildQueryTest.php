@@ -120,4 +120,12 @@ class HasChildQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
     }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayWithMissingQuery()
+    {
+        (new HasChildQuery())->toArray();
+    }
 }

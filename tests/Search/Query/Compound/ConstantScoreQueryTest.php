@@ -40,4 +40,12 @@ class ConstantScoreQueryTest extends AbstractQueryTestCase
             ],
         ], $constantScoreQuery->toArray());
     }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayWithMissingQuery()
+    {
+        (new ConstantScoreQuery())->toArray();
+    }
 }

@@ -32,7 +32,7 @@ class FunctionScoreQuery extends AbstractQuery
         $array = [];
 
         $query = $this->getQuery();
-        if (!empty($query)) {
+        if ($query !== null) {
             $queryArray = $query->toArray();
             if (!empty($queryArray)) {
                 $array['query'] = $queryArray;

@@ -12,12 +12,12 @@ trait HasQuery
 {
 
     /**
-     * @var QueryDSL
+     * @var ?QueryDSL
      */
     protected $query;
 
     /**
-     * @return QueryDSL
+     * @return QueryDSL|null
      */
     public function getQuery()
     {
@@ -25,11 +25,11 @@ trait HasQuery
     }
 
     /**
-     * @param QueryDSL $query
+     * @param QueryDSL|null $query
      *
      * @return $this
      */
-    public function setQuery($query)
+    public function setQuery(?QueryDSL $query)
     {
         $this->query = $query;
 

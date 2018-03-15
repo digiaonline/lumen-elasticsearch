@@ -1,5 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
@@ -22,15 +23,21 @@ class HasChildQuery extends AbstractQuery
      */
     private $maxChildren;
 
-
     /**
      * @inheritdoc
+     * @throws InvalidArgument
      */
     public function toArray()
     {
+        $query = $this->getQuery();
+        
+        if ($query === null) {
+            throw new InvalidArgument('Query must be set');
+        }
+        
         $hasChild = [
             'type'  => $this->getType(),
-            'query' => $this->getQuery()->toArray(),
+            'query' => $query->toArray(),
         ];
 
         $scoreMode = $this->getScoreMode();
