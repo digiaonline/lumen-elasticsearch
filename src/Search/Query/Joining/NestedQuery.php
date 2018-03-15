@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
-
 /**
  * Nested query allows to query nested objects / docs (see nested mapping).
  *

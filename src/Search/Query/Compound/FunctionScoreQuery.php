@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
