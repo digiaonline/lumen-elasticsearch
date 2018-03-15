@@ -2,6 +2,7 @@
 
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\ConstantScoreQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\DisMaxQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\FunctionScoreQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\FullText\MultiMatchQuery;
@@ -32,6 +33,14 @@ class QueryBuilder
     public function createConstantScoreQuery()
     {
         return new ConstantScoreQuery();
+    }
+
+    /**
+     * @return DisMaxQuery
+     */
+    public function createDisMaxQuery()
+    {
+        return new DisMaxQuery();
     }
 
     /**
