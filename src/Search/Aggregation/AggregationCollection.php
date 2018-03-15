@@ -86,6 +86,6 @@ class AggregationCollection implements \Countable, \IteratorAggregate
      */
     public function get($index)
     {
-        return isset($this->aggregations[$index]) ? $this->aggregations[$index] : null;
+        return $this->aggregations[$index] ?? null;
     }
 }
