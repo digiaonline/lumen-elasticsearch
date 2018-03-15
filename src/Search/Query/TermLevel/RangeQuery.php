@@ -41,23 +41,23 @@ class RangeQuery extends AbstractQuery
         $range = [];
 
         $greaterThanOrEquals = $this->getGreaterThanOrEquals();
-        if (!is_null($greaterThanOrEquals)) {
+        if (null !== $greaterThanOrEquals) {
             $range['gte'] = $greaterThanOrEquals;
         }
         $greaterThan = $this->getGreaterThan();
-        if (!is_null($greaterThan)) {
+        if (null !== $greaterThan) {
             $range['gt'] = $greaterThan;
         }
         $lessThanOrEquals = $this->getLessThanOrEquals();
-        if (!is_null($lessThanOrEquals)) {
+        if (null !== $lessThanOrEquals) {
             $range['lte'] = $lessThanOrEquals;
         }
         $lessThan = $this->getLessThan();
-        if (!is_null($lessThan)) {
+        if (null !== $lessThan) {
             $range['lt'] = $lessThan;
         }
         $boost = $this->getBoost();
-        if (!is_null($boost)) {
+        if (null !== $boost) {
             $range['boost'] = $boost;
         }
 

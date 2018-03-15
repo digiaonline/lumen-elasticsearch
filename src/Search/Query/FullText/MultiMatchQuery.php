@@ -41,7 +41,7 @@ class MultiMatchQuery extends MatchQuery
         $multiMatch = parent::applyOptions($match);
 
         $tieBreaker = $this->getTieBreaker();
-        if (!is_null($tieBreaker)) {
+        if (null !== $tieBreaker) {
             $multiMatch['tie_breaker'] = $tieBreaker;
         }
 

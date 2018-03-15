@@ -21,7 +21,7 @@ class TermQuery extends AbstractQuery
         $term = ['value' => $this->getValue()];
 
         $boost = $this->getBoost();
-        if (!is_null($boost)) {
+        if (null !== $boost) {
             $term['boost'] = $boost;
         }
 

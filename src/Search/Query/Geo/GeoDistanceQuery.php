@@ -54,7 +54,7 @@ class GeoDistanceQuery extends AbstractQuery
         ];
 
         $distanceType = $this->getDistanceType();
-        if (!is_null($distanceType)) {
+        if (null !== $distanceType) {
             $geoDistance['distance_type'] = $distanceType;
         }
 

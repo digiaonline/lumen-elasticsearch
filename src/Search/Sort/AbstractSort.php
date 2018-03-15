@@ -38,12 +38,12 @@ abstract class AbstractSort
     protected function applyOptions(array $options)
     {
         $order = $this->getOrder();
-        if (!is_null($order)) {
+        if (null !== $order) {
             $options['order'] = $order;
         }
 
         $mode = $this->getMode();
-        if (!is_null($mode)) {
+        if (null !== $mode) {
             $options['mode'] = $mode;
         }
 

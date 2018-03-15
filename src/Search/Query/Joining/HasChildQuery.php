@@ -34,17 +34,17 @@ class HasChildQuery extends AbstractQuery
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $hasChild['score_mode'] = $scoreMode;
         }
 
         $minChildren = $this->getMinChildren();
-        if (!is_null($minChildren)) {
+        if (null !== $minChildren) {
             $hasChild['min_children'] = $minChildren;
         }
 
         $maxChildren = $this->getMaxChildren();
-        if (!is_null($maxChildren)) {
+        if (null !== $maxChildren) {
             $hasChild['max_children'] = $maxChildren;
         }
 

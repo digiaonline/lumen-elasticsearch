@@ -31,12 +31,12 @@ class FieldSort extends AbstractSort
         $options = $this->applyOptions([]);
 
         $missing = $this->getMissing();
-        if (!is_null($missing)) {
+        if (null !== $missing) {
             $options['missing'] = $missing;
         }
 
         $unmappedType = $this->getUnmappedType();
-        if (!is_null($unmappedType)) {
+        if (null !== $unmappedType) {
             $options['unmapped_type'] = $unmappedType;
         }
 

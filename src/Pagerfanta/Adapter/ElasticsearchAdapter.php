@@ -60,7 +60,7 @@ class ElasticsearchAdapter implements AdapterInterface
      */
     public function getResult($offset = null, $length = null)
     {
-        if (!is_null($offset) && !is_null($length)) {
+        if (null !== $offset && null !== $length) {
             $page = ($offset / $length) + 1;
             $size = $length;
             if ($page !== $this->search->getPage() || $size !== $this->search->getSize()) {

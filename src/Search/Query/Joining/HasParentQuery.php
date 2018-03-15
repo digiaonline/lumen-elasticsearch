@@ -26,7 +26,7 @@ class HasParentQuery extends AbstractQuery
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $hasParent['score_mode'] = $scoreMode;
         }
 

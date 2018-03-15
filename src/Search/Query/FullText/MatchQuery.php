@@ -219,33 +219,33 @@ class MatchQuery extends AbstractQuery
     protected function applyOptions(array $match)
     {
         $operator = $this->getOperator();
-        if (!is_null($operator)) {
+        if (null !== $operator) {
             $match['operator'] = $operator;
         }
         $zeroTermsQuery = $this->getZeroTermsQuery();
-        if (!is_null($zeroTermsQuery)) {
+        if (null !== $zeroTermsQuery) {
             $match['zero_terms_query'] = $zeroTermsQuery;
         }
         $cutOffFreq = $this->getCutOffFrequency();
-        if (!is_null($cutOffFreq)) {
+        if (null !== $cutOffFreq) {
             $match['cutoff_frequency'] = $cutOffFreq;
         }
         $type = $this->getType();
-        if (!is_null($type)) {
+        if (null !== $type) {
             $match['type'] = $type;
             $slop = $this->getSlop();
-            if (!is_null($slop)) {
+            if (null !== $slop) {
                 $match['slop'] = $slop;
             }
             if ($match['type'] === self::TYPE_PHRASE_PREFIX) {
                 $maxExp = $this->getMaxExpansions();
-                if (!is_null($maxExp)) {
+                if (null !== $maxExp) {
                     $match['max_expansions'] = $maxExp;
                 }
             }
         }
         $analyzer = $this->getAnalyzer();
-        if (!is_null($analyzer)) {
+        if (null !== $analyzer) {
             $match['analyzer'] = $analyzer;
         }
 
