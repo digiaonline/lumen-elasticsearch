@@ -86,6 +86,9 @@ class SearchTest extends TestCase
         $this->search->setSize(100);
         $this->assertEquals(100, $this->search->getSize());
 
+        $this->search->setSource(['*']);
+        $this->assertEquals(['*'], $this->search->getSource());
+
         $this->search->setSort($this->sort);
         $this->assertInstanceOf(Sort::class, $this->search->getSort());
 
@@ -172,6 +175,26 @@ class SearchTest extends TestCase
             'from'  => 0,
         ], $this->search->buildBody());
     }
+
+    public function testToArrayWithSource()
+    {
+        $this->search = $this->service->createSearch();
+        $this->search->setPage(1);
+        $this->search->setSize(100);
+        $this->search->setSource(['id', 'title', 'description']);
+
+        $this->assertEquals([
+            'query' => ['match_all' => new \stdClass()],
+            'size' => 100,
+            'from' => 0,
+            '_source' => [
+                'id',
+                'title',
+                'description'
+            ],
+        ], $this->search->buildBody());
+    }
+
 
     /**
      * Test adding an array of aggregation to Search

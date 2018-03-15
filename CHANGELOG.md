@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.7] - 2018-03-15
+
+No functional changes, 2.3.6 accidentally got tagged on the wrong branch
+
+## [2.3.6] - 2018-01-19
+
+- Added option to force update_all_types when doing migrations
+- Added support for setting _source
+
 ## [2.3.5] - 2017-12-07
 - Added support for using constant score queries
 
