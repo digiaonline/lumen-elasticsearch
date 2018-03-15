@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
@@ -17,6 +17,7 @@ use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\AbstractScoringFunction;
  */
 class FunctionScoreQuery extends AbstractQuery
 {
+    use HasBoost;
     use HasQuery;
     use HasScoreMode;
 
@@ -24,6 +25,26 @@ class FunctionScoreQuery extends AbstractQuery
      * @var AbstractScoringFunction[]
      */
     private $functions = [];
+
+    /**
+     * @var float|null
+     */
+    private $weight;
+
+    /**
+     * @var float|null
+     */
+    private $maxBoost;
+
+    /**
+     * @var string|null
+     */
+    private $boostMode;
+
+    /**
+     * @var int|float|null
+     */
+    private $minScore;
 
     /**
      * @inheritdoc
@@ -54,6 +75,26 @@ class FunctionScoreQuery extends AbstractQuery
         $scoreMode = $this->getScoreMode();
         if (!empty($scoreMode)) {
             $array['score_mode'] = $scoreMode;
+        }
+
+        if ($this->hasWeight()) {
+            $array['weight'] = $this->getWeight();
+        }
+
+        if ($this->hasBoost()) {
+            $array['boost'] = $this->getBoost();
+        }
+
+        if ($this->hasMaxBoost()) {
+            $array['max_boost'] = $this->getMaxBoost();
+        }
+
+        if ($this->hasBoostMode()) {
+            $array['boost_mode'] = $this->getBoostMode();
+        }
+
+        if ($this->hasMinScore()) {
+            $array['min_score'] = $this->getMinScore();
         }
 
         return ['function_score' => $array];
@@ -89,6 +130,119 @@ class FunctionScoreQuery extends AbstractQuery
     public function addFunction(AbstractScoringFunction $function)
     {
         $this->functions[] = $function;
+
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getWeight()
+    {
+        return $this->weight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasWeight()
+    {
+        return $this->getWeight() !== null;
+    }
+
+    /**
+     * @param float $weight
+     *
+     * @return FunctionScoreQuery
+     */
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getMaxBoost()
+    {
+        return $this->maxBoost;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMaxBoost()
+    {
+        return $this->getMaxBoost() !== null;
+    }
+
+    /**
+     * @param float $maxBoost
+     *
+     * @return FunctionScoreQuery
+     */
+    public function setMaxBoost($maxBoost)
+    {
+        $this->maxBoost = $maxBoost;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getBoostMode()
+    {
+        return $this->boostMode;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasBoostMode()
+    {
+        return $this->getBoostMode() !== null;
+    }
+
+    /**
+     * @param string $boostMode
+     *
+     * @return FunctionScoreQuery
+     */
+    public function setBoostMode($boostMode)
+    {
+        $this->boostMode = $boostMode;
+
+        return $this;
+    }
+
+    /**
+     * @return int|float|null
+     */
+    public function getMinScore()
+    {
+        return $this->minScore;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasMinScore()
+    {
+        return $this->getMinScore() !== null;
+    }
+
+    /**
+     * @param int|float $minScore
+     *
+     * @return FunctionScoreQuery
+     */
+    public function setMinScore($minScore)
+    {
+        $this->minScore = $minScore;
+
         return $this;
     }
 }
