@@ -34,9 +34,9 @@
             "Nord\\Lumen\\Elasticsearch\\Tests\\": "tests"
         }
     },
-    "config": {
-        "platform": {
-            "php": "5.6.4"
-        }
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
     }
 }

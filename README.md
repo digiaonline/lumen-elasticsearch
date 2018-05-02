@@ -8,7 +8,6 @@
 [![Latest Stable Version](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/version)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
 [![Total Downloads](https://poser.pugx.org/nordsoftware/lumen-elasticsearch/downloads)](https://packagist.org/packages/nordsoftware/lumen-elasticsearch)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Gitter](https://img.shields.io/gitter/room/norsoftware/open-source.svg?maxAge=2592000)](https://gitter.im/nordsoftware/open-source)
 
 Simple wrapper of [Elasticsearch-PHP](https://github.com/elastic/elasticsearch-php) for the [Lumen PHP framework](http://lumen.laravel.com/).
 
@@ -321,7 +320,7 @@ composer install
 Run the following command to run the test suite:
 
 ```sh
-vendor/bin/phpunit
+composer test
 ```
 
 ## License
