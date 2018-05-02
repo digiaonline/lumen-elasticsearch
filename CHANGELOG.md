@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.10] - 2018-05-02
+
+- Removed composer.lock from git
+- Decreased the progress bar redraw frequency and made it configurable
+
 ## [2.3.9] - 2018-03-15
 
 - Added support for most of the missing function query features
