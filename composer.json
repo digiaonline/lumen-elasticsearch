@@ -33,10 +33,5 @@
         "psr-4": {
             "Nord\\Lumen\\Elasticsearch\\Tests\\": "tests"
         }
-    },
-    "config": {
-        "platform": {
-            "php": "5.6.4"
-        }
     }
 }
