@@ -7,6 +7,11 @@ abstract class IndexCommand extends AbstractCommand
 {
 
     /**
+     * The number of items to process before updating the progress bar
+     */
+    const PROGRESS_BAR_REDRAW_FREQUENCY = 50;
+
+    /**
      * @return array
      */
     abstract public function getData();
@@ -52,6 +57,7 @@ abstract class IndexCommand extends AbstractCommand
         $data = $this->getData();
 
         $bar = $this->output->createProgressBar($this->getCount());
+        $bar->setRedrawFrequency($this->getProgressBarRedrawFrequency());
 
         $bulkQuery = new BulkQuery($this->getBulkSize());
 
@@ -98,6 +104,14 @@ abstract class IndexCommand extends AbstractCommand
     protected function getBulkSize()
     {
         return BulkQuery::BULK_SIZE_DEFAULT;
+    }
+
+    /**
+     * @return int the progress bar redraw frequency
+     */
+    protected function getProgressBarRedrawFrequency()
+    {
+        return self::PROGRESS_BAR_REDRAW_FREQUENCY;
     }
 
     /**
