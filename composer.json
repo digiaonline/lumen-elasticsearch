@@ -33,5 +33,10 @@
         "psr-4": {
             "Nord\\Lumen\\Elasticsearch\\Tests\\": "tests"
         }
+    },
+    "scripts": {
+        "test": [
+            "phpunit"
+        ]
     }
 }
