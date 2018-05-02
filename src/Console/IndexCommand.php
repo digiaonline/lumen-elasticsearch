@@ -7,20 +7,6 @@ abstract class IndexCommand extends AbstractCommand
 {
 
     /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
-    protected $signature = 'elastic:index';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
-    protected $description = 'Indexes data to an Elasticsearch index.';
-
-    /**
      * @return array
      */
     abstract public function getData();
