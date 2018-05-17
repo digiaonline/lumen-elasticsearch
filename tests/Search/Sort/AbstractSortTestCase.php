@@ -29,6 +29,6 @@ abstract class AbstractSortTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->sortBuilder = $this->service->createSortBuilder();
+        $this->sortBuilder = new SortBuilder();
     }
 }

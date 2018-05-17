@@ -2,10 +2,12 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search;
 
+use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\TermsAggregation;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
@@ -44,17 +46,17 @@ class SearchTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = $this->service->createQueryBuilder();
+        $queryBuilder = new QueryBuilder();
 
         $this->search = $this->service->createSearch();
         $this->query  = $queryBuilder->createBoolQuery();
         $this->query->addMust($queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
 
-        $sortBuilder = $this->service->createSortBuilder();
+        $sortBuilder = new Sort\SortBuilder();
         $this->sort  = $this->service->createSort();
         $this->sort->addSort($sortBuilder->createScoreSort());
 
-        $aggregationBuilder = $this->service->createAggregationBuilder();
+        $aggregationBuilder = new AggregationBuilder();
 
         $this->aggregation = $aggregationBuilder->createGlobalAggregation();
         $this->aggregation->setName('global_name');

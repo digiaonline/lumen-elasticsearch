@@ -24,6 +24,6 @@ abstract class AbstractAggregationTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->aggregationBuilder = $this->service->createAggregationBuilder();
+        $this->aggregationBuilder = new AggregationBuilder();
     }
 }

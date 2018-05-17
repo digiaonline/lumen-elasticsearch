@@ -29,6 +29,6 @@ abstract class AbstractQueryTestCase extends TestCase
     {
         parent::setUp();
 
-        $this->queryBuilder = $this->service->createQueryBuilder();
+        $this->queryBuilder = new QueryBuilder();
     }
 }

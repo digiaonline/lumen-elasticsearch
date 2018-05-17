@@ -30,7 +30,7 @@ class SortTest extends TestCase
     {
         parent::setUp();
 
-        $this->sortBuilder = $this->service->createSortBuilder();
+        $this->sortBuilder = new SortBuilder();
         $this->sort        = $this->service->createSort();
     }
 
