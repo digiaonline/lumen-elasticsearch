@@ -8,12 +8,12 @@ namespace Nord\Lumen\Elasticsearch\Search\Query;
  */
 class ScoreMode
 {
-    const MODE_AVG      = 'avg';
-    const MODE_SUM      = 'sum';
-    const MODE_MIN      = 'min';
-    const MODE_MAX      = 'max';
-    const MODE_SCORE    = 'score';
-    const MODE_MULTIPLY = 'multiply';
-    const MODE_FIRST    = 'first';
-    const MODE_NONE     = 'none';
+    public const MODE_AVG      = 'avg';
+    public const MODE_SUM      = 'sum';
+    public const MODE_MIN      = 'min';
+    public const MODE_MAX      = 'max';
+    public const MODE_SCORE    = 'score';
+    public const MODE_MULTIPLY = 'multiply';
+    public const MODE_FIRST    = 'first';
+    public const MODE_NONE     = 'none';
 }

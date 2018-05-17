@@ -2,6 +2,10 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Compound;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -16,13 +20,13 @@ class BoolQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createBoolQuery();
-        $query->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
-        $query->addFilter($this->queryBuilder->createTermQuery()->setField('field2')->setValue('value2'));
-        $query->addMustNot($this->queryBuilder->createRangeQuery()->setField('field3')->setGreaterThanOrEquals(1)
-                                              ->setLessThanOrEquals(2));
-        $query->addShould($this->queryBuilder->createTermQuery()->setField('field4')->setValue('value3'));
-        $query->addShould($this->queryBuilder->createTermQuery()->setField('field4')->setValue('value4'));
+        $query = new BoolQuery();
+        
+        $query->addMust(new TermQuery('field1', 'value1'));
+        $query->addFilter(new TermQuery('field2', 'value2'));
+        $query->addMustNot((new RangeQuery())->setField('field3')->setGreaterThanOrEquals(1)->setLessThanOrEquals(2));
+        $query->addShould(new TermQuery('field4', 'value3'));
+        $query->addShould(new TermQuery('field4', 'value4'));
 
         $expectedArray = [
             'bool' => [
@@ -65,15 +69,14 @@ class BoolQueryTest extends AbstractQueryTestCase
      */
     public function testAddFilters()
     {
-        $query = $this->queryBuilder->createBoolQuery();
-        $query->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
-        $query->addFilter($this->queryBuilder->createTermQuery()->setField('field2')->setValue('value2'));
+        $query = new BoolQuery();
+        $query->addMust(new TermQuery('field1', 'value1'));
+        $query->addFilter(new TermQuery('field2', 'value2'));
 
-        $filters = [
-            $this->queryBuilder->createTermsQuery()->setField('field3')->setValues(['value3']),
-            $this->queryBuilder->createTermsQuery()->setField('field4')->setValues(['value4']),
-        ];
-        $query->addFilters($filters);
+        $query->addFilters([
+            (new TermsQuery())->setField('field3')->setValues(['value3']),
+            (new TermsQuery())->setField('field4')->setValues(['value4']),
+        ]);
 
         $expectedArray = [
             'bool' => [

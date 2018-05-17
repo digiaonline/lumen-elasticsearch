@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\WildcardQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -17,7 +18,7 @@ class WildcardQueryTest extends AbstractQueryTestCase
     public function testToArray()
     {
         // Basic value-only query
-        $query = $this->queryBuilder->createWildcardQuery()->setField('foo')->setValue('bar?baz*qux');
+        $query = (new WildcardQuery())->setField('foo')->setValue('bar?baz*qux');
 
         $this->assertEquals([
             'wildcard' => [
@@ -45,6 +46,6 @@ class WildcardQueryTest extends AbstractQueryTestCase
      */
     public function testToArrayMissingFieldValue()
     {
-        $this->queryBuilder->createWildcardQuery()->toArray();
+        (new WildcardQuery())->toArray();
     }
 }

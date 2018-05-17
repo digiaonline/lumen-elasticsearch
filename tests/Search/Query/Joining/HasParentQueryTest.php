@@ -2,8 +2,10 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasParentQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -18,15 +20,15 @@ class HasParentQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createHasParentQuery();
+        $query = new HasParentQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               );
 
         $this->assertEquals([
@@ -42,15 +44,15 @@ class HasParentQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createHasParentQuery();
+        $query = new HasParentQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               )
               ->setScoreMode(ScoreMode::MODE_SCORE);
 
@@ -67,5 +69,13 @@ class HasParentQueryTest extends AbstractQueryTestCase
                 'score_mode'  => 'score',
             ],
         ], $query->toArray());
+    }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayWithMissingQuery()
+    {
+        (new HasParentQuery())->toArray();
     }
 }

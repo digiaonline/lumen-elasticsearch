@@ -24,7 +24,7 @@ class WildcardQuery extends AbstractQuery
      */
     public function toArray()
     {
-        if (!isset($this->field) || !isset($this->value)) {
+        if ($this->field === null || $this->value === null) {
             throw new InvalidArgument('"field" and "value" must be set for this type of query');
         }
 

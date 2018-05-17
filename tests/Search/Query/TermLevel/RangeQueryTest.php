@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\RangeQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -16,7 +17,7 @@ class RangeQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createRangeQuery();
+        $query = new RangeQuery();
         $query->setField('field')
               ->setGreaterThanOrEquals(10);
 
@@ -28,7 +29,7 @@ class RangeQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createRangeQuery();
+        $query = new RangeQuery();
         $query->setField('field')
               ->setGreaterThan(10);
 
@@ -40,7 +41,7 @@ class RangeQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createRangeQuery();
+        $query = new RangeQuery();
         $query->setField('field')
               ->setLessThanOrEquals(10);
 
@@ -52,7 +53,7 @@ class RangeQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createRangeQuery();
+        $query = new RangeQuery();
         $query->setField('field')
               ->setLessThan(10);
 
@@ -64,7 +65,7 @@ class RangeQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createRangeQuery();
+        $query = new RangeQuery();
         $query->setField('field')
               ->setBoost(2.0);
 

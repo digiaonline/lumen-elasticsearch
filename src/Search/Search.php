@@ -62,10 +62,10 @@ class Search
 
 
     /**
-     * @param $index
+     * @param string $index
      * @return Search
      */
-    public function setIndex($index)
+    public function setIndex(string $index)
     {
         $this->index = $index;
         return $this;
@@ -82,10 +82,10 @@ class Search
 
 
     /**
-     * @param $type
+     * @param string $type
      * @return Search
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
         return $this;
@@ -260,20 +260,20 @@ class Search
     public function buildBody()
     {
         $body = [];
-
-        if (($query = $this->getQuery())) {
-            if (!empty($query)) {
-                $body['query'] = $query->toArray();
-            }
+        $query = $this->getQuery();
+            
+        if ($query !== null) {
+            $body['query'] = $query->toArray();
         }
+            
         if (empty($body['query'])) {
             $body['query'] = ['match_all' => new \stdClass()];
         }
 
-        if (($sort = $this->getSort())) {
-            if (!empty($sort)) {
-                $body['sort'] = $sort->toArray();
-            }
+        $sort = $this->getSort();
+            
+        if ($sort !== null) {
+            $body['sort'] = $sort->toArray();
         }
 
         if (!empty($this->getSource())) {

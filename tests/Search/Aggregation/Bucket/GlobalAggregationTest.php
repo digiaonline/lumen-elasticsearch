@@ -19,7 +19,7 @@ class GlobalAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createGlobalAggregation();
+        $aggregation = new GlobalAggregation();
 
         // Test on an empty aggregation
         $this->assertEquals([

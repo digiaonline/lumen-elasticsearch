@@ -18,7 +18,7 @@ class RegexpQueryTest extends AbstractQueryTestCase
     public function testToArray()
     {
         // Basic value-only query
-        $query = $this->queryBuilder->createRegexpQuery()->setField('foo')->setValue('bar[0-9]');
+        $query = (new RegexpQuery())->setField('foo')->setValue('bar[0-9]');
 
         $this->assertEquals([
             'regexp' => [
@@ -75,16 +75,8 @@ class RegexpQueryTest extends AbstractQueryTestCase
     /**
      * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
      */
-    public function testMaxDeterminizedStatesException()
-    {
-        $this->queryBuilder->createRegexpQuery()->setMaxDeterminizedStates('foo');
-    }
-
-    /**
-     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
-     */
     public function testToArrayMissingFieldValue()
     {
-        $this->queryBuilder->createRegexpQuery()->toArray();
+        (new RegexpQuery())->toArray();
     }
 }

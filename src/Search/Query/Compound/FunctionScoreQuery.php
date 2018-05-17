@@ -54,7 +54,7 @@ class FunctionScoreQuery extends AbstractQuery
         $array = [];
 
         $query = $this->getQuery();
-        if (!empty($query)) {
+        if ($query !== null) {
             $queryArray = $query->toArray();
             if (!empty($queryArray)) {
                 $array['query'] = $queryArray;
@@ -73,7 +73,7 @@ class FunctionScoreQuery extends AbstractQuery
         }
 
         $scoreMode = $this->getScoreMode();
-        if (!empty($scoreMode)) {
+        if ($scoreMode !== null) {
             $array['score_mode'] = $scoreMode;
         }
 

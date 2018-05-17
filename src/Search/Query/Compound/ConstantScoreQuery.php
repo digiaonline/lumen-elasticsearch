@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
 
@@ -16,12 +17,19 @@ class ConstantScoreQuery extends AbstractQuery
 
     /**
      * @inheritdoc
+     * @throws InvalidArgument
      */
     public function toArray()
     {
+        $query = $this->getQuery();
+
+        if ($query === null) {
+            throw new InvalidArgument('Query must be set');
+        }
+
         return [
             'constant_score' => [
-                'filter' => $this->getQuery()->toArray(),
+                'filter' => $query->toArray(),
                 'boost'  => $this->getBoost(),
             ],
         ];

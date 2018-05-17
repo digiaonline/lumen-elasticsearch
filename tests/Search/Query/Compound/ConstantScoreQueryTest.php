@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Compound;
 
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\ConstantScoreQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -19,7 +20,7 @@ class ConstantScoreQueryTest extends AbstractQueryTestCase
     public function testToArray()
     {
         $query = new BoolQuery();
-        $query->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+        $query->addMust(new TermQuery('field1', 'value1'));
 
         $constantScoreQuery = new ConstantScoreQuery();
         $constantScoreQuery->setQuery($query)
@@ -39,5 +40,13 @@ class ConstantScoreQueryTest extends AbstractQueryTestCase
                 'boost'  => 5.0,
             ],
         ], $constantScoreQuery->toArray());
+    }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayWithMissingQuery()
+    {
+        (new ConstantScoreQuery())->toArray();
     }
 }

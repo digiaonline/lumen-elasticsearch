@@ -2,9 +2,6 @@
 
 use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\Parsers\SortStringParser;
-use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
 
@@ -143,43 +140,6 @@ class ElasticsearchService implements ElasticsearchServiceContract
     {
         return new Sort();
     }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createQueryBuilder()
-    {
-        return new QueryBuilder();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createSortBuilder()
-    {
-        return new Sort\SortBuilder();
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createSortStringParser(array $config = [])
-    {
-        return new SortStringParser($config);
-    }
-
-
-    /**
-     * @inheritdoc
-     */
-    public function createAggregationBuilder()
-    {
-        return new AggregationBuilder();
-    }
-
 
     /**
      * @inheritdoc

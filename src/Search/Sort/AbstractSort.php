@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Sort;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-
 /**
  * Allows to add one or more sort on specific fields. Each sort can be reversed as well. The sort is defined on a per
  * field level, with special field name for _score to sort by score, and _doc to sort by index order.
@@ -12,22 +10,22 @@ use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
  */
 abstract class AbstractSort
 {
-    const ORDER_ASC  = 'asc';
-    const ORDER_DESC = 'desc';
+    public const ORDER_ASC  = 'asc';
+    public const ORDER_DESC = 'desc';
 
-    const MODE_MIN    = 'min';
-    const MODE_MAX    = 'max';
-    const MODE_SUM    = 'sum';
-    const MODE_AVG    = 'avg';
-    const MODE_MEDIAN = 'median';
+    public const MODE_MIN    = 'min';
+    public const MODE_MAX    = 'max';
+    public const MODE_SUM    = 'sum';
+    public const MODE_AVG    = 'avg';
+    public const MODE_MEDIAN = 'median';
 
     /**
-     * @var string Defaults to desc when sorting on the _score, and defaults to asc when sorting on anything else.
+     * @var ?string Defaults to desc when sorting on the _score, and defaults to asc when sorting on anything else.
      */
     private $order;
 
     /**
-     * @var string Elasticsearch supports sorting by array or multi-valued fields. The mode option controls what array
+     * @var ?string Elasticsearch supports sorting by array or multi-valued fields. The mode option controls what array
      * value is picked for sorting the document it belongs to.
      */
     private $mode;
@@ -40,12 +38,12 @@ abstract class AbstractSort
     protected function applyOptions(array $options)
     {
         $order = $this->getOrder();
-        if (!is_null($order)) {
+        if (null !== $order) {
             $options['order'] = $order;
         }
 
         $mode = $this->getMode();
-        if (!is_null($mode)) {
+        if (null !== $mode) {
             $options['mode'] = $mode;
         }
 
@@ -65,9 +63,9 @@ abstract class AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrder()
+    public function getOrder(): ?string
     {
         return $this->order;
     }
@@ -85,9 +83,9 @@ abstract class AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMode()
+    public function getMode(): ?string
     {
         return $this->mode;
     }
