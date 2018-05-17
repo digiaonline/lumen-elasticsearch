@@ -1,6 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Geo;
 
-use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
@@ -12,9 +11,9 @@ class GeoDistanceQuery extends AbstractQuery
 {
     use HasField;
     
-    const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
-    const DISTANCE_TYPE_ARC = 'arc';
-    const DISTANCE_TYPE_PLANE = 'plane';
+    public const DISTANCE_TYPE_SLOPPY_ARC = 'sloppy_arc';
+    public const DISTANCE_TYPE_ARC        = 'arc';
+    public const DISTANCE_TYPE_PLANE      = 'plane';
 
     /**
      * @var mixed
@@ -35,7 +34,7 @@ class GeoDistanceQuery extends AbstractQuery
     private $distance;
 
     /**
-     * @var string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
+     * @var ?string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
      * significantly slower) or plane (faster, but inaccurate on long distances and close to the poles).
      */
     private $distanceType;
@@ -55,7 +54,7 @@ class GeoDistanceQuery extends AbstractQuery
         ];
 
         $distanceType = $this->getDistanceType();
-        if (!is_null($distanceType)) {
+        if (null !== $distanceType) {
             $geoDistance['distance_type'] = $distanceType;
         }
 
@@ -117,7 +116,6 @@ class GeoDistanceQuery extends AbstractQuery
     /**
      * @param string $distanceType
      * @return GeoDistanceQuery
-     * @throws InvalidArgument
      */
     public function setDistanceType($distanceType)
     {
@@ -127,9 +125,9 @@ class GeoDistanceQuery extends AbstractQuery
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDistanceType()
+    public function getDistanceType(): ?string
     {
         return $this->distanceType;
     }

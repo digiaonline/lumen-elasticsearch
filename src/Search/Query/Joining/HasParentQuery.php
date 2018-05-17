@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
@@ -14,19 +14,25 @@ class HasParentQuery extends AbstractQuery
 {
     use HasType;
 
-
     /**
      * @inheritdoc
+     * @throws InvalidArgument
      */
     public function toArray()
     {
+        $query = $this->getQuery();
+
+        if ($query === null) {
+            throw new InvalidArgument('Query must be set');
+        }
+        
         $hasParent = [
             'parent_type'  => $this->getType(),
-            'query'        => $this->getQuery()->toArray(),
+            'query'        => $query->toArray(),
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $hasParent['score_mode'] = $scoreMode;
         }
 

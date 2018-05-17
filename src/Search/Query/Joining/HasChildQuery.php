@@ -1,7 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
 use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 
 /**
@@ -15,38 +14,44 @@ class HasChildQuery extends AbstractQuery
     use HasType;
 
     /**
-     * @var int
+     * @var ?int
      */
     private $minChildren;
 
     /**
-     * @var int
+     * @var ?int
      */
     private $maxChildren;
 
-
     /**
      * @inheritdoc
+     * @throws InvalidArgument
      */
     public function toArray()
     {
+        $query = $this->getQuery();
+        
+        if ($query === null) {
+            throw new InvalidArgument('Query must be set');
+        }
+        
         $hasChild = [
             'type'  => $this->getType(),
-            'query' => $this->getQuery()->toArray(),
+            'query' => $query->toArray(),
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $hasChild['score_mode'] = $scoreMode;
         }
 
         $minChildren = $this->getMinChildren();
-        if (!is_null($minChildren)) {
+        if (null !== $minChildren) {
             $hasChild['min_children'] = $minChildren;
         }
 
         $maxChildren = $this->getMaxChildren();
-        if (!is_null($maxChildren)) {
+        if (null !== $maxChildren) {
             $hasChild['max_children'] = $maxChildren;
         }
 
@@ -57,18 +62,17 @@ class HasChildQuery extends AbstractQuery
      * @param int $minChildren
      * @return HasChildQuery
      */
-    public function setMinChildren($minChildren)
+    public function setMinChildren(int $minChildren)
     {
-        $this->assertMinChildren($minChildren);
         $this->minChildren = $minChildren;
         return $this;
     }
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMinChildren()
+    public function getMinChildren(): ?int
     {
         return $this->minChildren;
     }
@@ -78,49 +82,18 @@ class HasChildQuery extends AbstractQuery
      * @param int $maxChildren
      * @return HasChildQuery
      */
-    public function setMaxChildren($maxChildren)
+    public function setMaxChildren(int $maxChildren)
     {
-        $this->assertMaxChildren($maxChildren);
         $this->maxChildren = $maxChildren;
         return $this;
     }
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxChildren()
+    public function getMaxChildren(): ?int
     {
         return $this->maxChildren;
-    }
-
-
-    /**
-     * @param int $minChildren
-     * @throws InvalidArgument
-     */
-    protected function assertMinChildren($minChildren)
-    {
-        if (!is_int($minChildren)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `min_children` must be an integer, "%s" given.',
-                gettype($minChildren)
-            ));
-        }
-    }
-
-
-    /**
-     * @param int $maxChildren
-     * @throws InvalidArgument
-     */
-    protected function assertMaxChildren($maxChildren)
-    {
-        if (!is_int($maxChildren)) {
-            throw new InvalidArgument(sprintf(
-                'HasChild Query `max_children` must be an integer, "%s" given.',
-                gettype($maxChildren)
-            ));
-        }
     }
 }

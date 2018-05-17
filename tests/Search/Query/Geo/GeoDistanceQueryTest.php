@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Geo;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Geo\GeoDistanceQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -16,7 +17,7 @@ class GeoDistanceQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createGeoDistanceQuery();
+        $query = new GeoDistanceQuery();
         $query->setLocation(60.169856, 24.938379)
               ->setDistance('10km')
               ->setField('field');
@@ -31,7 +32,7 @@ class GeoDistanceQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createGeoDistanceQuery();
+        $query = new GeoDistanceQuery();
         $query->setLocation(60.169856, 24.938379)
               ->setDistance('10km')
               ->setDistanceType('arc')

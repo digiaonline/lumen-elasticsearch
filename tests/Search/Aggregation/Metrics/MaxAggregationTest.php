@@ -17,7 +17,7 @@ class MaxAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createMaxAggregation();
+        $aggregation = new MaxAggregation();
 
         $aggregation->setField('field_name');
         $this->assertEquals([

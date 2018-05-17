@@ -12,7 +12,7 @@ trait HasFields
     /**
      * @var array
      */
-    protected $fields;
+    protected $fields = [];
 
     /**
      * @return array

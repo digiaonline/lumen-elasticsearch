@@ -17,7 +17,7 @@ class MinAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createMinAggregation();
+        $aggregation = new MinAggregation();
 
         $aggregation->setField('field_name');
         $this->assertEquals([

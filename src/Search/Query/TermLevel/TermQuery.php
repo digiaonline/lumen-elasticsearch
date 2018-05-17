@@ -19,7 +19,7 @@ class TermQuery extends AbstractQuery
      * @param string|null $field
      * @param mixed|null  $value
      */
-    public function __construct($field = null, $value = null)
+    public function __construct(?string $field = null, $value = null)
     {
         if ($field !== null && $value !== null) {
             $this->setField($field)->setValue($value);
@@ -34,7 +34,7 @@ class TermQuery extends AbstractQuery
         $term = ['value' => $this->getValue()];
 
         $boost = $this->getBoost();
-        if (!is_null($boost)) {
+        if (null !== $boost) {
             $term['boost'] = $boost;
         }
 

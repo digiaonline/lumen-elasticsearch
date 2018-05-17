@@ -24,9 +24,7 @@ class TermQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createTermQuery();
-        $query->setField('field')
-              ->setValue('value');
+        $query = new TermQuery('field', 'value');
 
         $this->assertEquals(['term' => ['field' => 'value']], $query->toArray());
 

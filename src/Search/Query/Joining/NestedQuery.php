@@ -1,6 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Joining;
 
-use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument;
 
 /**
  * Nested query allows to query nested objects / docs (see nested mapping).
@@ -17,19 +17,25 @@ class NestedQuery extends AbstractQuery
      */
     private $path;
 
-
     /**
      * @inheritdoc
+     * @throws InvalidArgument
      */
     public function toArray()
     {
+        $query = $this->getQuery();
+
+        if ($query === null) {
+            throw new InvalidArgument('Query must be set');
+        }
+        
         $nested = [
             'path'  => $this->getPath(),
-            'query' => $this->getQuery()->toArray(),
+            'query' => $query->toArray(),
         ];
 
         $scoreMode = $this->getScoreMode();
-        if (!is_null($scoreMode)) {
+        if (null !== $scoreMode) {
             $nested['score_mode'] = $scoreMode;
         }
 

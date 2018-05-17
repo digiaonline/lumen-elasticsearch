@@ -17,7 +17,7 @@ class MultiMatchQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createMultiMatchQuery();
+        $query = new MultiMatchQuery();
         $query->setFields(['field1', 'field2'])
               ->setValue('value');
 
@@ -28,7 +28,7 @@ class MultiMatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMultiMatchQuery();
+        $query = new MultiMatchQuery();
         $query->setTieBreaker(0.3)
               ->setFields(['field1', 'field2'])
               ->setValue('value');
@@ -41,7 +41,7 @@ class MultiMatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMultiMatchQuery();
+        $query = new MultiMatchQuery();
         $query->setFields(['field1', 'field2'])
               ->setValue('value')
               ->setType(MultiMatchQuery::TYPE_CROSS_FIELDS);

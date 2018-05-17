@@ -3,7 +3,6 @@
 namespace Nord\Lumen\Elasticsearch\Tests\Search;
 
 use Nord\Lumen\Elasticsearch\Search\Sort;
-use Nord\Lumen\Elasticsearch\Search\Sort\SortBuilder;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
@@ -19,18 +18,12 @@ class SortTest extends TestCase
     protected $sort;
 
     /**
-     * @var SortBuilder
-     */
-    protected $sortBuilder;
-
-    /**
      * @inheritdoc
      */
     public function setUp()
     {
         parent::setUp();
 
-        $this->sortBuilder = $this->service->createSortBuilder();
         $this->sort        = $this->service->createSort();
     }
 
@@ -40,12 +33,12 @@ class SortTest extends TestCase
     public function testSetterGetter()
     {
         $this->sort->setSorts([
-            $this->sortBuilder->createFieldSort()->setField('f'),
-            $this->sortBuilder->createScoreSort(),
+            (new Sort\FieldSort())->setField('f'),
+            new Sort\ScoreSort(),
         ]);
         $this->assertCount(2, $this->sort->getSorts());
 
-        $this->sort->addSort($this->sortBuilder->createScoreSort());
+        $this->sort->addSort(new Sort\ScoreSort());
         $this->assertCount(3, $this->sort->getSorts());
     }
 }

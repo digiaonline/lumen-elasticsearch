@@ -2,8 +2,10 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\HasChildQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -18,15 +20,15 @@ class HasChildQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createHasChildQuery();
+        $query = new HasChildQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               );
 
         $this->assertEquals([
@@ -42,15 +44,15 @@ class HasChildQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createHasChildQuery();
+        $query = new HasChildQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               )
               ->setScoreMode(ScoreMode::MODE_SUM);
 
@@ -68,15 +70,15 @@ class HasChildQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createHasChildQuery();
+        $query = new HasChildQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               )
               ->setMinChildren(2);
 
@@ -94,15 +96,15 @@ class HasChildQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createHasChildQuery();
+        $query = new HasChildQuery();
         $query->setType('doc')
               ->setQuery(
-                  $this->queryBuilder->createBoolQuery()
-                                     ->addMust(
-                                         $this->queryBuilder->createTermsQuery()
-                                                            ->setField('id')
-                                                            ->setValues(['ID1', 'ID2'])
-                                     )
+                  (new BoolQuery())
+                      ->addMust(
+                          (new TermsQuery())
+                              ->setField('id')
+                              ->setValues(['ID1', 'ID2'])
+                      )
               )
               ->setMaxChildren(10);
 
@@ -119,5 +121,13 @@ class HasChildQueryTest extends AbstractQueryTestCase
                 'max_children' => 10,
             ],
         ], $query->toArray());
+    }
+
+    /**
+     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
+     */
+    public function testToArrayWithMissingQuery()
+    {
+        (new HasChildQuery())->toArray();
     }
 }

@@ -10,12 +10,12 @@ trait HasType
 {
 
     /**
-     * @var string
+     * @var ?string
      */
     private $type;
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getType()
     {
@@ -27,7 +27,7 @@ trait HasType
      *
      * @return $this
      */
-    public function setType($type)
+    public function setType(string $type)
     {
         $this->type = $type;
 

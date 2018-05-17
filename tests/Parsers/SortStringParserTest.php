@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Parsers;
 
+use Nord\Lumen\Elasticsearch\Parsers\SortStringParser;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
@@ -16,7 +17,7 @@ class SortStringParserTest extends TestCase
      */
     public function testParserOptions()
     {
-        $parser = $this->service->createSortStringParser(['separator' => '..', 'delimiter' => '/']);
+        $parser = new SortStringParser(['separator' => '..', 'delimiter' => '/']);
 
         $this->assertEquals([
             [0 => 'field1', 1 => 'asc'],
@@ -25,31 +26,21 @@ class SortStringParserTest extends TestCase
     }
 
     /**
-     * Tests that an exception is thrown when a non-string is parsed
-     *
-     * @expectedException \Nord\Lumen\Elasticsearch\Exceptions\InvalidArgument
-     */
-    public function testParseException()
-    {
-        $this->service->createSortStringParser()->parse(new \stdClass());
-    }
-
-    /**
      * Tests parsing single sort item
      */
     public function testParseSingleSort()
     {
-        $sorts = $this->service->createSortStringParser()->parse('field');
+        $sorts = (new SortStringParser())->parse('field');
         $this->assertEquals([
             [0 => 'field'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field:asc');
+        $sorts = (new SortStringParser())->parse('field:asc');
         $this->assertEquals([
             [0 => 'field', 1 => 'asc'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field:asc:avg');
+        $sorts = (new SortStringParser())->parse('field:asc:avg');
         $this->assertEquals([
             [0 => 'field', 1 => 'asc', 2 => 'avg'],
         ], $sorts);
@@ -60,31 +51,31 @@ class SortStringParserTest extends TestCase
      */
     public function testParseMultiSort()
     {
-        $sorts = $this->service->createSortStringParser()->parse('field1;field2');
+        $sorts = (new SortStringParser())->parse('field1;field2');
         $this->assertEquals([
             [0 => 'field1'],
             [0 => 'field2'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field1:asc;field2:desc');
+        $sorts = (new SortStringParser())->parse('field1:asc;field2:desc');
         $this->assertEquals([
             [0 => 'field1', 1 => 'asc'],
             [0 => 'field2', 1 => 'desc'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field1;field2:asc');
+        $sorts = (new SortStringParser())->parse('field1;field2:asc');
         $this->assertEquals([
             [0 => 'field1'],
             [0 => 'field2', 1 => 'asc'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field1:asc:min;field2:desc:sum');
+        $sorts = (new SortStringParser())->parse('field1:asc:min;field2:desc:sum');
         $this->assertEquals([
             [0 => 'field1', 1 => 'asc', 2 => 'min'],
             [0 => 'field2', 1 => 'desc', 2 => 'sum'],
         ], $sorts);
 
-        $sorts = $this->service->createSortStringParser()->parse('field1:asc:min;field2:desc');
+        $sorts = (new SortStringParser())->parse('field1:asc:min;field2:desc');
         $this->assertEquals([
             [0 => 'field1', 1 => 'asc', 2 => 'min'],
             [0 => 'field2', 1 => 'desc'],
@@ -96,12 +87,12 @@ class SortStringParserTest extends TestCase
      */
     public function testBuildSortFromString()
     {
-        $sorts = $this->service->createSortStringParser()->buildSortFromString('_score;_doc');
+        $sorts = (new SortStringParser())->buildSortFromString('_score;_doc');
         $this->assertNotEmpty($sorts);
         $this->assertEquals('_score', $sorts[0]->toArray());
         $this->assertEquals('_doc', $sorts[1]->toArray());
 
-        $sorts = $this->service->createSortStringParser()->buildSortFromString('field1:asc;field2:desc:sum;_score');
+        $sorts = (new SortStringParser())->buildSortFromString('field1:asc;field2:desc:sum;_score');
         $this->assertNotEmpty($sorts);
         $this->assertEquals(['field1' => ['order' => 'asc']], $sorts[0]->toArray());
         $this->assertEquals(['field2' => ['order' => 'desc', 'mode' => 'sum']], $sorts[1]->toArray());

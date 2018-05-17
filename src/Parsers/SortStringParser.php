@@ -1,7 +1,9 @@
 <?php namespace Nord\Lumen\Elasticsearch\Parsers;
 
 use Nord\Lumen\Elasticsearch\Search\Sort\AbstractSort;
-use Nord\Lumen\Elasticsearch\Search\Sort\SortBuilder;
+use Nord\Lumen\Elasticsearch\Search\Sort\DocSort;
+use Nord\Lumen\Elasticsearch\Search\Sort\FieldSort;
+use Nord\Lumen\Elasticsearch\Search\Sort\ScoreSort;
 
 /**
  * Example: "name:asc" => [['name' => ['order' => 'asc']]]
@@ -19,7 +21,6 @@ class SortStringParser extends AbstractStringParser
         $sorts = [];
 
         if (!empty($string)) {
-            $sortBuilder = new SortBuilder();
             foreach ($this->parse($string) as $item) {
 
                 /*
@@ -31,11 +32,11 @@ class SortStringParser extends AbstractStringParser
 
                 if (isset($item[0])) {
                     if ($item[0] === '_score') {
-                        $sort = $sortBuilder->createScoreSort();
+                        $sort = new ScoreSort();
                     } elseif ($item[0] === '_doc') {
-                        $sort = $sortBuilder->createDocSort();
+                        $sort = new DocSort();
                     } else {
-                        $sort = $sortBuilder->createFieldSort()->setField($item[0]);
+                        $sort = (new FieldSort())->setField($item[0]);
                     }
 
                     if (isset($item[1])) {

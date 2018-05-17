@@ -6,12 +6,12 @@ class BulkQuery
     /**
      * The number of actions to handle in one query
      */
-    const BULK_SIZE_DEFAULT = 500;
+    public const BULK_SIZE_DEFAULT = 500;
 
     /**
      * @var BulkAction[]
      */
-    private $actions;
+    private $actions = [];
 
     /**
      * @var int
