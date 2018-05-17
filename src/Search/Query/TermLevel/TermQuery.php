@@ -14,6 +14,19 @@ class TermQuery extends AbstractQuery
     use HasValue;
 
     /**
+     * TermQuery constructor.
+     *
+     * @param string|null $field
+     * @param mixed|null  $value
+     */
+    public function __construct($field = null, $value = null)
+    {
+        if ($field !== null && $value !== null) {
+            $this->setField($field)->setValue($value);
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function toArray()

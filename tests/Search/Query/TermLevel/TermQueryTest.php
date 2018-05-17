@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -10,6 +11,14 @@ use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
  */
 class TermQueryTest extends AbstractQueryTestCase
 {
+
+    public function testConstructor()
+    {
+        $query = new TermQuery('field', 'value');
+
+        $this->assertEquals('field', $query->getField());
+        $this->assertEquals('value', $query->getValue());
+    }
 
     /**
      * @inheritdoc
