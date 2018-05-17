@@ -11,7 +11,6 @@ use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
  */
 class TermQueryTest extends AbstractQueryTestCase
 {
-
     public function testConstructor()
     {
         $query = new TermQuery('field', 'value');
