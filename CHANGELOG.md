@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.3.11] - 2018-05-17
+
+- Added a constructor to TermQuery for convenience
+
 ## [2.3.10] - 2018-05-02
 
 - Removed composer.lock from git
