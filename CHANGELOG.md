@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.0] - 2018-05-17
+
+- Bumped the minimum required PHP version to 7.1
+- Removed the various builder objects
+- Added phpstan for static analysis, fixed a lot of type-hint issues
+- Add some additional error checks, remove useless once caught by the language
+
 ## [2.3.11] - 2018-05-17
 
 - Added a constructor to TermQuery for convenience
