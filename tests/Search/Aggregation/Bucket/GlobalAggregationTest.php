@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\Bucket;
 
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MaxAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 use Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\AbstractAggregationTestCase;
@@ -18,7 +19,7 @@ class GlobalAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createGlobalAggregation();
+        $aggregation = new GlobalAggregation();
 
         // Test on an empty aggregation
         $this->assertEquals([

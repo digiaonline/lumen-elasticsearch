@@ -2,7 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation;
 
-use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
@@ -12,18 +11,4 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
 abstract class AbstractAggregationTestCase extends TestCase
 {
 
-    /**
-     * @var AggregationBuilder
-     */
-    protected $aggregationBuilder;
-
-    /**
-     * @inheritdoc
-     */
-    protected function setUp()
-    {
-        parent::setUp();
-
-        $this->aggregationBuilder = new AggregationBuilder();
-    }
 }

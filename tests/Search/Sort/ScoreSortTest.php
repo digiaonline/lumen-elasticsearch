@@ -2,6 +2,8 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Sort;
 
+use Nord\Lumen\Elasticsearch\Search\Sort\ScoreSort;
+
 /**
  * Class ScoreSortTest
  * @package Nord\Lumen\Elasticsearch\Tests\Search\Sort
@@ -14,7 +16,7 @@ class ScoreSortTest extends AbstractSortTestCase
      */
     public function testToArray()
     {
-        $sort = $this->sortBuilder->createScoreSort();
+        $sort = new ScoreSort();
         $this->assertEquals('_score', $sort->toArray());
 
         $sort->setOrder('asc');

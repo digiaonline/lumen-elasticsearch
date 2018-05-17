@@ -2,6 +2,8 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Joining;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Joining\NestedQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\ScoreMode;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
@@ -18,15 +20,14 @@ class NestedQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createNestedQuery();
+        $query = new NestedQuery();
         $query->setPath('doc')
               ->setQuery(
-                  $this->queryBuilder
-                      ->createBoolQuery()
+                  (new BoolQuery())
                       ->addMust(
-                          $this->queryBuilder->createMatchQuery()
-                                             ->setField('field')
-                                             ->setValue('value')
+                          (new MatchQuery())
+                              ->setField('field')
+                              ->setValue('value')
                       )
               );
 
@@ -43,15 +44,14 @@ class NestedQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createNestedQuery();
+        $query = new NestedQuery();
         $query->setPath('doc')
               ->setQuery(
-                  $this->queryBuilder
-                      ->createBoolQuery()
+                  (new BoolQuery())
                       ->addMust(
-                          $this->queryBuilder->createMatchQuery()
-                                             ->setField('field')
-                                             ->setValue('value')
+                          (new MatchQuery())
+                              ->setField('field')
+                              ->setValue('value')
                       )
               )
               ->setScoreMode(ScoreMode::MODE_AVG);

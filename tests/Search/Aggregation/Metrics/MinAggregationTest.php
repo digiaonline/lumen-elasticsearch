@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\Metrics;
 
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 use Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\AbstractAggregationTestCase;
 
 /**
@@ -16,7 +17,7 @@ class MinAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createMinAggregation();
+        $aggregation = new MinAggregation();
 
         $aggregation->setField('field_name');
         $this->assertEquals([

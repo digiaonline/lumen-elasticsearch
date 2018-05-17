@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\TermLevel;
 
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermsQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -16,7 +17,7 @@ class TermsQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createTermsQuery();
+        $query = new TermsQuery();
         $query->setField('field')
               ->setValues(['val1', 'val2']);
 
