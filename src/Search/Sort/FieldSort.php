@@ -10,13 +10,13 @@ class FieldSort extends AbstractSort
     public const MISSING_LAST  = '_last';
 
     /**
-     * @var string The missing parameter specifies how docs which are missing the field should be treated. The missing
+     * @var ?string The missing parameter specifies how docs which are missing the field should be treated. The missing
      * value can be set to _last, _first, or a custom value (that will be used for missing docs as the sort value).
      */
     private $missing;
 
     /**
-     * @var string By default, the search request will fail if there is no mapping associated with a field. The
+     * @var ?string By default, the search request will fail if there is no mapping associated with a field. The
      * unmapped_type option allows to ignore fields that have no mapping and not sort by them. The value of this
      * parameter is used to determine what sort values to emit.
      */
@@ -60,9 +60,9 @@ class FieldSort extends AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMissing()
+    public function getMissing(): ?string
     {
         return $this->missing;
     }
@@ -80,9 +80,9 @@ class FieldSort extends AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUnmappedType()
+    public function getUnmappedType(): ?string
     {
         return $this->unmappedType;
     }

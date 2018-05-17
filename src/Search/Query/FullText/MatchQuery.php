@@ -25,19 +25,19 @@ class MatchQuery extends AbstractQuery
     public const TYPE_PHRASE_PREFIX = 'phrase_prefix';
 
     /**
-     * @var string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").
+     * @var ?string The operator flag can be set to "or" or "and" to control the boolean clauses (defaults to "or").
      */
     private $operator;
 
     /**
-     * @var string If the analyzer used removes all tokens in a query like a "stop" filter does, the default behavior
+     * @var ?string If the analyzer used removes all tokens in a query like a "stop" filter does, the default behavior
      * is to match no documents at all. In order to change that the zero_terms_query option can be used, which accepts
      * "none" (default) and "all" which corresponds to a "match_all" query.
      */
     private $zeroTermsQuery;
 
     /**
-     * @var float The match query supports a cutoff_frequency that allows specifying an absolute or relative document
+     * @var ?float The match query supports a cutoff_frequency that allows specifying an absolute or relative document
      * frequency where high frequency terms are moved into an optional subquery and are only scored if one of the low
      * frequency (below the cutoff) terms in the case of an or operator or all of the low frequency terms in the case
      * of an and operator match.
@@ -45,19 +45,19 @@ class MatchQuery extends AbstractQuery
     private $cutOffFrequency;
 
     /**
-     * @var int A phrase query matches terms up to a configurable slop (which defaults to 0) in any order.
+     * @var ?int A phrase query matches terms up to a configurable slop (which defaults to 0) in any order.
      * Transposed terms have a slop of 2.
      */
     private $slop;
 
     /**
-     * @var int A "phrase_prefix" query option that controls to how many prefixes the last term will be expanded.
+     * @var ?int A "phrase_prefix" query option that controls to how many prefixes the last term will be expanded.
      * It is highly recommended to set it to an acceptable value to control the execution time of the query.
      */
     private $maxExpansions;
 
     /**
-     * @var string The analyzer can be set to control which analyzer will perform the analysis process on the text. It
+     * @var ?string The analyzer can be set to control which analyzer will perform the analysis process on the text. It
      * defaults to the field explicit mapping definition, or the default search analyzer,
      */
     private $analyzer;
@@ -91,9 +91,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOperator()
+    public function getOperator(): ?string
     {
         return $this->operator;
     }
@@ -111,9 +111,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getZeroTermsQuery()
+    public function getZeroTermsQuery(): ?string
     {
         return $this->zeroTermsQuery;
     }
@@ -131,9 +131,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getCutOffFrequency()
+    public function getCutOffFrequency(): ?float
     {
         return $this->cutOffFrequency;
     }
@@ -162,9 +162,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSlop()
+    public function getSlop(): ?int
     {
         return $this->slop;
     }
@@ -182,9 +182,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxExpansions()
+    public function getMaxExpansions(): ?int
     {
         return $this->maxExpansions;
     }
@@ -202,9 +202,9 @@ class MatchQuery extends AbstractQuery
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAnalyzer()
+    public function getAnalyzer(): ?string
     {
         return $this->analyzer;
     }

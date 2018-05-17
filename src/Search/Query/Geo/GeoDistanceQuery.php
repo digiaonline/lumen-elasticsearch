@@ -34,7 +34,7 @@ class GeoDistanceQuery extends AbstractQuery
     private $distance;
 
     /**
-     * @var string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
+     * @var ?string How to compute the distance. Can either be sloppy_arc (default), arc (slightly more precise but
      * significantly slower) or plane (faster, but inaccurate on long distances and close to the poles).
      */
     private $distanceType;
@@ -125,9 +125,9 @@ class GeoDistanceQuery extends AbstractQuery
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getDistanceType()
+    public function getDistanceType(): ?string
     {
         return $this->distanceType;
     }

@@ -20,12 +20,12 @@ abstract class AbstractSort
     public const MODE_MEDIAN = 'median';
 
     /**
-     * @var string Defaults to desc when sorting on the _score, and defaults to asc when sorting on anything else.
+     * @var ?string Defaults to desc when sorting on the _score, and defaults to asc when sorting on anything else.
      */
     private $order;
 
     /**
-     * @var string Elasticsearch supports sorting by array or multi-valued fields. The mode option controls what array
+     * @var ?string Elasticsearch supports sorting by array or multi-valued fields. The mode option controls what array
      * value is picked for sorting the document it belongs to.
      */
     private $mode;
@@ -63,9 +63,9 @@ abstract class AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrder()
+    public function getOrder(): ?string
     {
         return $this->order;
     }
@@ -83,9 +83,9 @@ abstract class AbstractSort
 
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getMode()
+    public function getMode(): ?string
     {
         return $this->mode;
     }

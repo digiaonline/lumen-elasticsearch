@@ -27,9 +27,9 @@ trait HasTieBreaker
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getTieBreaker()
+    public function getTieBreaker(): ?float
     {
         return $this->tieBreaker;
     }

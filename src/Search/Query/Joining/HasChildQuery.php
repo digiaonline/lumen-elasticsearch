@@ -14,12 +14,12 @@ class HasChildQuery extends AbstractQuery
     use HasType;
 
     /**
-     * @var int
+     * @var ?int
      */
     private $minChildren;
 
     /**
-     * @var int
+     * @var ?int
      */
     private $maxChildren;
 
@@ -70,9 +70,9 @@ class HasChildQuery extends AbstractQuery
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMinChildren()
+    public function getMinChildren(): ?int
     {
         return $this->minChildren;
     }
@@ -90,9 +90,9 @@ class HasChildQuery extends AbstractQuery
 
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getMaxChildren()
+    public function getMaxChildren(): ?int
     {
         return $this->maxChildren;
     }
