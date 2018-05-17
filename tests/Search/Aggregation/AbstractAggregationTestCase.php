@@ -10,5 +10,4 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
  */
 abstract class AbstractAggregationTestCase extends TestCase
 {
-
 }
