@@ -16,8 +16,7 @@ class DocSortTest extends AbstractSortTestCase
      */
     public function testToArray()
     {
-        $sort = $this->sortBuilder->createDocSort();
-        $this->assertInstanceOf(DocSort::class, $sort);
+        $sort = new DocSort();
 
         // Check empty
         $this->assertEquals('_doc', $sort->toArray());

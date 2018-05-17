@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation;
 
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Aggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
 
 /**
  * Class AggregationCollectionTest
@@ -17,7 +18,7 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
      */
     public function testConstructorAdd()
     {
-        $aggregation = $this->aggregationBuilder->createGlobalAggregation()->setName('global_name');
+        $aggregation = (new GlobalAggregation())->setName('global_name');
         $collection  = new AggregationCollection([$aggregation, $aggregation]);
 
         $this->assertEquals(2, $collection->count());
@@ -31,7 +32,7 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
         $collection = new AggregationCollection();
         $this->assertEquals(0, $collection->count());
 
-        $collection->add($this->aggregationBuilder->createGlobalAggregation()->setName('global_name'));
+        $collection->add((new GlobalAggregation())->setName('global_name'));
         $this->assertEquals(1, $collection->count());
     }
 
@@ -41,7 +42,7 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
     public function testGet()
     {
         $collection = new AggregationCollection();
-        $collection->add($this->aggregationBuilder->createGlobalAggregation()->setName('global_name'));
+        $collection->add((new GlobalAggregation())->setName('global_name'));
 
         $this->assertEquals('global_name', $collection->get(0)->getName());
     }
@@ -52,7 +53,7 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
     public function testIterate()
     {
         $collection = new AggregationCollection();
-        $collection->add($this->aggregationBuilder->createGlobalAggregation()->setName('global_name'));
+        $collection->add((new GlobalAggregation())->setName('global_name'));
 
         foreach ($collection as $aggregation) {
             $this->assertInstanceOf(Aggregation::class, $aggregation);
@@ -66,7 +67,7 @@ class AggregationCollectionTest extends AbstractAggregationTestCase
     public function testRemove()
     {
         $collection = new AggregationCollection();
-        $collection->add($this->aggregationBuilder->createGlobalAggregation()->setName('global_name'));
+        $collection->add((new GlobalAggregation())->setName('global_name'));
 
         $this->assertInstanceOf(Aggregation::class, $collection->remove(0));
         $this->assertEquals(0, $collection->count());

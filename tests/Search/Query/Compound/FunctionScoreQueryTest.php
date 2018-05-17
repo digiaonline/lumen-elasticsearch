@@ -3,6 +3,9 @@
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Compound;
 
 use Nord\Lumen\Elasticsearch\Search\Query\BoostMode;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\FunctionScoreQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Search\Scoring\Functions\ScriptScoringFunction;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
@@ -14,15 +17,15 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $boolQuery = $this->queryBuilder->createBoolQuery();
-        $boolQuery->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+        $boolQuery = new BoolQuery();
+        $boolQuery->addMust(new TermQuery('field1', 'value1'));
 
         $scriptScoringFunction = (new ScriptScoringFunction())
             ->setParams([
                 'featured_content' => ['abc', 'xyz']
             ])->setInline("int score =0;for(item in params.featured_content){ if (doc['identifier'].indexOf(item) > -1) { score+=10;}}return score;");
 
-        $functionScoreQuery = $this->queryBuilder->createFunctionScoreQuery();
+        $functionScoreQuery = new FunctionScoreQuery();
 
         $functionScoreQuery
             ->setQuery($boolQuery)
@@ -72,10 +75,10 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
      */
     public function testToArrayMinimumFields()
     {
-        $boolQuery = $this->queryBuilder->createBoolQuery();
-        $boolQuery->addMust($this->queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+        $boolQuery = new BoolQuery();
+        $boolQuery->addMust(new TermQuery('field1', 'value1'));
 
-        $functionScoreQuery = $this->queryBuilder->createFunctionScoreQuery();
+        $functionScoreQuery = new FunctionScoreQuery();
 
         $functionScoreQuery
             ->setQuery($boolQuery);

@@ -2,7 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query;
 
-use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
@@ -13,22 +12,7 @@ abstract class AbstractQueryTestCase extends TestCase
 {
 
     /**
-     * @var QueryBuilder
-     */
-    protected $queryBuilder;
-
-    /**
      *
      */
     abstract public function testToArray();
-
-    /**
-     * @inheritdoc
-     */
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->queryBuilder = new QueryBuilder();
-    }
 }

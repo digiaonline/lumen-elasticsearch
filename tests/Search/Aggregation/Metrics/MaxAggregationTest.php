@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\Metrics;
 
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MaxAggregation;
 use Nord\Lumen\Elasticsearch\Tests\Search\Aggregation\AbstractAggregationTestCase;
 
 /**
@@ -16,7 +17,7 @@ class MaxAggregationTest extends AbstractAggregationTestCase
      */
     public function testToArray()
     {
-        $aggregation = $this->aggregationBuilder->createMaxAggregation();
+        $aggregation = new MaxAggregation();
 
         $aggregation->setField('field_name');
         $this->assertEquals([

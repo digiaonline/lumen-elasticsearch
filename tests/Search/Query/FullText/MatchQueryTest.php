@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\FullText;
 
+use Nord\Lumen\Elasticsearch\Search\Query\FullText\MatchQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -16,7 +17,7 @@ class MatchQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value');
 
@@ -26,7 +27,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setOperator('and');
@@ -40,7 +41,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setZeroTermsQuery('none');
@@ -54,7 +55,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setCutOffFrequency(0.001);
@@ -68,7 +69,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setType('phrase');
@@ -82,7 +83,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setType('phrase')
@@ -98,7 +99,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setType('phrase_prefix')
@@ -114,7 +115,7 @@ class MatchQueryTest extends AbstractQueryTestCase
             ],
         ], $query->toArray());
 
-        $query = $this->queryBuilder->createMatchQuery();
+        $query = new MatchQuery();
         $query->setField('field')
               ->setValue('value')
               ->setAnalyzer('custom_analyzer');

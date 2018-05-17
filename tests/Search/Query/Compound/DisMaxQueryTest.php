@@ -2,6 +2,8 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search\Query\Compound;
 
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
+use Nord\Lumen\Elasticsearch\Search\Query\Compound\DisMaxQuery;
 use Nord\Lumen\Elasticsearch\Tests\Search\Query\AbstractQueryTestCase;
 
 /**
@@ -17,10 +19,10 @@ class DisMaxQueryTest extends AbstractQueryTestCase
     public function testToArray()
     {
         // Test with queries only
-        $query      = $this->queryBuilder->createDisMaxQuery();
+        $query      = new DisMaxQuery();
         $subQueries = [
-            $this->queryBuilder->createBoolQuery(),
-            $this->queryBuilder->createBoolQuery(),
+            new BoolQuery(),
+            new BoolQuery(),
         ];
         $query->setQueries($subQueries);
 
@@ -29,7 +31,7 @@ class DisMaxQueryTest extends AbstractQueryTestCase
         $this->assertCount(2, $query->getQueries());
 
         // Add a query
-        $query->addQuery($this->queryBuilder->createBoolQuery());
+        $query->addQuery(new BoolQuery());
         $this->assertCount(3, $query->toArray()['dis_max']['queries']);
 
         // Add tie breaker and boost

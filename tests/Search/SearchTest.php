@@ -2,12 +2,13 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests\Search;
 
-use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationBuilder;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\GlobalAggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Bucket\TermsAggregation;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MaxAggregation;
+use Nord\Lumen\Elasticsearch\Search\Aggregation\Metrics\MinAggregation;
 use Nord\Lumen\Elasticsearch\Search\Query\Compound\BoolQuery;
-use Nord\Lumen\Elasticsearch\Search\Query\QueryBuilder;
+use Nord\Lumen\Elasticsearch\Search\Query\TermLevel\TermQuery;
 use Nord\Lumen\Elasticsearch\Search\Search;
 use Nord\Lumen\Elasticsearch\Search\Sort;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
@@ -46,25 +47,20 @@ class SearchTest extends TestCase
     {
         parent::setUp();
 
-        $queryBuilder = new QueryBuilder();
-
         $this->search = $this->service->createSearch();
-        $this->query  = $queryBuilder->createBoolQuery();
-        $this->query->addMust($queryBuilder->createTermQuery()->setField('field1')->setValue('value1'));
+        $this->query  = new BoolQuery();
+        $this->query->addMust(new TermQuery('field1', 'value1'));
 
-        $sortBuilder = new Sort\SortBuilder();
         $this->sort  = $this->service->createSort();
-        $this->sort->addSort($sortBuilder->createScoreSort());
+        $this->sort->addSort(new Sort\ScoreSort());
 
-        $aggregationBuilder = new AggregationBuilder();
-
-        $this->aggregation = $aggregationBuilder->createGlobalAggregation();
+        $this->aggregation = new GlobalAggregation();
         $this->aggregation->setName('global_name');
         $this->aggregation->addAggregation(
-            $aggregationBuilder->createMinAggregation()->setField('field_name')->setName('min_name')
+            (new MinAggregation())->setField('field_name')->setName('min_name')
         );
         $this->aggregation->addAggregation(
-            $aggregationBuilder->createMaxAggregation()->setField('field_name')->setName('max_name')
+            (new MaxAggregation())->setField('field_name')->setName('max_name')
         );
     }
 
