@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Aggregation;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * The aggregations framework helps provide aggregated data based on a search query. It is based on simple building
  * blocks called aggregations, that can be composed in order to build complex summaries of the data.
@@ -25,7 +27,7 @@
  *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations.html
  */
-abstract class Aggregation
+abstract class Aggregation implements Arrayable
 {
 
     /**
@@ -52,9 +54,4 @@ abstract class Aggregation
 
         return $this;
     }
-
-    /**
-     * @return array
-     */
-    abstract public function toArray();
 }

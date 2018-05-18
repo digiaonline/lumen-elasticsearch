@@ -1,6 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Aggregation;
 
-class AggregationCollection implements \Countable, \IteratorAggregate
+use Illuminate\Contracts\Support\Arrayable;
+
+class AggregationCollection implements \Countable, \IteratorAggregate, Arrayable
 {
     /**
      * @var Aggregation[]

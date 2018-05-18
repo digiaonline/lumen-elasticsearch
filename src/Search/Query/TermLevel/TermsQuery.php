@@ -12,14 +12,27 @@ class TermsQuery extends AbstractQuery
     use HasValues;
 
     /**
+     * TermsQuery constructor.
+     *
+     * @param null|string $field
+     * @param array|null  $values
+     */
+    public function __construct(?string $field = null, ?array $values = null)
+    {
+        if ($field !== null && $values !== null) {
+            $this->setField($field)->setValues($values);
+        }
+    }
+
+    /**
      * @inheritdoc
      */
     public function toArray()
     {
         return [
             'terms' => [
-                $this->getField() => $this->getValues()
-            ]
+                $this->getField() => $this->getValues(),
+            ],
         ];
     }
 }

@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Scoring\Functions;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * The function_score query provides several types of score functions.
  *
@@ -27,10 +29,6 @@
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html#score-functions
  * @see \Nord\Lumen\Elasticsearch\Search\Query\Compound\FunctionScoreQuery
  */
-abstract class AbstractScoringFunction
+abstract class AbstractScoringFunction implements Arrayable
 {
-    /**
-     * @return array
-     */
-    abstract public function toArray();
 }
