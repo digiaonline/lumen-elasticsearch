@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Sort;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Allows to add one or more sort on specific fields. Each sort can be reversed as well. The sort is defined on a per
  * field level, with special field name for _score to sort by score, and _doc to sort by index order.
@@ -8,7 +10,7 @@
  *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
  */
-abstract class AbstractSort
+abstract class AbstractSort implements Arrayable
 {
     public const ORDER_ASC  = 'asc';
     public const ORDER_DESC = 'desc';
@@ -89,10 +91,4 @@ abstract class AbstractSort
     {
         return $this->mode;
     }
-
-
-    /**
-     * @return mixed
-     */
-    abstract public function toArray();
 }
