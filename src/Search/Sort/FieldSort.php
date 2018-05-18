@@ -26,11 +26,16 @@ class FieldSort extends AbstractSort
      * FieldSort constructor.
      *
      * @param null|string $field
+     * @param null|string $order
      */
-    public function __construct(?string $field = null)
+    public function __construct(?string $field = null, ?string $order = null)
     {
         if ($field !== null) {
             $this->setField($field);
+        }
+
+        if ($order !== null) {
+            $this->setOrder($order);
         }
     }
 

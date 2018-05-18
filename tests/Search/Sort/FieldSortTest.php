@@ -19,8 +19,10 @@ class FieldSortTest extends AbstractSortTestCase
         $sort = new FieldSort('field');
         $this->assertEquals('field', $sort->toArray());
 
-        $sort = $sort->setField('field')->setOrder('asc');
+        $sort = new FieldSort('field', 'asc');
         $this->assertEquals(['field' => ['order' => 'asc']], $sort->toArray());
+        $sort->setOrder('desc');
+        $this->assertEquals(['field' => ['order' => 'desc']], $sort->toArray());
 
         $sort = (new FieldSort())
             ->setField('field')->setMode('avg');
