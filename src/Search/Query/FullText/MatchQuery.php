@@ -1,8 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\FullText;
 
-use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasType;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasValue;
+use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
 
 /**
  * A family of match queries that accepts text/numerics/dates, analyzes them, and constructs a query.
@@ -61,6 +61,19 @@ class MatchQuery extends AbstractQuery
      * defaults to the field explicit mapping definition, or the default search analyzer,
      */
     private $analyzer;
+
+    /**
+     * MatchQuery constructor.
+     *
+     * @param null|string $field
+     * @param mixed       $value
+     */
+    public function __construct(?string $field = null, $value = null)
+    {
+        if ($field !== null && $value !== null) {
+            $this->setField($field)->setValue($value);
+        }
+    }
 
     /**
      * @inheritdoc
