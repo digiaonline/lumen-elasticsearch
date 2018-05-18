@@ -17,6 +17,14 @@ class TermsQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
+        // Test with constructor
+        $query = new TermsQuery('field', ['val1', 'val2']);
+
+        $this->assertEquals([
+            'terms' => ['field' => ['val1', 'val2']],
+        ], $query->toArray());
+
+        // Test with setters
         $query = new TermsQuery();
         $query->setField('field')
               ->setValues(['val1', 'val2']);
