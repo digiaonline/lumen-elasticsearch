@@ -15,8 +15,17 @@ class Sort
     /**
      * @var AbstractSort[]
      */
-    private $sorts = [];
+    private $sorts;
 
+    /**
+     * Sort constructor.
+     *
+     * @param AbstractSort[] $sorts
+     */
+    public function __construct(array $sorts = [])
+    {
+        $this->sorts = $sorts;
+    }
 
     /**
      * @return array
