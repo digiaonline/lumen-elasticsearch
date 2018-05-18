@@ -16,12 +16,10 @@ class FieldSortTest extends AbstractSortTestCase
      */
     public function testToArray()
     {
-        $sort = (new FieldSort())
-            ->setField('field');
+        $sort = new FieldSort('field');
         $this->assertEquals('field', $sort->toArray());
 
-        $sort = (new FieldSort())
-            ->setField('field')->setOrder('asc');
+        $sort = $sort->setField('field')->setOrder('asc');
         $this->assertEquals(['field' => ['order' => 'asc']], $sort->toArray());
 
         $sort = (new FieldSort())
