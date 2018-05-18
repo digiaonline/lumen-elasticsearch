@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query;
 
+use Illuminate\Contracts\Support\Arrayable;
+
 /**
  * Elasticsearch provides a full Query DSL based on JSON to define queries.
  * Think of the Query DSL as an AST of queries, consisting of two types of clauses:
@@ -16,10 +18,6 @@
  *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html
  */
-abstract class QueryDSL
+abstract class QueryDSL implements Arrayable
 {
-    /**
-     * @return array
-     */
-    abstract public function toArray();
 }

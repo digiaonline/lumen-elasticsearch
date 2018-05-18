@@ -1,5 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search;
 
+use Illuminate\Contracts\Support\Arrayable;
 use Nord\Lumen\Elasticsearch\Search\Sort\AbstractSort;
 
 /**
@@ -10,13 +11,22 @@ use Nord\Lumen\Elasticsearch\Search\Sort\AbstractSort;
  *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
  */
-class Sort
+class Sort implements Arrayable
 {
     /**
      * @var AbstractSort[]
      */
-    private $sorts = [];
+    private $sorts;
 
+    /**
+     * Sort constructor.
+     *
+     * @param AbstractSort[] $sorts
+     */
+    public function __construct(array $sorts = [])
+    {
+        $this->sorts = $sorts;
+    }
 
     /**
      * @return array

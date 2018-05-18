@@ -12,19 +12,11 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
 class SortTest extends TestCase
 {
 
-    /**
-     * @var Sort
-     */
-    protected $sort;
-
-    /**
-     * @inheritdoc
-     */
-    public function setUp()
+    public function testConstructor()
     {
-        parent::setUp();
+        $sort = new Sort([new Sort\ScoreSort()]);
 
-        $this->sort        = $this->service->createSort();
+        $this->assertInstanceOf(Sort\ScoreSort::class, $sort->getSorts()[0]);
     }
 
     /**
@@ -32,13 +24,16 @@ class SortTest extends TestCase
      */
     public function testSetterGetter()
     {
-        $this->sort->setSorts([
+        $sort = new Sort();
+        $sort->setSorts([
             (new Sort\FieldSort())->setField('f'),
             new Sort\ScoreSort(),
         ]);
-        $this->assertCount(2, $this->sort->getSorts());
 
-        $this->sort->addSort(new Sort\ScoreSort());
-        $this->assertCount(3, $this->sort->getSorts());
+        $this->assertCount(2, $sort->getSorts());
+
+        $sort->addSort(new Sort\ScoreSort());
+
+        $this->assertCount(3, $sort->getSorts());
     }
 }

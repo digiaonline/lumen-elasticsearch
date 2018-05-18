@@ -1,6 +1,8 @@
 <?php namespace Nord\Lumen\Elasticsearch\Documents\Bulk;
 
-class BulkQuery
+use Illuminate\Contracts\Support\Arrayable;
+
+class BulkQuery implements Arrayable
 {
 
     /**
