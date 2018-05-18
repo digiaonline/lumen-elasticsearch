@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.3] - 2018-05-18
+
+- Make the order settable via the FieldSort constructor
+
 ## [3.0.2] - 2018-05-18
 
 - Add some more convenient constructors
