@@ -22,6 +22,17 @@ class FieldSort extends AbstractSort
      */
     private $unmappedType;
 
+    /**
+     * FieldSort constructor.
+     *
+     * @param null|string $field
+     */
+    public function __construct(?string $field = null)
+    {
+        if ($field !== null) {
+            $this->setField($field);
+        }
+    }
 
     /**
      * @inheritdoc

@@ -17,9 +17,7 @@ class MatchQueryTest extends AbstractQueryTestCase
      */
     public function testToArray()
     {
-        $query = new MatchQuery();
-        $query->setField('field')
-              ->setValue('value');
+        $query = new MatchQuery('field', 'value');
 
         $this->assertEquals([
             'match' => [
