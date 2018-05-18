@@ -11,7 +11,6 @@ use Nord\Lumen\Elasticsearch\Tests\TestCase;
  */
 class SortTest extends TestCase
 {
-
     public function testConstructor()
     {
         $sort = new Sort([new Sort\ScoreSort()]);
