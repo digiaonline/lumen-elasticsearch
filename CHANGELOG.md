@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.0.1] - 2018-05-18
+
+- Add some more convenient constructors, implement Arrayable instead of our own abstract method
+
 ## [3.0.0] - 2018-05-17
 
 - Bumped the minimum required PHP version to 7.1
