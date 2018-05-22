@@ -152,4 +152,16 @@ class ElasticsearchService implements ElasticsearchServiceContract
             'body'  => $search->buildBody(),
         ]);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function count(Search $search): int
+    {
+        return $this->client->count([
+            'index' => $search->getIndex(),
+            'type'  => $search->getType(),
+            'body'  => $search->buildBody(),
+        ])['count'];
+    }
 }
