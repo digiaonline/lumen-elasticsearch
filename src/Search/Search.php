@@ -297,7 +297,9 @@ class Search
             $from = ($this->getPage() - 1) * $this->getSize();
         }
 
-        $body['from'] = $from;
+        if ($from > 0) {
+            $body['from'] = $from;    
+        }
 
         return $body;
     }
