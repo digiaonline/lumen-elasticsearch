@@ -198,9 +198,9 @@ class Search
      * @param int $page
      * @return Search
      */
-    public function setPage($page)
+    public function setPage(int $page)
     {
-        $this->page = (int)$page;
+        $this->page = $page;
         return $this;
     }
 
@@ -217,7 +217,7 @@ class Search
      *
      * @return Search
      */
-    public function setFrom($from)
+    public function setFrom(int $from)
     {
         $this->from = $from;
 
@@ -238,9 +238,9 @@ class Search
      * @param int $size
      * @return Search
      */
-    public function setSize($size)
+    public function setSize(int $size)
     {
-        $this->size = (int)$size;
+        $this->size = $size;
         return $this;
     }
 
