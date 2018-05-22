@@ -298,7 +298,7 @@ class Search
         }
 
         if ($from > 0) {
-            $body['from'] = $from;    
+            $body['from'] = $from;
         }
 
         return $body;
