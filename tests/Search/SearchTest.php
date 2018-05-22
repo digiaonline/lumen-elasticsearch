@@ -103,7 +103,6 @@ class SearchTest extends TestCase
         $this->assertEquals([
             'query' => ['match_all' => new \stdClass()],
             'size'  => 100,
-            'from'  => 0,
         ], $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
@@ -142,7 +141,6 @@ class SearchTest extends TestCase
                 ],
             ],
             'size'  => 100,
-            'from'  => 0,
         ], $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
@@ -152,7 +150,6 @@ class SearchTest extends TestCase
             'query' => ['match_all' => new \stdClass()],
             'sort'  => ['_score'],
             'size'  => 100,
-            'from'  => 0,
         ], $this->search->buildBody());
 
         $this->search = $this->service->createSearch();
@@ -170,8 +167,19 @@ class SearchTest extends TestCase
                 ],
             ],
             'size'  => 100,
-            'from'  => 0,
         ], $this->search->buildBody());
+        
+        // Make sure "from" is present when it's a positive number
+        $this->search->setFrom(10);
+
+        $this->assertArraySubset([
+            'from' => 10,
+        ], $this->search->buildBody());
+        
+        // Make sure "size" is not present when it's set to zero
+        $this->search->setSize(0);
+        
+        $this->assertArrayNotHasKey('size', $this->search->buildBody());
     }
 
     public function testToArrayWithSource()
@@ -184,7 +192,6 @@ class SearchTest extends TestCase
         $this->assertEquals([
             'query' => ['match_all' => new \stdClass()],
             'size' => 100,
-            'from' => 0,
             '_source' => [
                 'id',
                 'title',
@@ -227,7 +234,6 @@ class SearchTest extends TestCase
                 ]
             ],
             'size'  => 100,
-            'from'  => 0,
         ], $this->search->buildBody());
     }
 }
