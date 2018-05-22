@@ -109,4 +109,11 @@ interface ElasticsearchServiceContract
      * @return array
      */
     public function execute(Search $search);
+
+    /**
+     * @param Search $search
+     *
+     * @return int
+     */
+    public function count(Search $search): int;
 }

@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.1.0] - 2018-05-22
+
+- Fixed omitting "from" in queries where it's not needed
+- Added a count() method to the service
+
 ## [3.0.3] - 2018-05-18
 
 - Make the order settable via the FieldSort constructor
