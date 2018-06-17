@@ -9,7 +9,6 @@ use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
  */
 class TermsAggregation extends AbstractAggregation
 {
-
     use HasField;
 
     /**
