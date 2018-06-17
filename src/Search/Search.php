@@ -6,6 +6,7 @@ use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 class Search
 {
+
     /**
      * @var string
      */
@@ -25,6 +26,16 @@ class Search
      * @var array
      */
     private $source;
+
+    /**
+     * @var array
+     */
+    private $scriptFields;
+
+    /**
+     * @var array
+     */
+    private $storedFields;
 
     /**
      * @var Sort
@@ -51,7 +62,6 @@ class Search
      */
     private $page = 1;
 
-
     /**
      * Constructor.
      */
@@ -60,17 +70,17 @@ class Search
         $this->aggregations = new AggregationCollection();
     }
 
-
     /**
      * @param string $index
+     *
      * @return Search
      */
     public function setIndex(string $index)
     {
         $this->index = $index;
+
         return $this;
     }
-
 
     /**
      * @return string
@@ -80,17 +90,17 @@ class Search
         return $this->index;
     }
 
-
     /**
      * @param string $type
+     *
      * @return Search
      */
     public function setType(string $type)
     {
         $this->type = $type;
+
         return $this;
     }
-
 
     /**
      * @return string
@@ -100,17 +110,17 @@ class Search
         return $this->type;
     }
 
-
     /**
      * @param QueryDSL $query
+     *
      * @return Search
      */
     public function setQuery(QueryDSL $query)
     {
         $this->query = $query;
+
         return $this;
     }
-
 
     /**
      * @return QueryDSL
@@ -120,17 +130,17 @@ class Search
         return $this->query;
     }
 
-
     /**
      * @param Sort $sort
+     *
      * @return Search
      */
     public function setSort(Sort $sort)
     {
         $this->sort = $sort;
+
         return $this;
     }
-
 
     /**
      * @return Sort
@@ -148,6 +158,7 @@ class Search
     public function setSource(array $source)
     {
         $this->source = $source;
+
         return $this;
     }
 
@@ -160,6 +171,46 @@ class Search
     }
 
     /**
+     * @return array|null
+     */
+    public function getScriptFields(): ?array
+    {
+        return $this->scriptFields;
+    }
+
+    /**
+     * @param array $scriptFields
+     *
+     * @return Search
+     */
+    public function setScriptFields(array $scriptFields): Search
+    {
+        $this->scriptFields = $scriptFields;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getStoredFields(): ?array
+    {
+        return $this->storedFields;
+    }
+
+    /**
+     * @param array $storedFields
+     *
+     * @return Search
+     */
+    public function setStoredFields(array $storedFields): Search
+    {
+        $this->storedFields = $storedFields;
+
+        return $this;
+    }
+
+    /**
      * @return AggregationCollection
      */
     public function getAggregations()
@@ -167,20 +218,21 @@ class Search
         return $this->aggregations;
     }
 
-
     /**
      * @param Aggregation $aggregation
+     *
      * @return Search
      */
     public function addAggregation(Aggregation $aggregation)
     {
         $this->aggregations->add($aggregation);
+
         return $this;
     }
 
-
     /**
      * @param array $aggregations
+     *
      * @return Search
      */
     public function addAggregations(array $aggregations)
@@ -190,17 +242,19 @@ class Search
                 $this->addAggregation($aggregation);
             }
         }
+
         return $this;
     }
 
-
     /**
      * @param int $page
+     *
      * @return Search
      */
-    public function setPage(int $page)
+    public function setPage($page)
     {
-        $this->page = $page;
+        $this->page = (int)$page;
+
         return $this;
     }
 
@@ -217,13 +271,12 @@ class Search
      *
      * @return Search
      */
-    public function setFrom(int $from)
+    public function setFrom($from)
     {
         $this->from = $from;
 
         return $this;
     }
-
 
     /**
      * @return int
@@ -233,17 +286,17 @@ class Search
         return $this->size;
     }
 
-
     /**
      * @param int $size
+     *
      * @return Search
      */
-    public function setSize(int $size)
+    public function setSize($size)
     {
-        $this->size = $size;
+        $this->size = (int)$size;
+
         return $this;
     }
-
 
     /**
      * @return int
@@ -253,7 +306,6 @@ class Search
         return $this->page;
     }
 
-
     /**
      * @return array
      */
@@ -261,23 +313,31 @@ class Search
     {
         $body = [];
         $query = $this->getQuery();
-            
+
         if ($query !== null) {
             $body['query'] = $query->toArray();
         }
-            
+
         if (empty($body['query'])) {
             $body['query'] = ['match_all' => new \stdClass()];
         }
 
         $sort = $this->getSort();
-            
+
         if ($sort !== null) {
             $body['sort'] = $sort->toArray();
         }
 
         if (!empty($this->getSource())) {
             $body['_source'] = $this->getSource();
+        }
+
+        if (!empty($this->getScriptFields())) {
+            $body['script_fields'] = $this->getScriptFields();
+        }
+
+        if (!empty($this->getStoredFields())) {
+            $body['stored_fields'] = $this->getStoredFields();
         }
 
         $aggregations = $this->getAggregations();
@@ -297,9 +357,7 @@ class Search
             $from = ($this->getPage() - 1) * $this->getSize();
         }
 
-        if ($from > 0) {
-            $body['from'] = $from;
-        }
+        $body['from'] = $from;
 
         return $body;
     }
