@@ -9,14 +9,44 @@ use Nord\Lumen\Elasticsearch\Search\Traits\HasField;
  */
 class TermsAggregation extends AbstractAggregation
 {
+
     use HasField;
+
+    /**
+     * @var int
+     */
+    protected $minDocCount;
+
+    /**
+     * @return int|null
+     */
+    public function getMinDocCount(): ?int
+    {
+        return $this->minDocCount;
+    }
+
+    /**
+     * @param int $minDocCount
+     */
+    public function setMinDocCount(int $minDocCount)
+    {
+        $this->minDocCount = $minDocCount;
+
+        return $this;
+    }
 
     public function toArray()
     {
-        return [
+        $data = [
             'terms' => [
-                'field' => $this->getField()
-            ]
+                'field' => $this->getField(),
+            ],
         ];
+
+        if (!empty($this->getMinDocCount())) {
+            $data['terms']['min_doc_count'] = $this->getMinDocCount();
+        }
+
+        return $data;
     }
 }
