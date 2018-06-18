@@ -59,7 +59,7 @@ class FunctionScoreQuery extends AbstractQuery
             if (!empty($queryArray)) {
                 $array['query'] = $queryArray;
             } else {
-                $array['query'] = ['match_all' => []];
+                $array['query'] = ['match_all' => new \stdClass()];
             }
         }
 
