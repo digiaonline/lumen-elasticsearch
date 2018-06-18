@@ -15,4 +15,15 @@ class TermsAggregationTest extends AbstractAggregationTestCase
             'terms' => ['field' => 'field_name'],
         ], $aggregation->toArray());
     }
+
+    public function testMinDocCountToArray()
+    {
+        $aggregation = new TermsAggregation();
+
+        $aggregation->setField('field_name')->setMinDocCount(10);
+
+        $this->assertEquals([
+            'terms' => ['field' => 'field_name', 'min_doc_count' => 10],
+        ], $aggregation->toArray());
+    }
 }
