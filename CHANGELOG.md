@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.3.0] - 2018-0821
+
+- Added a console command for updating certain dynamic index settings
+
+## [3.2.0] - 2018-06-18
+
+- Added support for setting min_doc_count on term aggregations
+- Added support for setting scripted fields and stored fields
+- Fix an issue with empty function_score queries 
+
 ## [3.1.0] - 2018-05-22
 
 - Fixed omitting "from" in queries where it's not needed

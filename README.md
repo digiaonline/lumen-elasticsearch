@@ -307,6 +307,11 @@ If your documents are very large you may want to decrease the batch size used du
 Elasticsearch from running out of memory. You can do so by passing `--batchSize=X` to the `elastic:migrations:migrate` 
 command. If the option is omitted, the default value of 1000 is used.
 
+## Updating dynamic index settings
+
+There is a console command (`elastic:index:settings:update`) that you can use to update certain dynamic index settings 
+such as the refresh interval or the number of replicas. Simply register it in your console kernel to start using it. 
+
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).

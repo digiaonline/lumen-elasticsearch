@@ -59,11 +59,11 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
                         ]
                     ]
                 ],
-                'weight'     => 34.12,
-                'boost'      => 5.1,
-                'max_boost'  => 14.3,
+                'weight' => 34.12,
+                'boost' => 5.1,
+                'max_boost' => 14.3,
                 'boost_mode' => 'multiply',
-                'min_score'  => 1,
+                'min_score' => 1,
             ]
         ];
 
@@ -93,6 +93,23 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
                             ],
                         ],
                     ],
+                ],
+            ],
+        ];
+
+        $this->assertEquals($expectedArray, $functionScoreQuery->toArray());
+    }
+
+    public function testEmptyQuery()
+    {
+        $functionScoreQuery = new FunctionScoreQuery();
+
+        $functionScoreQuery->setQuery(new BoolQuery());
+
+        $expectedArray = [
+            'function_score' => [
+                'query' => [
+                    'match_all' => new \stdClass()
                 ],
             ],
         ];
