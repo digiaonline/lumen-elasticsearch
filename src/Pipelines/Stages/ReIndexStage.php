@@ -90,11 +90,10 @@ class ReIndexStage implements StageInterface
                 // Initialize the progress bar once Elasticsearch knows the total amount of items
                 if ($progressBar === null && $total > 0) {
                     $progressBar = new ProgressBar(new ConsoleOutput(), $total);
-                } else if ($progressBar !== null) {
+                } elseif ($progressBar !== null) {
                     $progressBar->setProgress($response['task']['status']['created']);
                 }
             } catch (ServerErrorResponseException $e) {
-
             }
 
             sleep(1);
