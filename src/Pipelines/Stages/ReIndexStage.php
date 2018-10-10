@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Pipelines\Stages;
 
+use Elasticsearch\Common\Exceptions\ServerErrorResponseException;
 use League\Pipeline\StageInterface;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Symfony\Component\Console\Helper\ProgressBar;
@@ -76,17 +77,24 @@ class ReIndexStage implements StageInterface
         $progressBar = null;
 
         do {
-            $response = $this->elasticsearchService->tasks()->get([
-                'task_id' => $task['task'],
-            ]);
+            $response = ['completed' => false];
 
-            $total = $response['task']['status']['total'];
+            // Ignore ServerErrorResponseException, re-indexing can make these requests time out
+            try {
+                $response = $this->elasticsearchService->tasks()->get([
+                    'task_id' => $task['task'],
+                ]);
 
-            // Initialize the progress bar once Elasticsearch knows the total amount of items
-            if ($progressBar === null && $total > 0) {
-                $progressBar = new ProgressBar(new ConsoleOutput(), $total);
-            } else if ($progressBar !== null) {
-                $progressBar->setProgress($response['task']['status']['created']);
+                $total = $response['task']['status']['total'];
+
+                // Initialize the progress bar once Elasticsearch knows the total amount of items
+                if ($progressBar === null && $total > 0) {
+                    $progressBar = new ProgressBar(new ConsoleOutput(), $total);
+                } else if ($progressBar !== null) {
+                    $progressBar->setProgress($response['task']['status']['created']);
+                }
+            } catch (ServerErrorResponseException $e) {
+
             }
 
             sleep(1);
