@@ -20,18 +20,37 @@ class ReIndexStageTest extends AbstractStageTestCase
         $tasks         = $this->getMockedTasks(['get']);
         $searchService = $this->getMockedSearchService($indices);
 
-
         $tasks->expects($this->exactly(2))
               ->method('get')
               ->willReturn(
-                  ['completed' => false],
-                  ['completed' => true]
+                  [
+                      'completed' => false,
+                      'task'      => [
+                          'status' => [
+                              'total'   => 100,
+                              'created' => 1,
+                          ],
+                      ],
+                  ],
+                  [
+                      'completed' => true,
+                      'task'      => [
+                          'status' => [
+                              'total'   => 100,
+                              'created' => 1,
+                          ],
+                      ],
+                  ]
               );
 
         $searchService
             ->expects($this->exactly(2))
             ->method('tasks')
             ->willReturn($tasks);
+
+        $searchService->expects($this->once())
+                      ->method('reindex')
+                      ->willReturn(['task' => 123]);
 
         $indices->expects($this->once())
                 ->method('exists')
@@ -46,7 +65,7 @@ class ReIndexStageTest extends AbstractStageTestCase
                       ->method('reindex')
                       ->with([
                           'wait_for_completion' => false,
-                          'body' => [
+                          'body'                => [
                               'source' => [
                                   'index' => 'foo',
                                   'size'  => 100,
