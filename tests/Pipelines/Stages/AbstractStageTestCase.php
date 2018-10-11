@@ -49,7 +49,7 @@ abstract class AbstractStageTestCase extends TestCase
     protected function getMockedSearchService($mockedIndices)
     {
         $searchService = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                              ->setMethods(['indices'])
+                              ->setMethods(['indices', 'reindex'])
                               ->getMockForAbstractClass();
 
         $searchService->method('indices')
