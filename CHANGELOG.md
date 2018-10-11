@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.4.1] - 2018-10-11
+
+- Fix a null pointer exception with the re-indexing progress bar
+
 ## [3.4.0] - 2018-10-11
 
 - Improved resilience of the re-indexing stage of index migrations
