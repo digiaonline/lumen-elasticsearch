@@ -99,7 +99,10 @@ class ReIndexStage implements StageInterface
             sleep(1);
         } while ((bool)$response['completed'] === false);
 
-        $progressBar->finish();
+        // For very short migrations we may never get a progress bar, because the task finishes too quickly
+        if ($progressBar !== null) {
+            $progressBar->finish();
+        }
 
         echo PHP_EOL;
     }
