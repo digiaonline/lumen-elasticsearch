@@ -2,8 +2,11 @@
 
 namespace Nord\Lumen\Elasticsearch\Pipelines\Stages;
 
+use Elasticsearch\Common\Exceptions\ServerErrorResponseException;
 use League\Pipeline\StageInterface;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Class ReIndexStage
@@ -56,15 +59,48 @@ class ReIndexStage implements StageInterface
                 ],
             ]);
 
-            do {
-                $response = $this->elasticsearchService->tasks()->get([
-                    'task_id' => $task['task']
-                ]);
-
-                sleep(1);
-            } while ((bool)$response['completed'] === false);
+            // Use a progress bar to indicate how far a long the re-indexing has come
+            $this->renderProgressBar($task);
         }
 
         return $payload;
+    }
+
+    /**
+     * Renders a progress bar until the specified re-indexing task is completed
+     *
+     * @param array $task
+     */
+    protected function renderProgressBar(array $task): void
+    {
+        // Use a progress bar to indicate how far a long the re-indexing has come
+        $progressBar = null;
+
+        do {
+            $response = ['completed' => false];
+
+            // Ignore ServerErrorResponseException, re-indexing can make these requests time out
+            try {
+                $response = $this->elasticsearchService->tasks()->get([
+                    'task_id' => $task['task'],
+                ]);
+
+                $total = $response['task']['status']['total'];
+
+                // Initialize the progress bar once Elasticsearch knows the total amount of items
+                if ($progressBar === null && $total > 0) {
+                    $progressBar = new ProgressBar(new ConsoleOutput(), $total);
+                } elseif ($progressBar !== null) {
+                    $progressBar->setProgress($response['task']['status']['created']);
+                }
+            } catch (ServerErrorResponseException $e) {
+            }
+
+            sleep(1);
+        } while ((bool)$response['completed'] === false);
+
+        $progressBar->finish();
+
+        echo PHP_EOL;
     }
 }

@@ -2,7 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.3.0] - 2018-0821
+## [3.4.0] - 2018-10-11
+
+- Improved resilience of the re-indexing stage of index migrations
+- Added a progress bar for the re-indexing stage of index migrations
+
+## [3.3.0] - 2018-08-21
 
 - Added a console command for updating certain dynamic index settings
 
