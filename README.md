@@ -312,6 +312,11 @@ command. If the option is omitted, the default value of 1000 is used.
 There is a console command (`elastic:index:settings:update`) that you can use to update certain dynamic index settings 
 such as the refresh interval or the number of replicas. Simply register it in your console kernel to start using it. 
 
+## Pagerfanta integration
+
+There is a Pagerfanta adapter included for easy pagination. However, it is optional, so if you intend to use it you 
+must require the `pagerfanta/pagerfanta` package explicitly.
+
 ## Contributing
 
 Please read the [guidelines](.github/CONTRIBUTING.md).
