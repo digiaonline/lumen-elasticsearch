@@ -2,6 +2,7 @@
 
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkQuery;
+use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkResponseAggregator;
 
 abstract class IndexCommand extends AbstractCommand
 {
@@ -60,7 +61,7 @@ abstract class IndexCommand extends AbstractCommand
         $bar->setRedrawFrequency($this->getProgressBarRedrawFrequency());
 
         $bulkQuery = new BulkQuery($this->getBulkSize());
-        $responses = [];
+        $bulkResponseAggregator = new BulkResponseAggregator();
 
         foreach ($data as $item) {
             $action = new BulkAction();
@@ -81,22 +82,25 @@ abstract class IndexCommand extends AbstractCommand
             $bulkQuery->addAction($action);
 
             if ($bulkQuery->isReady()) {
-                $responses[] = $this->elasticsearchService->bulk($bulkQuery->toArray());
+                $response = $this->elasticsearchService->bulk($bulkQuery->toArray());
                 $bulkQuery->reset();
+                $bulkResponseAggregator->addResponse($response);
             }
 
             $bar->advance();
         }
 
         if ($bulkQuery->hasItems()) {
-            $responses[] = $this->elasticsearchService->bulk($bulkQuery->toArray());
+            $response = $this->elasticsearchService->bulk($bulkQuery->toArray());
+            $bulkResponseAggregator->addResponse($response);
         }
 
         $bar->finish();
 
-        $errors = $this->getErrors($responses);
-        if($errors) {
+        $hasErrors = $bulkResponseAggregator->hasErrors();
+        if($hasErrors) {
             $this->info("\n");
+            $errors = $bulkResponseAggregator->getErrors();
             foreach($errors as $error) {
                 $this->error($error);
             }
@@ -131,40 +135,5 @@ abstract class IndexCommand extends AbstractCommand
     protected function getCount()
     {
         return count($this->getData());
-    }
-
-    /**
-     * @param array $responses
-     * @return array
-     */
-    protected function getErrors($responses) 
-    {
-        $errors = [];
-        foreach($responses as $type => $response) {
-
-            $items = array_get($response, 'items', []);
-            foreach($items as $item) {
-
-                $item = array_first($item);
-
-                if(!array_has($item, 'error')) {
-                    continue;
-                }
-
-                $index = array_get($item, '_index');
-                $type = array_get($item, '_type');
-                $id = array_get($item, '_id');
-
-                $errorType = array_get($item, 'error.type');
-                $errorReason = array_get($item, 'error.reason');
-
-                $causeType = array_get($item, 'error.caused_by.type');
-                $causeReason = array_get($item, 'error.caused_by.reason');
-
-                $errors[] = sprintf('Error "%s" reason "%s". Cause "%s" reason "%s". Index "%s", type "%s", id "%s"', 
-                    $errorType, $errorReason, $causeType, $causeReason, $index, $type, $id);
-            }
-        }
-        return $errors;
     }
 }
