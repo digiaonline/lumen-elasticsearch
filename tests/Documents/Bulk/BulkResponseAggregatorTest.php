@@ -35,19 +35,21 @@ class BulkResponseAggregatorTest extends TestCase
         $this->assertFalse($this->aggregator->hasErrors());
 
         $response = [
-            'type' => [
-                'items' => [
-                    '_index' => 'foo',
-                    '_type'  => 'bar',
-                    '_id'    => 'baz',
-                    'error'  =>  [
-                        'type'   => 'err type',
-                        'reason' => 'err reason',
-                        'caused_by' => [
-                            'type'   => 'err cause type',
-                            'reason' => 'err cuase reason'
-                        ]
-                    ],
+            'items' => [
+                [
+                    'type' => [
+                        '_index' => 'foo',
+                        '_type'  => 'bar',
+                        '_id'    => 'baz',
+                        'error'  =>  [
+                            'type'   => 'err type',
+                            'reason' => 'err reason',
+                            'caused_by' => [
+                                'type'   => 'err cause type',
+                                'reason' => 'err cuase reason'
+                            ]
+                        ],
+                    ]
                 ]
             ]
         ];

@@ -98,10 +98,10 @@ abstract class IndexCommand extends AbstractCommand
         $bar->finish();
 
         $hasErrors = $bulkResponseAggregator->hasErrors();
-        if($hasErrors) {
+        if ($hasErrors) {
             $this->info("\n");
             $errors = $bulkResponseAggregator->getErrors();
-            foreach($errors as $error) {
+            foreach ($errors as $error) {
                 $this->error($error);
             }
         }

@@ -18,7 +18,6 @@ class BulkResponseAggregator
      */
     public function __construct()
     {
-
     }
 
 
@@ -27,7 +26,7 @@ class BulkResponseAggregator
      *
      * @return BulkResponseAggregator
      */
-    public function addResponse(Array $response)
+    public function addResponse(array $response)
     {
         $this->response[] = $response;
 
@@ -57,16 +56,15 @@ class BulkResponseAggregator
     /**
      * @param array $response
      */
-    protected function parseErrors(Array $response) 
+    protected function parseErrors(array $response) 
     {
-        $errors = [];
 
         $items = array_get($response, 'items', []);
-        foreach($items as $item) {
+        foreach ($items as $item) {
 
             $item = array_first($item);
 
-            if(!array_has($item, 'error')) {
+            if (!array_has($item, 'error')) {
                 continue;
             }
 
@@ -80,18 +78,14 @@ class BulkResponseAggregator
             $causeType = array_get($item, 'error.caused_by.type');
             $causeReason = array_get($item, 'error.caused_by.reason');
 
-            $errors[] = sprintf('Error "%s" reason "%s". Cause "%s" reason "%s". Index "%s", type "%s", id "%s"', 
+            $this->errors[] = sprintf('Error "%s" reason "%s". Cause "%s" reason "%s". Index "%s", type "%s", id "%s"',
                 $errorType, $errorReason, $causeType, $causeReason, $index, $type, $id);
-        }
-
-        if($errors) {
-            $this->errors = array_merge($this->errors, $errors);
         }
     }
 
 
     /**
-     *  
+     * 
      */
     public function reset()
     {
