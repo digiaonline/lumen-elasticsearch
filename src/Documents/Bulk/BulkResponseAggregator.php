@@ -56,12 +56,10 @@ class BulkResponseAggregator
     /**
      * @param array $response
      */
-    protected function parseErrors(array $response) 
+    protected function parseErrors(array $response)
     {
-
         $items = array_get($response, 'items', []);
         foreach ($items as $item) {
-
             $item = array_first($item);
 
             if (!array_has($item, 'error')) {
@@ -85,7 +83,7 @@ class BulkResponseAggregator
 
 
     /**
-     * 
+     *
      */
     public function reset()
     {
