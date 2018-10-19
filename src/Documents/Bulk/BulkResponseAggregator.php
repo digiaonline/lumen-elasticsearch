@@ -28,7 +28,7 @@ class BulkResponseAggregator
      */
     public function addResponse(array $response)
     {
-        $this->response[] = $response;
+        $this->responses[] = $response;
 
         $this->parseErrors($response);
 
