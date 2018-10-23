@@ -2,6 +2,7 @@
 
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkQuery;
+use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkResponseAggregator;
 
 abstract class IndexCommand extends AbstractCommand
 {
@@ -60,6 +61,7 @@ abstract class IndexCommand extends AbstractCommand
         $bar->setRedrawFrequency($this->getProgressBarRedrawFrequency());
 
         $bulkQuery = new BulkQuery($this->getBulkSize());
+        $bulkResponseAggregator = new BulkResponseAggregator();
 
         foreach ($data as $item) {
             $action = new BulkAction();
@@ -80,18 +82,29 @@ abstract class IndexCommand extends AbstractCommand
             $bulkQuery->addAction($action);
 
             if ($bulkQuery->isReady()) {
-                $this->elasticsearchService->bulk($bulkQuery->toArray());
+                $response = $this->elasticsearchService->bulk($bulkQuery->toArray());
                 $bulkQuery->reset();
+                $bulkResponseAggregator->addResponse($response);
             }
 
             $bar->advance();
         }
 
         if ($bulkQuery->hasItems()) {
-            $this->elasticsearchService->bulk($bulkQuery->toArray());
+            $response = $this->elasticsearchService->bulk($bulkQuery->toArray());
+            $bulkResponseAggregator->addResponse($response);
         }
 
         $bar->finish();
+
+        $hasErrors = $bulkResponseAggregator->hasErrors();
+        if ($hasErrors) {
+            $this->info("\n");
+            $errors = $bulkResponseAggregator->getErrors();
+            foreach ($errors as $error) {
+                $this->error($error);
+            }
+        }
 
         $this->info("\nDone!");
 
