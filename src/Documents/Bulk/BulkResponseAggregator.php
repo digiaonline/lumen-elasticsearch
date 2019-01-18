@@ -9,27 +9,12 @@ class BulkResponseAggregator
     private $errors = [];
 
     /**
-     * @var array
-     */
-    private $responses = [];
-
-    /**
-     * BulkResponseAggregator constructor.
-     */
-    public function __construct()
-    {
-    }
-
-
-    /**
      * @param array $response
      *
      * @return BulkResponseAggregator
      */
     public function addResponse(array $response)
     {
-        $this->responses[] = $response;
-
         $this->parseErrors($response);
 
         return $this;
@@ -88,6 +73,5 @@ class BulkResponseAggregator
     public function reset()
     {
         $this->errors = [];
-        $this->responses = [];
     }
 }
