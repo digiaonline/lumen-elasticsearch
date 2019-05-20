@@ -192,38 +192,36 @@ $service->index([
 
 ### Running queries
 
-Queries against the search index are run by creating a query using the query builder, then creating a search using the 
-query and finally executing the query using the provided service.
+Queries against the search index are run by creating a query, then creating a search using the query and finally 
+executing the query using the provided service.
 
 Here's an example:
 
 ```php
+// Get an instance of ElasticSearchService
 $service = app(ElasticsearchServiceContract::class);
 
-// Create a query builder
-$queryBuilder = $service->createQueryBuilder();
-
 // Create the query
-$query = $queryBuilder->createBoolQuery()
+$query = (new BoolQuery())
     ->addMust(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('user')
             ->setValue('kimchy'))
     ->addFilter(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('tech'))
     ->addMustNot(
-        $queryBuilder->createRangeQuery()
+        (new RangeQuery())
             ->setField('age')
             ->setGreaterThanOrEquals(18)
             ->setLessThanOrEquals(40))
     ->addShould(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('wow'))
     ->addShould(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('elasticsearch'));
 
