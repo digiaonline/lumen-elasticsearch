@@ -172,6 +172,10 @@ class IndexPersonsCommand extends IndexCommand
 Now, run `php artisan app:index:persons` to index the data. You can now create additional commands for your other data 
 types that need to be indexed.
 
+In addition to `IndexCommand` there is an `AbstractMultiIndexCommand` that can be used if you need to index the same 
+data into multiple indices. This can be useful if you're migrating Elasticsearch 5.x indices to Elasticsearch 6.x, 
+which doesn't support indices with multiple different document types.
+
 #### Indexing single items
 
 The console commands are useful when you want to index all items of a particular type, e.g. all persons in your 
