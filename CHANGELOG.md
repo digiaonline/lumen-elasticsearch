@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.6.] - 2019-05-28
+
+- Add AbstractMultiIndexCommand for indexing the same data into multiple indices
+
 ## [3.5.1] - 2019-01-18
 
 - Fix a memory leak during bulk indexing (introduced in 3.5.0)
