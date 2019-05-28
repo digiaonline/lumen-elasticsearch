@@ -53,21 +53,29 @@ abstract class IndexCommand extends AbstractCommand
      */
     public function handle()
     {
-        $this->info(sprintf('Indexing data of type "%s" into "%s"', $this->getType(), $this->getIndex()));
+        $this->indexData($this->getIndex());
+    }
+
+    /**
+     * @param string $indexName
+     */
+    protected function indexData(string $indexName): void
+    {
+        $this->info(sprintf('Indexing data of type "%s" into "%s"', $this->getType(), $indexName));
 
         $data = $this->getData();
 
         $bar = $this->output->createProgressBar($this->getCount());
         $bar->setRedrawFrequency($this->getProgressBarRedrawFrequency());
 
-        $bulkQuery = new BulkQuery($this->getBulkSize());
+        $bulkQuery              = new BulkQuery($this->getBulkSize());
         $bulkResponseAggregator = new BulkResponseAggregator();
 
         foreach ($data as $item) {
             $action = new BulkAction();
 
             $meta = [
-                '_index' => $this->getIndex(),
+                '_index' => $indexName,
                 '_type'  => $this->getType(),
                 '_id'    => $this->getItemId($item),
             ];
@@ -107,8 +115,6 @@ abstract class IndexCommand extends AbstractCommand
         }
 
         $this->info("\nDone!");
-
-        return 0;
     }
 
     /**
