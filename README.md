@@ -172,6 +172,10 @@ class IndexPersonsCommand extends IndexCommand
 Now, run `php artisan app:index:persons` to index the data. You can now create additional commands for your other data 
 types that need to be indexed.
 
+In addition to `IndexCommand` there is an `AbstractMultiIndexCommand` that can be used if you need to index the same 
+data into multiple indices. This can be useful if you're migrating Elasticsearch 5.x indices to Elasticsearch 6.x, 
+which doesn't support indices with multiple different document types.
+
 #### Indexing single items
 
 The console commands are useful when you want to index all items of a particular type, e.g. all persons in your 
@@ -192,38 +196,36 @@ $service->index([
 
 ### Running queries
 
-Queries against the search index are run by creating a query using the query builder, then creating a search using the 
-query and finally executing the query using the provided service.
+Queries against the search index are run by creating a query, then creating a search using the query and finally 
+executing the query using the provided service.
 
 Here's an example:
 
 ```php
+// Get an instance of ElasticSearchService
 $service = app(ElasticsearchServiceContract::class);
 
-// Create a query builder
-$queryBuilder = $service->createQueryBuilder();
-
 // Create the query
-$query = $queryBuilder->createBoolQuery()
+$query = (new BoolQuery())
     ->addMust(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('user')
             ->setValue('kimchy'))
     ->addFilter(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('tech'))
     ->addMustNot(
-        $queryBuilder->createRangeQuery()
+        (new RangeQuery())
             ->setField('age')
             ->setGreaterThanOrEquals(18)
             ->setLessThanOrEquals(40))
     ->addShould(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('wow'))
     ->addShould(
-        $queryBuilder->createTermQuery()
+        (new TermQuery())
             ->setField('tag')
             ->setValue('elasticsearch'));
 
