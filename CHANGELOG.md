@@ -2,7 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.6.] - 2019-05-28
+## [3.6.1] - 2019-08-13
+
+- Fix incorrect return type-hint for getItemParent()
+
+## [3.6.0] - 2019-05-28
 
 - Add AbstractMultiIndexCommand for indexing the same data into multiple indices
 
