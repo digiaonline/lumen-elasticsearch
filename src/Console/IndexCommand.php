@@ -44,7 +44,7 @@ abstract class IndexCommand extends AbstractCommand
     /**
      * @param mixed $item
      *
-     * @return string
+     * @return string|null
      */
     abstract public function getItemParent($item);
 
