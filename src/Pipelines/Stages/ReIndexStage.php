@@ -5,6 +5,7 @@ namespace Nord\Lumen\Elasticsearch\Pipelines\Stages;
 use Elasticsearch\Common\Exceptions\ServerErrorResponseException;
 use League\Pipeline\StageInterface;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\ConsoleOutput;
 
@@ -35,11 +36,15 @@ class ReIndexStage implements StageInterface
      */
     public function __invoke($payload)
     {
+        /** @var ApplyMigrationPayload $payload */
         // Reindex data from the old index to the new, but only if the old index exists (not true on brand new setups)
-        if ($this->elasticsearchService->indices()->exists(['index' => $payload->getIndexName()])) {
+        $oldIndex = $payload->getPrefixedIndexName();
+        $newIndex = $payload->getPrefixedTargetVersionName();
+
+        if ($this->elasticsearchService->indices()->exists(['index' => $oldIndex])) {
             // Temporarily change some index settings to speed up the process
             $this->elasticsearchService->indices()->putSettings([
-                'index' => $payload->getTargetVersionName(),
+                'index' => $newIndex,
                 'body'  => [
                     'refresh_interval'   => -1,
                     'number_of_replicas' => 0,
@@ -50,11 +55,11 @@ class ReIndexStage implements StageInterface
                 'wait_for_completion' => false,
                 'body'                => [
                     'source' => [
-                        'index' => $payload->getIndexName(),
+                        'index' => $oldIndex,
                         'size'  => $payload->getBatchSize(),
                     ],
                     'dest'   => [
-                        'index' => $payload->getTargetVersionName(),
+                        'index' => $newIndex,
                     ],
                 ],
             ]);
@@ -91,6 +96,7 @@ class ReIndexStage implements StageInterface
                 if ($progressBar === null && $total > 0) {
                     $progressBar = new ProgressBar(new ConsoleOutput(), $total);
                 } elseif ($progressBar !== null) {
+                    /** @var ProgressBar $progressBar */
                     $progressBar->setProgress($response['task']['status']['created']);
                 }
             } catch (ServerErrorResponseException $e) {
