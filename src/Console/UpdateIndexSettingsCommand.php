@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Console;
 
 use Illuminate\Console\Command;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 
 /**
  * Class SetIndexSettingsCommand
@@ -44,7 +45,7 @@ class UpdateIndexSettingsCommand extends Command
 
     public function handle(): void
     {
-        $index           = $this->input->getArgument('index');
+        $index           = IndexNamePrefixer::getPrefixedIndexName($this->input->getArgument('index'));
         $numReplicas     = $this->input->getOption('numReplicas');
         $refreshInterval = $this->input->getOption('refreshInterval');
 
