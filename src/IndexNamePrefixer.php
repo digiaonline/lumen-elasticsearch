@@ -4,7 +4,6 @@ namespace Nord\Lumen\Elasticsearch;
 
 class IndexNamePrefixer
 {
-
     public static function getPrefixedIndexName(string $indexName): string
     {
         $prefix = \getenv('ELASTICSEARCH_INDEX_PREFIX');
