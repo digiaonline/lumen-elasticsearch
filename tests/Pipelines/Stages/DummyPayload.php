@@ -42,4 +42,6 @@ class DummyPayload extends ApplyMigrationPayload
     {
         return 'foo';
     }
+    
+    
 }
