@@ -5,7 +5,6 @@ namespace Nord\Lumen\Elasticsearch\Pipelines\Stages;
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use League\Pipeline\StageInterface;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
-use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 
 /**
@@ -80,9 +79,7 @@ class UpdateIndexAliasStage implements StageInterface
 
         // Remove orphaned indices
         foreach ($orphanedIndices as $orphanedIndex) {
-            $prefixedOrphanedIndex = IndexNamePrefixer::getPrefixedIndexName($orphanedIndex);
-            
-            $indices->delete(['index' => $prefixedOrphanedIndex]);
+            $indices->delete(['index' => $orphanedIndex]);
         }
 
         return $payload;
