@@ -37,7 +37,7 @@ class UpdateIndexAliasStage implements StageInterface
         /** @var ApplyMigrationPayload $payload */
 
         $indices         = $this->elasticsearchService->indices();
-        $alias           = $payload->getIndexName();
+        $alias           = $payload->getPrefixedIndexName();
         $orphanedIndices = [];
 
         // If we already have an alias in place we store the indices it points to right now
@@ -56,7 +56,7 @@ class UpdateIndexAliasStage implements StageInterface
 
         // Revert temporary index settings
         $indices->putSettings([
-            'index' => $payload->getTargetVersionName(),
+            'index' => $payload->getPrefixedTargetVersionName(),
             'body'  => [
                 'refresh_interval'   => '1s',
                 'number_of_replicas' => $payload->getNumberOfReplicas(),
@@ -69,7 +69,7 @@ class UpdateIndexAliasStage implements StageInterface
                 'actions' => [
                     [
                         'add' => [
-                            'index' => $payload->getTargetVersionName(),
+                            'index' => $payload->getPrefixedTargetVersionName(),
                             'alias' => $alias,
                         ],
                     ],
