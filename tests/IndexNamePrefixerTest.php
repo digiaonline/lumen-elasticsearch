@@ -6,7 +6,6 @@ use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 
 class IndexNamePrefixerTest extends TestCase
 {
-
     public function testNoPrefixDefined(): void
     {
         putenv('ELASTICSEARCH_INDEX_PREFIX=');
