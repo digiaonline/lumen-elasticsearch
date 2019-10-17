@@ -2,15 +2,13 @@
 
 namespace Nord\Lumen\Elasticsearch\Console;
 
-use Illuminate\Console\Command;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 
 /**
  * Class SetIndexSettingsCommand
  * @package namespace Nord\Lumen\Elasticsearch\Console
  */
-class UpdateIndexSettingsCommand extends Command
+class UpdateIndexSettingsCommand extends AbstractCommand
 {
 
     /**
@@ -25,23 +23,6 @@ class UpdateIndexSettingsCommand extends Command
      * @var string
      */
     protected $description = 'Updates specified dynamic index settings for the specified index';
-
-    /**
-     * @var ElasticsearchServiceContract
-     */
-    private $elasticsearchService;
-
-    /**
-     * SetIndexSettingsCommand constructor.
-     *
-     * @param ElasticsearchServiceContract $elasticsearchService
-     */
-    public function __construct(ElasticsearchServiceContract $elasticsearchService)
-    {
-        parent::__construct();
-
-        $this->elasticsearchService = $elasticsearchService;
-    }
 
     public function handle(): void
     {
