@@ -314,6 +314,18 @@ command. If the option is omitted, the default value of 1000 is used.
 There is a console command (`elastic:index:settings:update`) that you can use to update certain dynamic index settings 
 such as the refresh interval or the number of replicas. Simply register it in your console kernel to start using it. 
 
+## Using index prefixes
+
+This library supports specifying a prefix for index names, similarly to how many frameworks support cache prefixes in 
+order to allow multiple applications to share the same cache. This means you can use a single Elasticsearch cluster 
+for multiple projects (or for example a shared one for the "dev" and "staging" environment).
+
+The prefix used is specified by the `ELASTICSEARCH_INDEX_PREFIX` environment variable. If you have an index named 
+`content` and you specify `foo` as a prefix, the index will be named `foo_content`.
+
+Prefixing is supported for index migrations too, in which case the both the indices and the aliases created are 
+prefixed.
+
 ## Pagerfanta integration
 
 There is a Pagerfanta adapter included for easy pagination. However, it is optional, so if you intend to use it you 
