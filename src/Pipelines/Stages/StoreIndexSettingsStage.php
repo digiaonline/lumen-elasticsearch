@@ -35,7 +35,7 @@ class StoreIndexSettingsStage implements StageInterface
     {
         /** @var ApplyMigrationPayload $payload */
         // Store the current number_of_replicas setting value in the payload
-        $index = $payload->getPrefixedTargetVersionName();
+        $index = $this->elasticsearchService->getPrefixedIndexName($payload->getTargetVersionName());
 
         $settings = $this->elasticsearchService->indices()->getSettings(['index' => $index]);
 

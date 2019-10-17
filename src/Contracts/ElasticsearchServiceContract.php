@@ -15,14 +15,12 @@ interface ElasticsearchServiceContract
      */
     public function search(array $params = []);
 
-
     /**
      * @param array $params
      *
      * @return array
      */
     public function index(array $params = []);
-
 
     /**
      * @param array $params
@@ -31,14 +29,12 @@ interface ElasticsearchServiceContract
      */
     public function reindex(array $params = []);
 
-
     /**
      * @param array $params
      *
      * @return array
      */
     public function updateByQuery(array $params = []);
-
 
     /**
      * @param array $params
@@ -47,14 +43,12 @@ interface ElasticsearchServiceContract
      */
     public function bulk(array $params = []);
 
-
     /**
      * @param array $params
      *
      * @return array
      */
     public function delete(array $params = []);
-
 
     /**
      * @param array $params
@@ -63,14 +57,12 @@ interface ElasticsearchServiceContract
      */
     public function deleteByQuery(array $params = []);
 
-
     /**
      * @param array $params
      *
      * @return array
      */
     public function create(array $params = []);
-
 
     /**
      * @param array $params
@@ -79,33 +71,29 @@ interface ElasticsearchServiceContract
      */
     public function exists(array $params = []);
 
-
     /**
      * @return TasksNamespace
      */
     public function tasks();
-
 
     /**
      * @return IndicesNamespace
      */
     public function indices();
 
-
     /**
      * @return Search
      */
     public function createSearch();
-
 
     /**
      * @return Sort
      */
     public function createSort();
 
-
     /**
      * @param Search $search
+     *
      * @return array
      */
     public function execute(Search $search);
@@ -116,4 +104,18 @@ interface ElasticsearchServiceContract
      * @return int
      */
     public function count(Search $search): int;
+
+    /**
+     * @param string $indexName
+     *
+     * @return string
+     */
+    public function getPrefixedIndexName(string $indexName): string;
+
+    /**
+     * @param array $parameters
+     *
+     * @return array
+     */
+    public function getPrefixedIndexParameters(array $parameters): array;
 }

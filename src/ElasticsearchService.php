@@ -14,13 +14,20 @@ class ElasticsearchService implements ElasticsearchServiceContract
     private $client;
 
     /**
+     * @var string|null
+     */
+    private $indexPrefix;
+
+    /**
      * ElasticsearchService constructor.
      *
-     * @param Client $client
+     * @param Client      $client
+     * @param string|null $indexPrefix
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, ?string $indexPrefix = null)
     {
-        $this->client = $client;
+        $this->client      = $client;
+        $this->indexPrefix = $indexPrefix;
     }
 
     /**
@@ -28,9 +35,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function search(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->search($params);
+        return $this->client->search($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -38,9 +43,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function index(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->index($params);
+        return $this->client->index($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -48,6 +51,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function reindex(array $params = [])
     {
+        // Index prefixing omitted on purpose here
         return $this->client->reindex($params);
     }
 
@@ -56,9 +60,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function updateByQuery(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->updateByQuery($params);
+        return $this->client->updateByQuery($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -66,9 +68,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function bulk(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->bulk($params);
+        return $this->client->bulk($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -76,9 +76,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function delete(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->delete($params);
+        return $this->client->delete($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -86,9 +84,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function deleteByQuery(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->deleteByQuery($params);
+        return $this->client->deleteByQuery($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -104,9 +100,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function create(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->create($params);
+        return $this->client->create($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -114,9 +108,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function exists(array $params = [])
     {
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
-
-        return $this->client->exists($params);
+        return $this->client->exists($this->getPrefixedIndexParameters($params));
     }
 
     /**
@@ -148,10 +140,8 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function execute(Search $search)
     {
-        $index = IndexNamePrefixer::getPrefixedIndexName($search->getIndex());
-
         return $this->search([
-            'index' => $index,
+            'index' => $this->getPrefixedIndexName($search->getIndex()),
             'type'  => $search->getType(),
             'body'  => $search->buildBody(),
         ]);
@@ -162,12 +152,34 @@ class ElasticsearchService implements ElasticsearchServiceContract
      */
     public function count(Search $search): int
     {
-        $index = IndexNamePrefixer::getPrefixedIndexName($search->getIndex());
-
         return $this->client->count([
-            'index' => $index,
+            'index' => $this->getPrefixedIndexName($search->getIndex()),
             'type'  => $search->getType(),
             'body'  => $search->buildBody(),
         ])['count'];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPrefixedIndexName(string $indexName): string
+    {
+        if ($this->indexPrefix) {
+            return \sprintf('%s_%s', $this->indexPrefix, $indexName);
+        }
+
+        return $indexName;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPrefixedIndexParameters(array $parameters): array
+    {
+        if (isset($parameters['index'])) {
+            $parameters['index'] = $this->getPrefixedIndexName($parameters['index']);
+        }
+
+        return $parameters;
     }
 }

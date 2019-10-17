@@ -5,6 +5,7 @@ namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 use Elasticsearch\Namespaces\IndicesNamespace;
 use Elasticsearch\Namespaces\TasksNamespace;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
+use Nord\Lumen\Elasticsearch\ElasticsearchService;
 use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
@@ -27,7 +28,6 @@ abstract class AbstractStageTestCase extends TestCase
                     ->getMock();
     }
 
-
     /**
      * @param array $methods
      *
@@ -43,14 +43,16 @@ abstract class AbstractStageTestCase extends TestCase
 
     /**
      * @param IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $mockedIndices
+     * @param string|null                                               $indexPrefix
      *
      * @return ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject
      */
-    protected function getMockedSearchService($mockedIndices)
+    protected function getMockedSearchService($mockedIndices, ?string $indexPrefix = null)
     {
-        $searchService = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                              ->setMethods(['indices', 'reindex'])
-                              ->getMockForAbstractClass();
+        $searchService = $this->getMockBuilder(ElasticsearchService::class)
+                              ->setConstructorArgs([$this->createDummyClient(), $indexPrefix])
+                              ->setMethods(['indices', 'reindex', 'tasks'])
+                              ->getMock();
 
         $searchService->method('indices')
                       ->willReturn($mockedIndices);

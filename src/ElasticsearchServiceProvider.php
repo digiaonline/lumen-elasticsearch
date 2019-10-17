@@ -8,7 +8,6 @@ class ElasticsearchServiceProvider extends ServiceProvider
 {
     protected const CONFIG_KEY = 'elasticsearch';
 
-
     /**
      * @inheritdoc
      */
@@ -20,7 +19,6 @@ class ElasticsearchServiceProvider extends ServiceProvider
         $this->registerBindings();
     }
 
-
     /**
      * Register bindings.
      */
@@ -28,9 +26,14 @@ class ElasticsearchServiceProvider extends ServiceProvider
     {
         /** @noinspection PhpUndefinedMethodInspection */
         $config = $this->app['config']->get('elasticsearch', []);
+        
+        // Extract the index_prefix parameter if present
+        $indexPrefix = $config['index_prefix'];
+        unset($config['index_prefix']);
 
-        $this->app->/** @scrutinizer ignore-call */ singleton(ElasticsearchServiceContract::class, function () use ($config) {
-            return new ElasticsearchService(ClientBuilder::fromConfig($config));
-        });
+        $this->app->/** @scrutinizer ignore-call */ singleton(ElasticsearchServiceContract::class,
+            static function () use ($config, $indexPrefix) {
+                return new ElasticsearchService(ClientBuilder::fromConfig($config), $indexPrefix);
+            });
     }
 }

@@ -10,6 +10,10 @@ return [
     |
     */
 
-    'hosts' => ['localhost:9200'],
+    'hosts'        => ['localhost:9200'],
 
+    /*
+     * The prefix to use for index names
+     */
+    'index_prefix' => env('ELASTICSEARCH_INDEX_PREFIX'),
 ];

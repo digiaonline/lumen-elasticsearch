@@ -2,8 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Pipelines\Payloads;
 
-use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
-
 /**
  * Class MigrationPayload
  * @package Nord\Lumen\Elasticsearch\Pipelines\Payloads
@@ -56,14 +54,6 @@ abstract class MigrationPayload
     public function getIndexName()
     {
         return $this->getConfiguration()['index'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getPrefixedIndexName(): string
-    {
-        return IndexNamePrefixer::getPrefixedIndexName($this->getIndexName());
     }
 
     /**

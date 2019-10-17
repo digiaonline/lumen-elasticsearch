@@ -37,7 +37,7 @@ class CheckIndexExistsStage implements StageInterface
     public function __invoke($payload)
     {
         /** @var ApplyMigrationPayload $payload */
-        $index    = $payload->getPrefixedTargetVersionName();
+        $index    = $this->elasticsearchService->getPrefixedIndexName($payload->getTargetVersionName());
         $response = $this->elasticsearchService->indices()->exists(['index' => $index]);
 
         if ($response) {

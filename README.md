@@ -320,8 +320,12 @@ This library supports specifying a prefix for index names, similarly to how many
 order to allow multiple applications to share the same cache. This means you can use a single Elasticsearch cluster 
 for multiple projects (or for example a shared one for the "dev" and "staging" environment).
 
-The prefix used is specified by the `ELASTICSEARCH_INDEX_PREFIX` environment variable. If you have an index named 
-`content` and you specify `foo` as a prefix, the index will be named `foo_content`.
+The prefix used is specified by the configuration file (`config/elasticsearch.php`). The default behavior is to read the 
+ prefix from the `ELASTICSEARCH_INDEX_PREFIX` environment variable.
+ 
+ If you have an index named 
+`content` and you specify `foo` as a prefix, the index will be named `foo_content`. If you need custom logic you 
+can override `getPrefixedIndexName()` in `ElasticsearchService`.
 
 Prefixing is supported for index migrations too, in which case the both the indices and the aliases created are 
 prefixed.
