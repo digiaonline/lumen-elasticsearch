@@ -31,12 +31,13 @@ class CheckIndexExistsStage implements StageInterface
 
     /**
      * @inheritDoc
+     *
+     * @throws IndexExistsException
      */
     public function __invoke($payload)
     {
         /** @var ApplyMigrationPayload $payload */
-
-        $index    = $payload->getTargetVersionName();
+        $index    = $payload->getPrefixedTargetVersionName();
         $response = $this->elasticsearchService->indices()->exists(['index' => $index]);
 
         if ($response) {

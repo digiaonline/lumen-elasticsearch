@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Console;
 
+use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
+
 class DeleteCommand extends AbstractCommand
 {
 
@@ -22,9 +24,9 @@ class DeleteCommand extends AbstractCommand
      */
     public function handle()
     {
-        $index = (string)$this->argument('index');
+        $index = IndexNamePrefixer::getPrefixedIndexName((string)$this->argument('index'));
 
-        $this->info('Deleting index ...');
+        $this->info(sprintf("Deleting index '%s' ...", $index));
 
         $this->elasticsearchService->indices()->delete(['index' => $index]);
 

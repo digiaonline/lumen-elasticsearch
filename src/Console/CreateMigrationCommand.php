@@ -44,6 +44,6 @@ class CreateMigrationCommand extends Command
         $payload = new CreateMigrationPayload($configurationPath);
         $pipeline->process($payload);
 
-        $this->output->writeln('Created ' . $payload->getVersionName());
+        $this->output->writeln('Created ' . $payload->getIndexVersionName());
     }
 }

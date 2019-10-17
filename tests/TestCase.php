@@ -29,6 +29,14 @@ class TestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @inheritDoc
+     */
+    protected function tearDown()
+    {
+        putenv('ELASTICSEARCH_INDEX_PREFIX=');
+    }
+
+    /**
      * @return string
      */
     protected function getResourcesBasePath()
