@@ -34,7 +34,7 @@ class CreateIndexStage implements StageInterface
     public function __invoke($payload)
     {
         /** @var ApplyMigrationPayload $payload */
-        $params = $payload->getPrefixedTargetConfiguration();
+        $params = $this->elasticsearchService->getPrefixedIndexParameters($payload->getTargetConfiguration());
 
         $this->elasticsearchService->indices()->create($params);
 

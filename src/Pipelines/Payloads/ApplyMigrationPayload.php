@@ -2,8 +2,6 @@
 
 namespace Nord\Lumen\Elasticsearch\Pipelines\Payloads;
 
-use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
-
 /**
  * Class ApplyMigrationPayload
  * @package Nord\Lumen\Elasticsearch\Pipelines\Payloads
@@ -77,27 +75,11 @@ class ApplyMigrationPayload extends MigrationPayload
     }
 
     /**
-     * @return array
-     */
-    public function getPrefixedTargetConfiguration(): array
-    {
-        return IndexNamePrefixer::getPrefixedIndexParameters($this->getTargetConfiguration());
-    }
-
-    /**
      * @return string
      */
     public function getTargetVersionName()
     {
         return $this->getTargetConfiguration()['index'];
-    }
-
-    /**
-     * @return string
-     */
-    public function getPrefixedTargetVersionName(): string
-    {
-        return IndexNamePrefixer::getPrefixedIndexName($this->getTargetVersionName());
     }
 
     /**

@@ -38,8 +38,8 @@ class ReIndexStage implements StageInterface
     {
         /** @var ApplyMigrationPayload $payload */
         // Reindex data from the old index to the new, but only if the old index exists (not true on brand new setups)
-        $oldIndex = $payload->getPrefixedIndexName();
-        $newIndex = $payload->getPrefixedTargetVersionName();
+        $oldIndex = $this->elasticsearchService->getPrefixedIndexName($payload->getIndexName());
+        $newIndex = $this->elasticsearchService->getPrefixedIndexName($payload->getTargetVersionName());
 
         if ($this->elasticsearchService->indices()->exists(['index' => $oldIndex])) {
             // Temporarily change some index settings to speed up the process

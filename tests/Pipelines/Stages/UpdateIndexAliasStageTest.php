@@ -4,16 +4,14 @@ namespace Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages;
 
 use Elasticsearch\Common\Exceptions\Missing404Exception;
 use Elasticsearch\Namespaces\IndicesNamespace;
-use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\Pipelines\Payloads\ApplyMigrationPayload;
 use Nord\Lumen\Elasticsearch\Pipelines\Stages\UpdateIndexAliasStage;
-use Nord\Lumen\Elasticsearch\Tests\TestCase;
 
 /**
  * Class UpdateIndexAliasStageTest
  * @package Nord\Lumen\Elasticsearch\Tests\Pipelines\Stages
  */
-class UpdateIndexAliasStageTest extends TestCase
+class UpdateIndexAliasStageTest extends AbstractStageTestCase
 {
 
     /**
@@ -46,14 +44,7 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->method('delete')
                 ->with(['index' => 'content_3']);
 
-        /** @var ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject $service */
-        $service = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                        ->setMethods(['indices'])
-                        ->getMockForAbstractClass();
-
-        $service->expects($this->once())
-                ->method('indices')
-                ->willReturn($indices);
+        $service = $this->getMockedSearchService($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
         $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
@@ -67,8 +58,6 @@ class UpdateIndexAliasStageTest extends TestCase
      */
     public function testNormalOperationWithPrefix()
     {
-        putenv('ELASTICSEARCH_INDEX_PREFIX=test');
-        
         /** @var IndicesNamespace|\PHPUnit_Framework_MockObject_MockObject $indices */
         $indices = $this->getMockBuilder(IndicesNamespace::class)
                         ->disableOriginalConstructor()
@@ -94,14 +83,8 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->method('delete')
                 ->with(['index' => 'test_content_3']);
 
-        /** @var ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject $service */
-        $service = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                        ->setMethods(['indices'])
-                        ->getMockForAbstractClass();
-
-        $service->expects($this->once())
-                ->method('indices')
-                ->willReturn($indices);
+        $indexPrefix = 'test';
+        $service     = $this->getMockedSearchService($indices, $indexPrefix);
 
         $stage   = new UpdateIndexAliasStage($service);
         $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
@@ -135,14 +118,7 @@ class UpdateIndexAliasStageTest extends TestCase
         $indices->expects($this->never())
                 ->method('delete');
 
-        /** @var ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject $service */
-        $service = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                        ->setMethods(['indices'])
-                        ->getMockForAbstractClass();
-
-        $service->expects($this->once())
-                ->method('indices')
-                ->willReturn($indices);
+        $service = $this->getMockedSearchService($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
         $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);
@@ -177,14 +153,7 @@ class UpdateIndexAliasStageTest extends TestCase
                 ->method('delete')
                 ->with(['index' => 'content']);
 
-        /** @var ElasticsearchServiceContract|\PHPUnit_Framework_MockObject_MockObject $service */
-        $service = $this->getMockBuilder(ElasticsearchServiceContract::class)
-                        ->setMethods(['indices'])
-                        ->getMockForAbstractClass();
-
-        $service->expects($this->once())
-                ->method('indices')
-                ->willReturn($indices);
+        $service = $this->getMockedSearchService($indices);
 
         $stage   = new UpdateIndexAliasStage($service);
         $payload = new ApplyMigrationPayload($this->getResourcesBasePath() . '/content.php', 100);

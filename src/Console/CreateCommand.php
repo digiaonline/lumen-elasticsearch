@@ -1,7 +1,5 @@
 <?php namespace Nord\Lumen\Elasticsearch\Console;
 
-use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
-
 class CreateCommand extends AbstractCommand
 {
 
@@ -35,7 +33,7 @@ class CreateCommand extends AbstractCommand
         }
 
         $params = require($filePath);
-        $params = IndexNamePrefixer::getPrefixedIndexParameters($params);
+        $params = $this->elasticsearchService->getPrefixedIndexParameters($params);
 
         $this->info(sprintf("Creating index '%s' ...", $params['index']));
 

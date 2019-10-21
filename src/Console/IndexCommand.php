@@ -3,7 +3,6 @@
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkAction;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkQuery;
 use Nord\Lumen\Elasticsearch\Documents\Bulk\BulkResponseAggregator;
-use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 
 abstract class IndexCommand extends AbstractCommand
 {
@@ -62,8 +61,8 @@ abstract class IndexCommand extends AbstractCommand
      */
     protected function indexData(string $indexName): void
     {
-        $indexName = IndexNamePrefixer::getPrefixedIndexName($indexName);
-        
+        $indexName = $this->elasticsearchService->getPrefixedIndexName($indexName);
+
         $this->info(sprintf('Indexing data of type "%s" into "%s"', $this->getType(), $indexName));
 
         $data = $this->getData();

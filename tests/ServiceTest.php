@@ -4,6 +4,7 @@ namespace Nord\Lumen\Elasticsearch\Tests;
 
 use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\ElasticsearchService;
+use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
 
 /**
  * Class ServiceTest
@@ -281,5 +282,19 @@ class ServiceTest extends TestCase
                      ->will($this->returnValue($output));
 
         $this->assertEquals($output, $this->service->indices());
+    }
+
+    public function testNoPrefixDefined(): void
+    {
+        $this->assertEquals('foo', $this->service->getPrefixedIndexName('foo'));
+        $this->assertEquals(['index' => 'foo'], $this->service->getPrefixedIndexParameters(['index' => 'foo']));
+    }
+
+    public function testPrefixDefined(): void
+    {
+        $this->service = new ElasticsearchService($this->client, 'dev');
+
+        $this->assertEquals('dev_foo', $this->service->getPrefixedIndexName('foo'));
+        $this->assertEquals(['index' => 'dev_foo'], $this->service->getPrefixedIndexParameters(['index' => 'foo']));
     }
 }

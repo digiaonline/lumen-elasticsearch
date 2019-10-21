@@ -2,6 +2,7 @@
 
 namespace Nord\Lumen\Elasticsearch\Tests;
 
+use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
 use Nord\Lumen\Elasticsearch\Contracts\ElasticsearchServiceContract;
 use Nord\Lumen\Elasticsearch\ElasticsearchService;
@@ -25,15 +26,15 @@ class TestCase extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->service = new ElasticsearchService(ClientBuilder::fromConfig([]));
+        $this->service = new ElasticsearchService($this->createDummyClient());
     }
 
     /**
-     * @inheritDoc
+     * @return Client
      */
-    protected function tearDown()
+    protected function createDummyClient(): Client
     {
-        putenv('ELASTICSEARCH_INDEX_PREFIX=');
+        return ClientBuilder::fromConfig([]);
     }
 
     /**
