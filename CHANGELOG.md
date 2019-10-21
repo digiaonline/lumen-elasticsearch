@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.7.1] - 2019-10-21
+
+- Fix two bugs in the new index prefixing feature
+
 ## [3.7.0] - 2019-10-21
 
 - Add support for index prefixing
