@@ -141,7 +141,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
     public function execute(Search $search)
     {
         return $this->search([
-            'index' => $this->getPrefixedIndexName($search->getIndex()),
+            'index' => $search->getIndex(),
             'type'  => $search->getType(),
             'body'  => $search->buildBody(),
         ]);
@@ -165,7 +165,10 @@ class ElasticsearchService implements ElasticsearchServiceContract
     public function getPrefixedIndexName(string $indexName): string
     {
         if ($this->indexPrefix) {
-            return \sprintf('%s_%s', $this->indexPrefix, $indexName);
+            // Prefix every index
+            return implode(',', array_map(function (string $indexName) {
+                return sprintf('%s_%s', $this->indexPrefix, $indexName);
+            }, explode(',', $indexName)));
         }
 
         return $indexName;

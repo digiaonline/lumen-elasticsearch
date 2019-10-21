@@ -5,6 +5,7 @@ namespace Nord\Lumen\Elasticsearch\Tests;
 use Elasticsearch\Client;
 use Nord\Lumen\Elasticsearch\ElasticsearchService;
 use Nord\Lumen\Elasticsearch\IndexNamePrefixer;
+use Nord\Lumen\Elasticsearch\Search\Search;
 
 /**
  * Class ServiceTest
@@ -294,7 +295,29 @@ class ServiceTest extends TestCase
     {
         $this->service = new ElasticsearchService($this->client, 'dev');
 
+        // Test with single idnex
         $this->assertEquals('dev_foo', $this->service->getPrefixedIndexName('foo'));
         $this->assertEquals(['index' => 'dev_foo'], $this->service->getPrefixedIndexParameters(['index' => 'foo']));
+
+        // Test with multiple indices
+        $this->assertEquals('dev_foo,dev_bar', $this->service->getPrefixedIndexName('foo,bar'));
+        $this->assertEquals(['index' => 'dev_foo,dev_bar'],
+            $this->service->getPrefixedIndexParameters(['index' => 'foo,bar']));
+
+        // Test that execute() doesn't double-prefix index names
+        /** @var Client|\PHPUnit_Framework_MockObject_MockObject $mockClient */
+        $mockClient = $this->getMockBuilder(Client::class)
+                           ->disableOriginalConstructor()
+                           ->setMethods(['search'])
+                           ->getMock();
+
+        $mockClient->expects($this->once())
+                   ->method('search')
+                   ->with($this->callback(static function (array $params) {
+                       return $params['index'] === 'dev_foo';
+                   }));
+
+        $this->service = new ElasticsearchService($mockClient, 'dev');
+        $this->service->execute((new Search())->setIndex('foo'));
     }
 }
