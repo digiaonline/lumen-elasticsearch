@@ -141,7 +141,7 @@ class ElasticsearchService implements ElasticsearchServiceContract
     public function execute(Search $search)
     {
         return $this->search([
-            'index' => $this->getPrefixedIndexName($search->getIndex()),
+            'index' => $search->getIndex(),
             'type'  => $search->getType(),
             'body'  => $search->buildBody(),
         ]);
