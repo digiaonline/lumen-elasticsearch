@@ -11,7 +11,7 @@ use Nord\Lumen\Elasticsearch\ElasticsearchService;
  * Class TestCase
  * @package Nord\Lumen\Elasticsearch\Tests
  */
-class TestCase extends \PHPUnit_Framework_TestCase
+class TestCase extends \PHPUnit\Framework\TestCase
 {
 
     /**
