@@ -13,12 +13,13 @@ Simple wrapper of [Elasticsearch-PHP](https://github.com/elastic/elasticsearch-p
 
 ## Version support
 
-| Lumen  | Elasticsearch | PHP    | Library |
-|--------|---------------|--------|---------|
-| >= 5.4 | 5.x           | >= 7.1 | 3.x     |
-| 5.4.x  | 5.x           | >= 5.6 | 2.x     |
-| 5.4.x  | 2.x           | >= 5.6 | 1.x     |
-| 5.2.x  | 2.x           | >= 5.6 | 0.7.x   |
+| Lumen          | Elasticsearch | PHP    | Library   |
+|----------------|---------------|--------|-----------|
+| >= 6.0         | 5.x           | >= 7.1 | 3.8 - 3.x |
+| >= 5.4, <= 6.0 | 5.x           | >= 7.1 | 3.0 - 3.7 |
+| 5.4.x          | 5.x           | >= 5.6 | 2.x       |
+| 5.4.x          | 2.x           | >= 5.6 | 1.x       |
+| 5.2.x          | 2.x           | >= 5.6 | 0.7.x     |
 
 ## Requirements
 
