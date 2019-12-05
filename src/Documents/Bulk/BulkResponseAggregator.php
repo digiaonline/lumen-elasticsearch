@@ -68,12 +68,13 @@ class BulkResponseAggregator
         }
     }
 
-
     /**
-     *
+     * @return $this
      */
-    public function reset()
+    public function reset(): self
     {
         $this->errors = [];
+
+        return $this;
     }
 }
