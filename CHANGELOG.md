@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.7.2] - 2019-12-04
+
+- dummy tag since 3.7.1 was accidentally tagged on a feature branch
+
 ## [3.7.1] - 2019-10-21
 
 - Fix two bugs in the new index prefixing feature
