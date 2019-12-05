@@ -2,9 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.8.0] - 2019-12-04
+
+- Add support for Lumen 6.x
+- BulkResponseAggregator::reset() is now fluid
+- Run Travis CI on PHP 7.4 too
+- Update PHPUnit to 7.5
+
 ## [3.7.2] - 2019-12-04
 
-- dummy tag since 3.7.1 was accidentally tagged on a feature branch
+- Dummy tag since 3.7.1 was accidentally tagged on a feature branch
 
 ## [3.7.1] - 2019-10-21
 
