@@ -11,29 +11,27 @@ class BulkResponseAggregator
     /**
      * @param array $response
      *
-     * @return BulkResponseAggregator
+     * @return $this
      */
-    public function addResponse(array $response)
+    public function addResponse(array $response): self
     {
         $this->parseErrors($response);
 
         return $this;
     }
 
-
     /**
      * @return bool
      */
-    public function hasErrors()
+    public function hasErrors(): bool
     {
         return count($this->errors) > 0;
     }
 
-
     /**
      * @return array
      */
-    public function getErrors()
+    public function getErrors(): array
     {
         return $this->errors;
     }
@@ -41,7 +39,7 @@ class BulkResponseAggregator
     /**
      * @param array $response
      */
-    protected function parseErrors(array $response)
+    protected function parseErrors(array $response): void
     {
         $items = $response['items'] ?? [];
 
