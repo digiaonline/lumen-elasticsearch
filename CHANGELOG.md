@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.8.1] - 2019-12-18
+
+- Fix a regression in BulkResponseAggregator (introduced in 3.8.0)
+- Add MatchAll and MatchNone queries
+- Upload code coverage to Coveralls only once when running Travis CI
+
 ## [3.8.0] - 2019-12-04
 
 - Add support for Lumen 6.x
