@@ -1,5 +1,6 @@
 <?php namespace Nord\Lumen\Elasticsearch\Search\Query\Compound;
 
+use Nord\Lumen\Elasticsearch\Search\Query\MatchAllQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasBoost;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\Traits\HasScoreMode;
@@ -54,14 +55,13 @@ class FunctionScoreQuery extends AbstractQuery
         $array = [];
 
         $query = $this->getQuery();
-        if ($query !== null) {
-            $queryArray = $query->toArray();
-            if (!empty($queryArray)) {
-                $array['query'] = $queryArray;
-            } else {
-                $array['query'] = ['match_all' => new \stdClass()];
-            }
+
+        // Use a match_all query if none has been specified
+        if ($query === null) {
+            $query = new MatchAllQuery();
         }
+        
+        $array['query'] = $query->toArray();
 
         $functions = [];
         foreach ($this->getFunctions() as $function) {

@@ -104,8 +104,6 @@ class FunctionScoreQueryTest extends AbstractQueryTestCase
     {
         $functionScoreQuery = new FunctionScoreQuery();
 
-        $functionScoreQuery->setQuery(new BoolQuery());
-
         $expectedArray = [
             'function_score' => [
                 'query' => [

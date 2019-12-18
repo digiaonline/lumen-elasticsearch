@@ -2,6 +2,7 @@
 
 use Nord\Lumen\Elasticsearch\Search\Aggregation\Aggregation;
 use Nord\Lumen\Elasticsearch\Search\Aggregation\AggregationCollection;
+use Nord\Lumen\Elasticsearch\Search\Query\MatchAllQuery;
 use Nord\Lumen\Elasticsearch\Search\Query\QueryDSL;
 
 class Search
@@ -311,16 +312,15 @@ class Search
      */
     public function buildBody()
     {
-        $body = [];
+        $body  = [];
         $query = $this->getQuery();
 
-        if ($query !== null) {
-            $body['query'] = $query->toArray();
+        // Use a match_all query if none has been specified
+        if ($query === null) {
+            $query = new MatchAllQuery();
         }
 
-        if (empty($body['query'])) {
-            $body['query'] = ['match_all' => new \stdClass()];
-        }
+        $body['query'] = $query->toArray();
 
         $sort = $this->getSort();
 
