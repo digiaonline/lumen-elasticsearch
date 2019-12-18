@@ -36,9 +36,9 @@ class BulkResponseAggregatorTest extends TestCase
 
         $response = [
             'items' => [
-                // An item with an error
+                // An index operation with an error
                 [
-                    'type' => [
+                    'index' => [
                         '_index' => 'foo',
                         '_type'  => 'bar',
                         '_id'    => 'baz',
@@ -52,17 +52,17 @@ class BulkResponseAggregatorTest extends TestCase
                         ],
                     ],
                 ],
-                // An item without an error
+                // A delete operation without an error
                 [
-                    'type' => [
+                    'delete' => [
                         '_index' => 'foo',
                         '_type'  => 'bar',
                         '_id'    => 'baz',
                     ],
                 ],
-                // An item with an error, but no caused_by
+                // A create operation with an error, but no caused_by
                 [
-                    'type' => [
+                    'create' => [
                         '_index' => 'foo',
                         '_type'  => 'bar',
                         '_id'    => 'baz',

@@ -1,5 +1,7 @@
 <?php namespace Nord\Lumen\Elasticsearch\Documents\Bulk;
 
+use Illuminate\Support\Arr;
+
 class BulkResponseAggregator
 {
 
@@ -37,6 +39,16 @@ class BulkResponseAggregator
     }
 
     /**
+     * @return $this
+     */
+    public function reset(): self
+    {
+        $this->errors = [];
+
+        return $this;
+    }
+
+    /**
      * @param array $response
      */
     protected function parseErrors(array $response): void
@@ -44,10 +56,10 @@ class BulkResponseAggregator
         $items = $response['items'] ?? [];
 
         foreach ($items as $item) {
-            $item = $item['type'];
+            $operation = Arr::first($item);
 
             // Ignore items without errors
-            $error = $item['error'] ?? null;
+            $error = $operation['error'] ?? null;
 
             if ($error === null) {
                 continue;
@@ -61,18 +73,8 @@ class BulkResponseAggregator
             }
 
             $this->errors[] = sprintf('Error "%s" reason "%s". Cause "%s" reason "%s". Index "%s", type "%s", id "%s"',
-                $error['type'], $error['reason'], $causedBy['type'], $causedBy['reason'], $item['_index'],
-                $item['_type'], $item['_id']);
+                $error['type'], $error['reason'], $causedBy['type'], $causedBy['reason'], $operation['_index'],
+                $operation['_type'], $operation['_id']);
         }
-    }
-
-    /**
-     * @return $this
-     */
-    public function reset(): self
-    {
-        $this->errors = [];
-
-        return $this;
     }
 }
