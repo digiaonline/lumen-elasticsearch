@@ -37,6 +37,16 @@ class BulkResponseAggregator
     }
 
     /**
+     * @return $this
+     */
+    public function reset(): self
+    {
+        $this->errors = [];
+
+        return $this;
+    }
+
+    /**
      * @param array $response
      */
     protected function parseErrors(array $response): void
@@ -64,15 +74,5 @@ class BulkResponseAggregator
                 $error['type'], $error['reason'], $causedBy['type'], $causedBy['reason'], $item['_index'],
                 $item['_type'], $item['_id']);
         }
-    }
-
-    /**
-     * @return $this
-     */
-    public function reset(): self
-    {
-        $this->errors = [];
-
-        return $this;
     }
 }
