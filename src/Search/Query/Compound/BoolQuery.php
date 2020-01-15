@@ -135,7 +135,7 @@ class BoolQuery extends AbstractQuery
             }
         }
 
-        // Empty queries must be serialized as new \stdClass(), otherwise the Elasticsearch PHP SDK will fail when 
+        // Empty queries must be serialized as new \stdClass(), otherwise the Elasticsearch PHP SDK will fail when
         // encoding the query to JSON (see https://github.com/elastic/elasticsearch-php/issues/495)
         if (empty($array)) {
             $array = ['bool' => new \stdClass()];
