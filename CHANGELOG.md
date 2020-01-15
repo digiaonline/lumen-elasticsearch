@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [3.8.2] - 2020-01-15
+
+- Fix a regression when serializing empty Bool queries
+
 ## [3.8.1] - 2019-12-18
 
 - Fix a regression in BulkResponseAggregator (introduced in 3.8.0)

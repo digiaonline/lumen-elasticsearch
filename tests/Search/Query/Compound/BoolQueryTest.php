@@ -21,7 +21,7 @@ class BoolQueryTest extends AbstractQueryTestCase
     public function testToArray()
     {
         $query = new BoolQuery();
-        
+
         $query->addMust(new TermQuery('field1', 'value1'));
         $query->addFilter(new TermQuery('field2', 'value2'));
         $query->addMustNot((new RangeQuery())->setField('field3')->setGreaterThanOrEquals(1)->setLessThanOrEquals(2));
@@ -62,6 +62,13 @@ class BoolQueryTest extends AbstractQueryTestCase
         ];
 
         $this->assertEquals($expectedArray, $query->toArray());
+
+        // Test empty query
+        $query = new BoolQuery();
+
+        $this->assertEquals([
+            'bool' => new \stdClass(),
+        ], $query->toArray());
     }
 
     /**
